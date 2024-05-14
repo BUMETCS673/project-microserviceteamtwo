@@ -9,5 +9,5 @@
 ## Praveen Singh
 - I am pursing my masters in Software Development.
 - I have worked as a Software Engineer at Tata 1MG for over 1.5 years.
-- I was the executive team lead of Competitive Programing society of my college for 2 years.
+- I was the executive team lead of CodeChef Competitive Programming society of my college for 2 years.
 - I have worked with various Tech Stack including but not limited to Java, SQL, HTML, CSS, Javascript.
