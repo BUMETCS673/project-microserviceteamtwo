@@ -1,3 +1,10 @@
+# Team Description
+
+## Pranjal Ekhande
+-  I am the Requirement Leader for this team, I have 3 years of experience to the table. 
+-  I have worked extensively on technologies such as Spring Boot, TypeScript, PostgreSQL, and Flask. 
+-  I possess expertise in cloud infrastructure automation. My proficiency extends to tools like Ansible and Terraform.
+
 ## Dipayan Mazumder
 - Currently pursuing my Masters in Computer Science Majoring in Cybersecurity.
 - I have done my bachelors in Computer Science.
