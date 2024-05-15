@@ -32,3 +32,8 @@
 - I have worked as a Software Engineer at Tata 1MG for over 1.5 years.
 - I was the executive team lead of CodeChef Competitive Programming society of my college for 2 years.
 - I have worked with various Tech Stack including but not limited to Java, SQL, HTML, CSS, Javascript.
+
+## Aman Jain
+- Pursuing My Masters in Computer Science Majoring in Ml and AI.
+- I have worken on an CMS system in my internship period in year 2022.
+- I Have worked on technologies like Python(Django), Java , SQl, JAvascript and springboot in projects i worked during my bachlore's. 
