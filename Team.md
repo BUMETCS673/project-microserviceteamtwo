@@ -33,7 +33,16 @@
 - I was the executive team lead of CodeChef Competitive Programming society of my college for 2 years.
 - I have worked with various Tech Stack including but not limited to Java, SQL, HTML, CSS, Javascript.
 
-## Aman Jain
-- Pursuing My Masters in Computer Science Majoring in Ml and AI.
+### Aman Jain
+#### Role: Configuration Leader
+- Pursuing My Masters in Computer Science Majoring in ML and AI.
 - I have worken on an CMS system in my internship period in year 2022.
 - I Have worked on technologies like Python(Django), Java , SQl, JAvascript and springboot in projects i worked during my bachlore's. 
+
+
+### Mukul Jangid ([email: mkljngd@bu.edu](mkljngd@bu.edu))
+#### Role: Design and Implementation Leader
+- I am currently pursuing a Master of Science in Computer Science. 
+- My proficiency in debugging, monitoring performance on platforms like AWS and GCP, and resolving issues swiftly will ensure the reliability and robustness of our implementation.
+- Leveraging my past experience at Klaar Digital Solutions, I will apply similar high-performance strategies.
+- As the Design and Implementation Leader, I will streamline the process and guide the team to write code which follows the contemporary coding standards, fostering a collaborative and efficient project environment.
