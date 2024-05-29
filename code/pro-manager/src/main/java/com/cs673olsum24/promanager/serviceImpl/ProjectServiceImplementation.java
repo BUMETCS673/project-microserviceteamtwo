@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-
+import com.tcs.capacitymgmt.entity.ComputeSolaris;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -80,9 +80,69 @@ public class ProjectServiceImplementation implements ProjectServices {
 		
 		return map;
     }
+	
+	public Map<String, Object> deleteProject(String id)
+	{
+		Map<String, Object> map2 = new HashMap<>();
+		
+		this.projectDAO.deleteProject(id);
+		
+		map2.put("Response","Success");
+		return map2;
+		
+	}
+	
+	
 
+	
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> safeDeleteProject(JSONObject each)
+	{
+		Map<String, Object> map = new HashMap<>();		
+		Projects p = new Projects();	
+		
+		p.setProjectid((String) each.getOrDefault("projectid", "NA"));
+		
 
+		try {
+			this.projectDAO.safeDeleteProject(p);
+			map.put("Response", "Success");
+		}
+		catch(Exception e)		
+		{
+			map.put("Response", "Failed");
+		}
 
+    	return map;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> editProject(JSONObject each)
+	{
+		Map<String, Object> map = new HashMap<>();		
+		Projects p = new Projects();			
+		p.setProjectid((String) each.getOrDefault("projectid", "NA"));
+		p.setProjectname((String) each.getOrDefault("projectname", "NA"));
+		p.setUserid((String) each.getOrDefault("userid", "NA"));						
+		Integer updated_on = (Integer) each.getOrDefault("updated_on", 0);
+		Integer taskid = (Integer) each.getOrDefault("taskid", 0);		
+		p.setUpdated_on(updated_on.doubleValue());
+		p.setTaskid(taskid.doubleValue());		
+		p.setDescription(each.getOrDefault("description", "NA").toString());				
+		p.setStatus((String) each.getOrDefault("status", "NA"));
+		p.setType((String) each.getOrDefault("type", "NA"));
+		
+		try {
+			this.projectDAO.editProject(p);
+			map.put("Response", "Success");
+		}
+		catch(Exception e)		
+		{
+			map.put("Response", "Failed");
+		}
 
+    	return map;
+	}
+	
 
 }

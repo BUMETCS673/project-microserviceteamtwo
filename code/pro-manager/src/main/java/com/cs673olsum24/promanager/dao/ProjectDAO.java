@@ -19,6 +19,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cs673olsum24.promanager.entity.Projects;
+import com.tcs.capacitymgmt.entity.ComputeSolaris;
 import com.tcs.capacitymgmt.entity.Vios;
 
 @Repository
@@ -29,7 +30,9 @@ public class ProjectDAO {
 	 private EntityManager entityManager;	 
 	 public ProjectDAO(NamedParameterJdbcTemplate template) {  
 	        this.template = template;  
-	    }  	    
+	    }
+	 
+	 
 	 NamedParameterJdbcTemplate template;
 		public List<Object[]> findAllProjects() {			
 			
@@ -46,9 +49,7 @@ public class ProjectDAO {
 		    	return Collections.emptyList();
 		    }
 		}
-		
-		
-
+				
 	    public void addProjects(Projects p) {
 	    	
 	    	System.out.println("In Dao");
@@ -74,5 +75,72 @@ public class ProjectDAO {
 	 		    }  
 	 		});
 	    }
+	    
+	    
+	    public String deleteProject(String id) {		    	
+	 		
+	    	final String sql1 ="delete from project_ci WHERE projectid= :id";
+	 		Map<String,Object> map1=new HashMap<>(); 
+	 		
+	 		map1.put("id",id);
+	 		
+	 		template.execute(sql1,map1,new PreparedStatementCallback<Object>() {  
+	 		    @Override  
+	 		    public Object doInPreparedStatement(PreparedStatement ps)  
+	 		            throws SQLException {  
+	 		        return ps.executeUpdate();  
+	 		    }  
+	 		});
+	 		return "success";
+	    }
 		
+	    
+	    
+	    public void safeDeleteProject(Projects p) {
+	    	
+	 		final String sql1 ="UPDATE project_ci SET status= inactive WHERE projectid= :projectid";
+	 		
+	 		Map<String,Object> map=new HashMap<>();
+	 		
+	 		map.put("projectid", p.getProjectid());	 	
+	 		map.put("status", p.getStatus());
+	 			 			 		
+	 		template.execute(sql1,map,new PreparedStatementCallback<Object>() {  
+	 		    @Override  
+	 		    public Object doInPreparedStatement(PreparedStatement ps)  
+	 		            throws SQLException {  
+	 		        return ps.executeUpdate();  
+	 		    }  
+	 		});
+	    }
+	    
+	    
+	    
+	    public void editProject(Projects p) {
+	 		
+	 		final String sql1 ="UPDATE project_ci SET projectname=:projectname,userid=:userid,taskid=:taskid,description=:description ,updated_on= :updated_on, status=:status,type=:type WHERE projectid= :projectid";
+	 		
+	 		Map<String,Object> map=new HashMap<>();  
+	 		map.put("projectid", p.getProjectid());
+	 		map.put("projectname", p.getProjectname());
+	 		map.put("userid", p.getUserid());
+	 		map.put("taskid", p.getTaskid());
+	 		map.put("description", p.getDescription());
+	 		map.put("created_on", p.getCreated_on());
+	 		map.put("updated_on", p.getUpdated_on());
+	 		map.put("status", p.getStatus());
+	 		map.put("type", p.getType());
+
+
+	 		
+	 		
+	 		template.execute(sql1,map,new PreparedStatementCallback<Object>() {  
+	 		    @Override  
+	 		    public Object doInPreparedStatement(PreparedStatement ps)  
+	 		            throws SQLException {  
+	 		        return ps.executeUpdate();  
+	 		    }  
+	 		});
+	    }
+	    
 }

@@ -20,5 +20,10 @@ public interface ProjectServices {
 	
 	public abstract Map<String, Object> addProject(HttpServletRequest request,Map<String, Object> payload) ;
 	
-
+	public abstract Map<String, Object> deleteProject(String id); //permanant delete
+	
+	public abstract Map<String, Object> safeDeleteProject(JSONObject body); // safe delete project
+	
+	public abstract Map<String, Object> editProject(JSONObject body);
+	
 }
