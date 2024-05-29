@@ -81,3 +81,8 @@ We are proposing to contribute to a learning platform with a Project Management 
 - **Postman:** API Testing
 - **Manual Testing:** Exploratory, Usability, Regression
 - **Automation Testing:** Unit Testing, Integration Testing
+
+### Updates
+- Started with Project STD documentation
+- Created and added class diagrams
+- Discussed and established roadmap for Testing
