@@ -19,8 +19,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cs673olsum24.promanager.entity.Projects;
-import com.tcs.capacitymgmt.entity.ComputeSolaris;
-import com.tcs.capacitymgmt.entity.Vios;
+
 
 @Repository
 @Transactional
@@ -38,6 +37,8 @@ public class ProjectDAO {
 			
 			try {
 	            String sql = "SELECT p.projectid, p.projectname FROM project_ci p";
+//	            String sql = "SELECT p.projectid, p.projectname , p.userid,p.taskid,p.description,p.created_on,p.updated_on,p.status,p.type"
+//	            		+ "FROM project_ci p";
 	            
 	            Query query = entityManager.createNativeQuery(sql);
 	            	           		          

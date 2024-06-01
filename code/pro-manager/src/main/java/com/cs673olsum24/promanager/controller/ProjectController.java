@@ -9,8 +9,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
+//
+//import org.json.simple.JSONObject;
+//import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +37,6 @@ import com.cs673olsum24.promanager.service.*;
 @RequestMapping(value="/apiv1")
 public class ProjectController {
 	
-
 	@Autowired
 	private ProjectServices projectServices;
 	
@@ -62,14 +63,14 @@ public class ProjectController {
 	    }
 		
 	
-		@PostMapping(value = "/project/addprojects")
-		public ResponseEntity<Object> addProject(HttpServletRequest request, @RequestBody Map<String, Object> payload) {
-			
-			System.out.println("In controller");
-			
-			return new ResponseEntity<>(projectServices.addProject(request,payload),HttpStatus.OK);  	
-	    }
-		
+//		@PostMapping(value = "/project/addprojects")
+//		public ResponseEntity<Object> addProject(HttpServletRequest request, @RequestBody Map<String, Object> payload) {
+//			
+//			System.out.println("In controller");
+//			
+//			return new ResponseEntity<>(projectServices.addProject(request,payload),HttpStatus.OK);  	
+//	    }
+//		
 		 
 		@GetMapping(value = "project/deleteproject/{id}")
 	    public ResponseEntity<Object> deleteProject(@PathVariable("id") String id) {
@@ -78,17 +79,17 @@ public class ProjectController {
 			return new ResponseEntity<>(projectServices.deleteProject(id),HttpStatus.OK);
 		}
 		
-		@PostMapping(value = "project/safedeleteproject")
-		 public ResponseEntity<Object> editProject(@RequestBody JSONObject body) {
-		 	return new ResponseEntity<>(projectServices.safeDeleteProject(body),HttpStatus.OK);
-		 }
+//		@PostMapping(value = "project/safedeleteproject")
+//		 public ResponseEntity<Object> editProject(@RequestBody JSONObject body) {
+//		 	return new ResponseEntity<>(projectServices.safeDeleteProject(body),HttpStatus.OK);
+//		 }
 		
 		
-		@PostMapping(value = "project/editproject")
-		 public ResponseEntity<Object> editSolarisCompute(@RequestBody JSONObject body) {
-		 	return new ResponseEntity<>(projectServices.safeDeleteProject(body),HttpStatus.OK);
-		 }
-		
+//		@PostMapping(value = "project/editproject")
+//		 public ResponseEntity<Object> editSolarisCompute(@RequestBody JSONObject body) {
+//		 	return new ResponseEntity<>(projectServices.safeDeleteProject(body),HttpStatus.OK);
+//		 }
+//		
 	
 
 		

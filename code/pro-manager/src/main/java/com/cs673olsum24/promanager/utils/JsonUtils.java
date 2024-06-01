@@ -18,9 +18,9 @@ import org.json.simple.parser.ParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 public class JsonUtils {
-private static final Logger LOGGER = LogManager.getLogger(JsonUtils.class);
+	
+	private static final Logger LOGGER = LogManager.getLogger(JsonUtils.class);
 	
 	@SuppressWarnings("unchecked")
 	public static List<Object> output(List<Object[]> data) throws JsonProcessingException, ParseException

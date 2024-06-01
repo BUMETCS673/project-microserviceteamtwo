@@ -20,7 +20,7 @@ CREATE TABLE "project_ci" (
   "active" boolean
 );
 
-# CONSTRAINTS make active default true
+-- # CONSTRAINTS make active default true
 
 INSERT INTO "project_ci" (
   "projectid", 
