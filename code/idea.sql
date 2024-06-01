@@ -10,7 +10,7 @@ grant all privileges on database postgres to pro;
 CREATE TABLE "project_ci" (
   "projectid" varchar UNIQUE PRIMARY KEY,
   "projectname" varchar,
-  "userid" float,  
+  "userid" varchar,  
   "taskid" float,
   "description" varchar,
   "created_on" int,
