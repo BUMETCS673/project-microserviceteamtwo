@@ -63,14 +63,11 @@ public class ProjectController {
 	    }
 		
 	
-//		@PostMapping(value = "/project/addprojects")
-//		public ResponseEntity<Object> addProject(HttpServletRequest request, @RequestBody Map<String, Object> payload) {
-//			
-//			System.out.println("In controller");
-//			
-//			return new ResponseEntity<>(projectServices.addProject(request,payload),HttpStatus.OK);  	
-//	    }
-//		
+		@PostMapping(value = "/project/addprojects")
+		public ResponseEntity<Object> addProject(HttpServletRequest request, @RequestBody Map<String, Object> payload) {
+			return new ResponseEntity<>(projectServices.addProject(request,payload),HttpStatus.OK);  	
+	    }
+		
 		 
 		@GetMapping(value = "project/deleteproject/{id}")
 	    public ResponseEntity<Object> deleteProject(@PathVariable("id") String id) {

@@ -23,124 +23,121 @@ import com.cs673olsum24.promanager.utils.JsonUtils;
 
 @Service
 public class ProjectServiceImplementation implements ProjectServices {
-	
-	
+
+
 	@Autowired
 	private ProjectDAO projectDAO;
-		
+
 	public Map<String, Object> getAllProjects() throws JsonProcessingException {
 		Map<String, Object> map = new HashMap<>();
 		List<Object []> data = this.projectDAO.findAllProjects();
-    	map.put("projects", data);
-    	return map;
-    }
-		
-	
-	
+		map.put("projects", data);
+		return map;
+	}
+
+
+
 	@SuppressWarnings("unchecked")
-	public Map<String, Object> addProject(HttpServletRequest request,Map<String, Object> payload) {
-		
-		System.out.println("In Service Implementation");
-		
-		JSONObject data = JsonUtils.convertPayload(payload);	
-		JSONArray projects=(JSONArray) data.get("projects");	
-		Iterator<JSONObject> result = projects.iterator();			
-			while(result.hasNext())
-			{		
-				JSONObject each = (JSONObject) result.next();
-				Double created_on = (Double) each.getOrDefault("created_on", 0);
-				Double updated_on = (Double) each.getOrDefault("updated_on", 0);
-				Double taskid = (Double) each.getOrDefault("taskid", 0);
-				
-				Projects p = new Projects();							
-				
-				p.setProjectid((String) each.getOrDefault("projectid", "NA"));
-				p.setProjectname((String) each.getOrDefault("projectname", "NA"));
-				p.setUserid((String) each.getOrDefault("userid", "NA"));				
-				p.setCreated_on((double) created_on.doubleValue());
-				p.setUpdated_on((double) updated_on.doubleValue());
-				p.setTaskid((double) taskid.doubleValue());				
-				p.setDescription(each.getOrDefault("description", "NA").toString());				
-				p.setStatus((String) each.getOrDefault("status", "NA"));
-				p.setType((String) each.getOrDefault("type", "NA"));
-				
-				try {
+	public Map<String, Object> addProject(HttpServletRequest request, Map<String, Object> payload) {
+
+		JSONObject data = JsonUtils.convertPayload(payload);
+		JSONArray projects = (JSONArray) data.get("projects");
+
+		Iterator<JSONObject> result = projects.iterator();
+		while (result.hasNext()) {
+			JSONObject each = (JSONObject) result.next();
+			Long created_on = (Long) each.getOrDefault("created_on", 0);
+			Long updated_on = (Long) each.getOrDefault("updated_on", 0);
+			Long taskid = (Long) each.getOrDefault("taskid", 0);
+
+			Projects p = new Projects();
+
+			p.setProjectid((String) each.getOrDefault("projectid", "NA"));
+			p.setProjectname((String) each.getOrDefault("projectname", "NA"));
+			p.setUserid((String) each.getOrDefault("userid", "NA"));
+			p.setDescription(each.getOrDefault("description", "NA").toString());
+			p.setStatus((String) each.getOrDefault("status", "NA"));
+			p.setType((String) each.getOrDefault("type", "NA"));
+
+			p.setCreated_on((long) created_on.doubleValue());
+			p.setUpdated_on((long) updated_on.doubleValue());
+			p.setTaskid((long) taskid.doubleValue());
+
+			try {
 				this.projectDAO.addProjects(p);
-				}
-				catch(Exception e)
-				{
-					System.out.println(e);
-				}
+			} catch (Exception e) {
+				System.out.println(e);
 			}
-		
+		}
+
 		Map<String, Object> map = new HashMap<>();
 		map.put("Response", "OK");
-		
+
 		return map;
-    }
-//	
+	}
+
 	public Map<String, Object> deleteProject(String id)
 	{
 		Map<String, Object> map2 = new HashMap<>();
-		
+
 		this.projectDAO.deleteProject(id);
-		
+
 		map2.put("Response","Success");
 		return map2;
-		
-	}
-	
-	
 
-	
-//	@SuppressWarnings("unchecked")
-//	public Map<String, Object> safeDeleteProject(JSONObject each)
-//	{
-//		Map<String, Object> map = new HashMap<>();		
-//		Projects p = new Projects();	
-//		
-//		p.setProjectid((String) each.getOrDefault("projectid", "NA"));
-//		
-//
-//		try {
-//			this.projectDAO.safeDeleteProject(p);
-//			map.put("Response", "Success");
-//		}
-//		catch(Exception e)		
-//		{
-//			map.put("Response", "Failed");
-//		}
-//
-//    	return map;
-//	}
-	
-//	@SuppressWarnings("unchecked")
-//	public Map<String, Object> editProject(JSONObject each)
-//	{
-//		Map<String, Object> map = new HashMap<>();		
-//		Projects p = new Projects();			
-//		p.setProjectid((String) each.getOrDefault("projectid", "NA"));
-//		p.setProjectname((String) each.getOrDefault("projectname", "NA"));
-//		p.setUserid((String) each.getOrDefault("userid", "NA"));						
-//		Integer updated_on = (Integer) each.getOrDefault("updated_on", 0);
-//		Integer taskid = (Integer) each.getOrDefault("taskid", 0);		
-//		p.setUpdated_on(updated_on.doubleValue());
-//		p.setTaskid(taskid.doubleValue());		
-//		p.setDescription(each.getOrDefault("description", "NA").toString());				
-//		p.setStatus((String) each.getOrDefault("status", "NA"));
-//		p.setType((String) each.getOrDefault("type", "NA"));
-//		
-//		try {
-//			this.projectDAO.editProject(p);
-//			map.put("Response", "Success");
-//		}
-//		catch(Exception e)		
-//		{
-//			map.put("Response", "Failed");
-//		}
-//
-//    	return map;
-//	}
-	
+	}
+
+
+
+
+	//	@SuppressWarnings("unchecked")
+	//	public Map<String, Object> safeDeleteProject(JSONObject each)
+	//	{
+	//		Map<String, Object> map = new HashMap<>();		
+	//		Projects p = new Projects();	
+	//		
+	//		p.setProjectid((String) each.getOrDefault("projectid", "NA"));
+	//		
+	//
+	//		try {
+	//			this.projectDAO.safeDeleteProject(p);
+	//			map.put("Response", "Success");
+	//		}
+	//		catch(Exception e)		
+	//		{
+	//			map.put("Response", "Failed");
+	//		}
+	//
+	//    	return map;
+	//	}
+
+	//	@SuppressWarnings("unchecked")
+	//	public Map<String, Object> editProject(JSONObject each)
+	//	{
+	//		Map<String, Object> map = new HashMap<>();		
+	//		Projects p = new Projects();			
+	//		p.setProjectid((String) each.getOrDefault("projectid", "NA"));
+	//		p.setProjectname((String) each.getOrDefault("projectname", "NA"));
+	//		p.setUserid((String) each.getOrDefault("userid", "NA"));						
+	//		Integer updated_on = (Integer) each.getOrDefault("updated_on", 0);
+	//		Integer taskid = (Integer) each.getOrDefault("taskid", 0);		
+	//		p.setUpdated_on(updated_on.doubleValue());
+	//		p.setTaskid(taskid.doubleValue());		
+	//		p.setDescription(each.getOrDefault("description", "NA").toString());				
+	//		p.setStatus((String) each.getOrDefault("status", "NA"));
+	//		p.setType((String) each.getOrDefault("type", "NA"));
+	//		
+	//		try {
+	//			this.projectDAO.editProject(p);
+	//			map.put("Response", "Success");
+	//		}
+	//		catch(Exception e)		
+	//		{
+	//			map.put("Response", "Failed");
+	//		}
+	//
+	//    	return map;
+	//	}
+
 
 }

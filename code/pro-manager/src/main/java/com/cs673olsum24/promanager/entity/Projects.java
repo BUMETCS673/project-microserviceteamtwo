@@ -23,17 +23,17 @@ public class Projects {
     
 
     @Column(name = "taskid")
-    private double taskid;
+    private long taskid;
     
     @Column(name = "description")
     private String description;
     
     
     @Column(name = "created_on")
-    private double created_on;
+    private long created_on;
     
     @Column(name = "updated_on")
-    private double updated_on;
+    private long updated_on;
     
     @Column(name = "status")
     private String status;
@@ -65,11 +65,11 @@ public class Projects {
 		this.userid = userid;
 	}
 
-	public double getTaskid() {
+	public long getTaskid() {
 		return taskid;
 	}
 
-	public void setTaskid(double taskid) {
+	public void setTaskid(long taskid) {
 		this.taskid = taskid;
 	}
 
@@ -81,19 +81,21 @@ public class Projects {
 		this.description = description;
 	}
 
-	public double getCreated_on() {
+	public long getCreated_on() {
 		return created_on;
 	}
 
-	public void setCreated_on(double created_on) {
+	public void setCreated_on(long created_on) {
 		this.created_on = created_on;
 	}
 
-	public double getUpdated_on() {
+
+
+	public long getUpdated_on() {
 		return updated_on;
 	}
 
-	public void setUpdated_on(double updated_on) {
+	public void setUpdated_on(long updated_on) {
 		this.updated_on = updated_on;
 	}
 
