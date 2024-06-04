@@ -111,33 +111,48 @@ public class ProjectServiceImplementation implements ProjectServices {
 	//    	return map;
 	//	}
 
-	//	@SuppressWarnings("unchecked")
-	//	public Map<String, Object> editProject(JSONObject each)
-	//	{
-	//		Map<String, Object> map = new HashMap<>();		
-	//		Projects p = new Projects();			
-	//		p.setProjectid((String) each.getOrDefault("projectid", "NA"));
-	//		p.setProjectname((String) each.getOrDefault("projectname", "NA"));
-	//		p.setUserid((String) each.getOrDefault("userid", "NA"));						
-	//		Integer updated_on = (Integer) each.getOrDefault("updated_on", 0);
-	//		Integer taskid = (Integer) each.getOrDefault("taskid", 0);		
-	//		p.setUpdated_on(updated_on.doubleValue());
-	//		p.setTaskid(taskid.doubleValue());		
-	//		p.setDescription(each.getOrDefault("description", "NA").toString());				
-	//		p.setStatus((String) each.getOrDefault("status", "NA"));
-	//		p.setType((String) each.getOrDefault("type", "NA"));
-	//		
-	//		try {
-	//			this.projectDAO.editProject(p);
-	//			map.put("Response", "Success");
-	//		}
-	//		catch(Exception e)		
-	//		{
-	//			map.put("Response", "Failed");
-	//		}
-	//
-	//    	return map;
-	//	}
+		@SuppressWarnings("unchecked")
+		public Map<String, Object> editProject(JSONObject each)
+		{
+			System.out.println(each.getOrDefault("updated_on", 0L));
+			Map<String, Object> map = new HashMap<>();		
+			Projects p = new Projects();			
+			Object updatedOnObj = each.getOrDefault("updated_on", 0L);
+			Long updatedOn;
+			if (updatedOnObj instanceof Integer) {
+				updatedOn = ((Integer) updatedOnObj).longValue();
+			} else {
+				updatedOn = (Long) updatedOnObj;
+			}
+			
+			Object taskidObj = each.getOrDefault("taskid", 0L);
+			Long taskId;
+			if (taskidObj instanceof Integer) {
+				taskId = ((Integer) taskidObj).longValue();
+			} else {
+				taskId = (Long) taskidObj;
+			}
+
+			p.setProjectid((String) each.getOrDefault("projectid", "NA"));
+			p.setProjectname((String) each.getOrDefault("projectname", "NA"));
+			p.setUserid((String) each.getOrDefault("userid", "NA"));
+			p.setUpdated_on(updatedOn);
+			p.setTaskid(taskId);		
+			p.setDescription(each.getOrDefault("description", "NA").toString());				
+			p.setStatus((String) each.getOrDefault("status", "NA"));
+			p.setType((String) each.getOrDefault("type", "NA"));
+			
+			try {
+				this.projectDAO.editProject(p);
+				map.put("Response", "Success");
+			}
+			catch(Exception e)		
+			{
+				map.put("Response", "Failed");
+			}
+
+	   	return map;
+		}
 
 
 }
