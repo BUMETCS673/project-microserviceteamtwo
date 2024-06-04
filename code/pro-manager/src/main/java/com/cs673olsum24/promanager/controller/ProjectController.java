@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 //
 //import org.json.simple.JSONObject;
@@ -82,11 +83,11 @@ public class ProjectController {
 //		 }
 		
 		
-//		@PostMapping(value = "project/editproject")
-//		 public ResponseEntity<Object> editSolarisCompute(@RequestBody JSONObject body) {
-//		 	return new ResponseEntity<>(projectServices.safeDeleteProject(body),HttpStatus.OK);
-//		 }
-//		
+		@PostMapping(value = "project/editProject")
+		 public ResponseEntity<Object> editProject(@RequestBody JSONObject body) {
+		 	return new ResponseEntity<>(projectServices.editProject(body),HttpStatus.OK);
+		 }
+		
 	
 
 		

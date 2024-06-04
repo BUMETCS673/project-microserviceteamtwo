@@ -144,7 +144,6 @@ public class ProjectDAO {
 		map.put("userid", p.getUserid());
 		map.put("taskid", p.getTaskid());
 		map.put("description", p.getDescription());
-		map.put("created_on", p.getCreated_on());
 		map.put("updated_on", p.getUpdated_on());
 		map.put("status", p.getStatus());
 		map.put("type", p.getType());

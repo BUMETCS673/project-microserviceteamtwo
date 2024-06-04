@@ -4,7 +4,7 @@ package com.cs673olsum24.promanager.service;
 
 import java.util.Map;
 
-
+import org.json.simple.JSONObject;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -22,6 +22,6 @@ public interface ProjectServices {
 	
 //	public abstract Map<String, Object> safeDeleteProject(JSONObject body); // safe delete project
 
-//	public abstract Map<String, Object> editProject(JSONObject body);
+	public abstract Map<String, Object> editProject(JSONObject body);
 	
 }
