@@ -30,13 +30,13 @@ We are proposing to contribute to a learning platform with a Project Management 
 **Essential Features:**
 
 - **Project Creation:** Allow users to create and manage projects.
-  - Estimated person-hours: 40-50
+  - Estimated person-hours: 80-120
 - **Task Management:** Enable project members to create, update, and track tasks.
-  - Estimated person-hours: 60-80
+  - Estimated person-hours: 160-180
 - **Project Access Control:** Allow project owners to manage access and privacy settings.
-  - Estimated person-hours: 30-40
+  - Estimated person-hours: 150-200
 - **Project Search and Filtering:** Enable users to find relevant projects easily.
-  - Estimated person-hours: 20-30
+  - Estimated person-hours: 150-200
 
 **Desirable Features:**
 
