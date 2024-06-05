@@ -17,6 +17,7 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 //import org.json.simple.parser.ParseException;
 
@@ -70,12 +71,13 @@ public class ProjectController {
 	    }
 		
 		 
-		@GetMapping(value = "project/deleteproject/{id}")
+		@DeleteMapping(value = "project/deleteproject/{id}")
 	    public ResponseEntity<Object> deleteProject(@PathVariable("id") String id) {
 			
 			System.out.println(id);
 			return new ResponseEntity<>(projectServices.deleteProject(id),HttpStatus.OK);
 		}
+		
 		
 //		@PostMapping(value = "project/safedeleteproject")
 //		 public ResponseEntity<Object> editProject(@RequestBody JSONObject body) {
