@@ -42,20 +42,14 @@ public class TaskController {
 	@Autowired
 	private TaskServices taskServices;
 	
-
 		/*
 		 * Author : Pranjal Ekhande
 		 * This is Method defines the api and its path. Method showcases all tasks retrival from database.
 		 * This skeleton should be used to develope all the serive controller.
-		 */
-	
-	
+		 */		
 		@GetMapping(value = "/task/project/getalltasks/{projectid}")
 		public ResponseEntity<Object> getAllTaskProjects( @PathVariable("projectid") String id)  throws JsonProcessingException, ParseException {
 			
-			System.out.println(id);
 			return new ResponseEntity<>(taskServices.getAllTasks(id),HttpStatus.OK);  	
-	    }
-				
-		
+	    }						
 }
