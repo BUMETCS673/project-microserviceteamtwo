@@ -58,9 +58,10 @@ public class ProjectDAO {
 	 * @throws IllegalArgumentException If the query string is invalid.
 	 * @throws PersistenceException If there is a problem executing the query.
 	 */
+	
 	public List<Object[]> findAllProjects() {
 		try {
-			String sql = "SELECT p.projectid, p.projectname , p.userid, p.taskid, p.description, p.created_on, p.updated_on, p.status, p.type FROM project_ci p";
+			String sql = "SELECT p.project_id, p.projectname , p.owner_id, p.active, p.description, p.created_on, p.updated_on, p.status, p.type FROM project_ci p";
 			Query query = entityManager.createNativeQuery(sql);
 			List<Object[]> results = query.getResultList();
 			return query.getResultList();
@@ -71,19 +72,19 @@ public class ProjectDAO {
 
 	public void addProjects(Projects p) {
 
-		final String sql = "insert into project_ci(projectid,projectname,userid,taskid,description,created_on,updated_on,status,type) "
-				+ "values(:projectid,:projectname,:userid,:taskid,:description,:created_on,:updated_on,:status,:type)";	
+		final String sql = "insert into project_ci(project_id,projectname,ownerid,description,created_on,updated_on,status,type,active) "
+				+ "values(:projectid,:projectname,:ownerid,:description,:created_on,:updated_on,:status,:type,:active)";	
 
 		Map<String,Object> map=new HashMap<>();  
 		map.put("projectid", p.getProjectid());
 		map.put("projectname", p.getProjectname());
-		map.put("userid", p.getUserid());
-		map.put("taskid", p.getTaskid());
+		map.put("owner_id", p.getOwner_id());
 		map.put("description", p.getDescription());
 		map.put("created_on", p.getCreated_on());
 		map.put("updated_on", p.getUpdated_on());
 		map.put("status", p.getStatus());
 		map.put("type", p.getType());	
+		map.put("active", p.getActive());
 
 		template.execute(sql,map,new PreparedStatementCallback<Object>() {  
 			@Override  
@@ -136,20 +137,16 @@ public class ProjectDAO {
 
 	public void editProject(Projects p) {
 
-		final String sql1 ="UPDATE project_ci SET projectname=:projectname,userid=:userid,taskid=:taskid,description=:description ,updated_on= :updated_on, status=:status,type=:type WHERE projectid= :projectid";
+		final String sql1 ="UPDATE project_ci SET projectname=:projectname,owner_id=:owner_id,description=:description ,updated_on= :updated_on, status=:status,type=:type WHERE project_id= :projectid";
 
 		Map<String,Object> map=new HashMap<>();  
 		map.put("projectid", p.getProjectid());
 		map.put("projectname", p.getProjectname());
-		map.put("userid", p.getUserid());
-		map.put("taskid", p.getTaskid());
+		map.put("owner_id", p.getOwner_id());		
 		map.put("description", p.getDescription());
 		map.put("updated_on", p.getUpdated_on());
 		map.put("status", p.getStatus());
 		map.put("type", p.getType());
-
-
-
 
 		template.execute(sql1,map,new PreparedStatementCallback<Object>() {  
 			@Override  
