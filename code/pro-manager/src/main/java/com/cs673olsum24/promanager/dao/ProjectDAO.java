@@ -63,7 +63,7 @@ public class ProjectDAO {
 		try {
 			String sql = "SELECT p.project_id, p.projectname , p.owner_id, p.active, p.description, p.created_on, p.updated_on, p.status, p.type FROM project_ci p";
 			Query query = entityManager.createNativeQuery(sql);
-			List<Object[]> results = query.getResultList();
+//			List<Object[]> results = query.getResultList();
 			return query.getResultList();
 		} catch (Exception e) {
 			return Collections.emptyList();
@@ -76,7 +76,7 @@ public class ProjectDAO {
 				+ "values(:projectid,:projectname,:ownerid,:description,:created_on,:updated_on,:status,:type,:active)";	
 
 		Map<String,Object> map=new HashMap<>();  
-		map.put("projectid", p.getProjectid());
+		map.put("project_id", p.getProjectid());
 		map.put("projectname", p.getProjectname());
 		map.put("owner_id", p.getOwner_id());
 		map.put("description", p.getDescription());
@@ -137,10 +137,10 @@ public class ProjectDAO {
 
 	public void editProject(Projects p) {
 
-		final String sql1 ="UPDATE project_ci SET projectname=:projectname,owner_id=:owner_id,description=:description ,updated_on= :updated_on, status=:status,type=:type WHERE project_id= :projectid";
+		final String sql1 ="UPDATE project_ci SET projectname=:projectname,owner_id=:owner_id,description=:description ,updated_on= :updated_on, status=:status,type=:type WHERE project_id= :project_id";
 
 		Map<String,Object> map=new HashMap<>();  
-		map.put("projectid", p.getProjectid());
+		map.put("project_id", p.getProjectid());
 		map.put("projectname", p.getProjectname());
 		map.put("owner_id", p.getOwner_id());		
 		map.put("description", p.getDescription());

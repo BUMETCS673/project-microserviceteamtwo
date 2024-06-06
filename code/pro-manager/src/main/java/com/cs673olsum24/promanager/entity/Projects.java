@@ -12,8 +12,8 @@ public class Projects {
 	
 	@Id
     @GeneratedValue
-    @Column(name = "projectid", nullable = false)
-    private String projectid;
+    @Column(name = "project_id", nullable = false)
+    private String project_id;
  
     @Column(name = "projectname")
     private String projectname;
@@ -22,7 +22,7 @@ public class Projects {
     private String description;
     
     @Column(name = "owner_id")
-    private String owner_id;    
+    private int owner_id;    
     
     @Column(name = "created_on")
     private long created_on;
@@ -40,11 +40,11 @@ public class Projects {
     private Boolean active;
 
 	public String getProjectid() {
-		return projectid;
+		return project_id;
 	}
 
-	public void setProjectid(String projectid) {
-		this.projectid = projectid;
+	public void setProjectid(String project_id) {
+		this.project_id = project_id;
 	}
 
 	public String getProjectname() {
@@ -55,11 +55,11 @@ public class Projects {
 		this.projectname = projectname;
 	}
 
-	public String getOwner_id() {
+	public int getOwner_id() {
 		return owner_id;
 	}
 
-	public void setOwner_id(String owner_id) {
+	public void setOwner_id(int owner_id) {
 		this.owner_id = owner_id;
 	}
 

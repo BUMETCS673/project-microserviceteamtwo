@@ -48,13 +48,15 @@ public class ProjectServiceImplementation implements ProjectServices {
 			JSONObject each = (JSONObject) result.next();
 			Long created_on = (Long) each.getOrDefault("created_on", 0);
 			Long updated_on = (Long) each.getOrDefault("updated_on", 0);
+			int owner_id = (int) each.getOrDefault("owner_id", 1);
+			
 			
 
 			Projects p = new Projects();
 
-			p.setProjectid((String) each.getOrDefault("projectid", "NA"));
+			p.setProjectid((String) each.getOrDefault("project_id", "NA"));
 			p.setProjectname((String) each.getOrDefault("projectname", "NA"));
-			p.setOwner_id((String) each.getOrDefault("owner_id", "NA"));
+			
 			p.setDescription(each.getOrDefault("description", "NA").toString());
 			p.setStatus((String) each.getOrDefault("status", "OPEN"));
 			p.setType((String) each.getOrDefault("type", "NA"));
@@ -62,6 +64,7 @@ public class ProjectServiceImplementation implements ProjectServices {
 
 			p.setCreated_on((long) created_on.doubleValue());
 			p.setUpdated_on((long) updated_on.doubleValue());
+			p.setOwner_id(owner_id);
 			
 			
 
@@ -126,6 +129,8 @@ public class ProjectServiceImplementation implements ProjectServices {
 			} else {
 				updatedOn = (Long) updatedOnObj;
 			}
+
+			int owner_id = (int) each.getOrDefault("owner_id", 1);
 			
 //			Object taskidObj = each.getOrDefault("taskid", 0L);
 //			Long taskId;
@@ -135,14 +140,15 @@ public class ProjectServiceImplementation implements ProjectServices {
 //				taskId = (Long) taskidObj;
 //			}
 
-			p.setProjectid((String) each.getOrDefault("projectid", "NA"));
+			p.setProjectid((String) each.getOrDefault("project_id", "NA"));
 			p.setProjectname((String) each.getOrDefault("projectname", "NA"));
-			p.setOwner_id((String) each.getOrDefault("owner_id", "NA"));
+			
 			p.setUpdated_on(updatedOn);
 //			p.setTaskid(taskId);		
 			p.setDescription(each.getOrDefault("description", "NA").toString());				
 			p.setStatus((String) each.getOrDefault("status", "NA"));
 			p.setType((String) each.getOrDefault("type", "NA"));
+			p.setOwner_id(owner_id);
 			
 			try {
 				this.projectDAO.editProject(p);
