@@ -42,6 +42,17 @@ INSERT INTO "project_ci" (
   'development'
 );
 
+CREATE TABLE comments (
+    comment_id SERIAL PRIMARY KEY,
+    project_id INT NOT NULL,
+    comments TEXT NOT NULL,
+    user_id INT NOT NULL,
+    created_on TIMESTAMP NOT NULL
+);
+
+INSERT INTO comments (project_id, comments, user_id, created_on)
+VALUES (1, 'This is a sample comment', 2, NOW());
+
 -- create table APP_USER
 -- (
 --   USER_ID           serial,
@@ -99,4 +110,5 @@ GRANT ALL PRIVILEGES ON TABLE project_ci to cap;
 
 -- GRANT ALL PRIVILEGES ON TABLE app_role to pro;
 -- GRANT ALL PRIVILEGES ON TABLE app_user to pro;
+
 
