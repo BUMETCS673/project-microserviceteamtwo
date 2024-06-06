@@ -12,22 +12,17 @@ public class Projects {
 	
 	@Id
     @GeneratedValue
-    @Column(name = "projectid", nullable = false)
-    private String projectid;
+    @Column(name = "project_id", nullable = false)
+    private String project_id;
  
     @Column(name = "projectname")
     private String projectname;
     
-    @Column(name = "userid")
-    private String userid;    
-    
-
-    @Column(name = "taskid")
-    private long taskid;
-    
     @Column(name = "description")
     private String description;
     
+    @Column(name = "owner_id")
+    private int owner_id;    
     
     @Column(name = "created_on")
     private long created_on;
@@ -40,13 +35,16 @@ public class Projects {
     
     @Column(name = "type")
     private String type;
+    
+    @Column(name = "active")
+    private Boolean active;
 
 	public String getProjectid() {
-		return projectid;
+		return project_id;
 	}
 
-	public void setProjectid(String projectid) {
-		this.projectid = projectid;
+	public void setProjectid(String project_id) {
+		this.project_id = project_id;
 	}
 
 	public String getProjectname() {
@@ -57,22 +55,15 @@ public class Projects {
 		this.projectname = projectname;
 	}
 
-	public String getUserid() {
-		return userid;
+	public int getOwner_id() {
+		return owner_id;
 	}
 
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setOwner_id(int owner_id) {
+		this.owner_id = owner_id;
 	}
 
-	public long getTaskid() {
-		return taskid;
-	}
-
-	public void setTaskid(long taskid) {
-		this.taskid = taskid;
-	}
-
+	
 	public String getDescription() {
 		return description;
 	}
@@ -114,6 +105,15 @@ public class Projects {
 	public void setType(String type) {
 		this.type = type;
 	}
+	
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
     
 
 }

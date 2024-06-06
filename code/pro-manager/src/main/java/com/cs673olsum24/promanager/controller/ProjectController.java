@@ -42,16 +42,16 @@ public class ProjectController {
 	@Autowired
 	private ProjectServices projectServices;
 	
-		/*
-		 * Author : Pranjal Ekhande
-		 * This is Method defines the api and its path. Method showcases dummy projects which are hardcoded right now.
-		 * This will be removed after iteration 1
-		 */
-		@GetMapping(value = "/project/getprojects")
-		public List<Project> getProjects()  {
-			return Arrays.asList(new Project(1,"Create Educational Platform","Pranjal"));
-	    }
-	
+//		/*
+//		 * Author : Pranjal Ekhande
+//		 * This is Method defines the api and its path. Method showcases dummy projects which are hardcoded right now.
+//		 * This will be removed after iteration 1
+//		 */
+//		@GetMapping(value = "/project/getprojects")
+//		public List<Project> getProjects()  {
+//			return Arrays.asList(new Project(1,"Create Educational Platform","Pranjal"));
+//	    }
+//	
 	
 		/*
 		 * Author : Pranjal Ekhande
