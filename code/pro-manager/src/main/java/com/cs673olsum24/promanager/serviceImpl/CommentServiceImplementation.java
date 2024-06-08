@@ -19,22 +19,34 @@ public class CommentServiceImplementation implements CommentService {
     private CommentDAO commentDAO;
 
     @Override
-    public List<Comment> getAllComments(int projectId) {
-        return commentDAO.getAllComments(projectId);
+    public Map<String, Object> getAllComments(int projectId) {
+        Map<String, Object> response = new HashMap<>();
+        List<Comment> comments = commentDAO.getAllComments(projectId);
+        response.put("comments", comments);
+        return response;
     }
 
     @Override
-    public void addComment(Comment comment) {
-        commentDAO.addComment(comment);
+    public Map<String, Object> addComment(Comment comment) {
+        Map<String, Object> response = new HashMap<>();
+        Comment addedComment = commentDAO.addComment(comment);
+        response.put("comment", addedComment);
+        return response;
     }
 
     @Override
-    public void deleteComment(int id) {
+    public Map<String, Object> deleteComment(int id) {
+        Map<String, Object> response = new HashMap<>();
         commentDAO.deleteComment(id);
+        response.put("response", "Success");
+        return response;
     }
 
     @Override
-    public void editComment(Comment comment) {
-        commentDAO.editComment(comment);
+    public Map<String, Object> editComment(Comment comment) {
+        Map<String, Object> response = new HashMap<>();
+        Comment editedComment = commentDAO.editComment(comment);
+        response.put("comment", editedComment);
+        return response;
     }
 }
