@@ -20,27 +20,23 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @GetMapping("/{projectId}")
-    public ResponseEntity<List<Comment>> getAllComments(@PathVariable int projectId) {
-        List<Comment> comments = commentService.getAllComments(projectId);
-        return new ResponseEntity<>(comments, HttpStatus.OK);
+    @GetMapping(value = "/getallcomments/{projectId}")
+    public ResponseEntity<Object> getAllComments(@PathVariable int projectId) {
+        return new ResponseEntity<>(commentService.getAllComments(projectId), HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<Void> addComment(@RequestBody Comment comment) {
-        commentService.addComment(comment);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    @PostMapping(value = "/addcomment")
+    public ResponseEntity<Object> addComment(@RequestBody Comment comment) {
+        return new ResponseEntity<>(commentService.addComment(comment), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteComment(@PathVariable int id) {
-        commentService.deleteComment(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @DeleteMapping(value = "/deletecomment/{id}")
+    public ResponseEntity<Object> deleteComment(@PathVariable int id) {
+        return new ResponseEntity<>(commentService.deleteComment(id), HttpStatus.OK);
     }
 
-    @PutMapping
-    public ResponseEntity<Void> editComment(@RequestBody Comment comment) {
-        commentService.editComment(comment);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @PostMapping(value = "/editcomment")
+    public ResponseEntity<Object> editComment(@RequestBody Comment comment) {
+        return new ResponseEntity<>(commentService.editComment(comment), HttpStatus.OK);
     }
 }
