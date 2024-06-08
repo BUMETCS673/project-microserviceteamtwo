@@ -7,7 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
+
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * Author : Praveen Singh
@@ -26,13 +36,13 @@ public class CommentServiceImplementation implements CommentService {
         return response;
     }
 
-    @Override
-    public Map<String, Object> addComment(Comment comment) {
-        Map<String, Object> response = new HashMap<>();
-        Comment addedComment = commentDAO.addComment(comment);
-        response.put("comment", addedComment);
-        return response;
-    }
+//    @Override
+//    public Map<String, Object> addComment(Comment comment) {
+//        Map<String, Object> response = new HashMap<>();
+//        Comment addedComment = commentDAO.addComment(comment);
+//        response.put("comment", addedComment);
+//        return response;
+//    }
 
     @Override
     public Map<String, Object> deleteComment(int id) {
@@ -42,11 +52,11 @@ public class CommentServiceImplementation implements CommentService {
         return response;
     }
 
-    @Override
-    public Map<String, Object> editComment(Comment comment) {
-        Map<String, Object> response = new HashMap<>();
-        Comment editedComment = commentDAO.editComment(comment);
-        response.put("comment", editedComment);
-        return response;
-    }
+//    @Override
+//    public Map<String, Object> editComment(Comment comment) {
+//        Map<String, Object> response = new HashMap<>();
+//        Comment editedComment = commentDAO.editComment(comment);
+//        response.put("comment", editedComment);
+//        return response;
+//    }
 }
