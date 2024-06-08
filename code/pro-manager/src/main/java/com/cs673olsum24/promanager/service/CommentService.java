@@ -10,9 +10,8 @@ import java.util.List;
  */
 
 public interface CommentService {
-    List<Comment> getAllComments(int projectId);
-    void addComment(Comment comment);
-    void deleteComment(int id);
-    void editComment(Comment comment);
-
+    Map<String, Object> getAllComments(int projectId);
+    Map<String, Object> addComment(Comment comment);
+    Map<String, Object> deleteComment(int id);
+    Map<String, Object> editComment(Comment comment);
 }
