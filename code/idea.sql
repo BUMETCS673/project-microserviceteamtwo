@@ -30,6 +30,16 @@ CREATE TABLE "tasks" (
    "updated_on"       INT
 );
 
+
+CREATE TABLE comments (
+    comment_id SERIAL PRIMARY KEY,
+    project_id INT NOT NULL,
+    comments TEXT NOT NULL,
+    user_id INT NOT NULL,
+    created_on TIMESTAMP NOT NULL
+);
+
+
 CREATE TABLE APP_USER
 (
   USER_ID      INT,
@@ -116,6 +126,10 @@ INSERT INTO PROJECT_USER (PROJECT_USER_ID, PROJECT_ID, USER_ID, ROLE, created_at
 (4, 'proj_004', 123, 'Collaborator', 1622548800, 1622548800);
 
 
+INSERT INTO comments (project_id, comments, user_id, created_on)
+VALUES (1, 'This is a sample comment', 2, NOW());
+
+
 
 SELECT 
     p.project_id,
@@ -135,6 +149,7 @@ LEFT JOIN
     APP_USER u ON t.assigned_user_id = u.USER_ID
 WHERE 
     p.project_id = 'proj_001';
+
 
 
 
