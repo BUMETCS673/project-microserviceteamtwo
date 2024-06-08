@@ -56,9 +56,10 @@ public class CommentDAO {
      * Adds a new comment to the database.
      *
      * @param comment the Comment object to be added to the database.
+     * @return 
      */
     
-    public void addComment(Comment comment) {
+    public Comment addComment(Comment comment) {
         final String addCommentsql = "INSERT INTO comments (project_id, comments, user_id, created_on) VALUES (:projectId, :comments, :userId, :createdOn)";
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("project_id", comment.getProjectId());
@@ -73,6 +74,7 @@ public class CommentDAO {
 				return ps.executeUpdate();  
 			}  
 		});
+		return comment;
     }
 
     /**
@@ -99,9 +101,10 @@ public class CommentDAO {
      * Updates an existing comment in the database.
      *
      * @param comment the Comment object containing the updated comment data.
+     * @return 
      */
     
-    public void editComment(Comment comment) {
+    public Comment editComment(Comment comment) {
         final String updateCommentsql = "UPDATE comments SET comments = :comments WHERE id = :comment_id";
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("comments", comment.getComments());
@@ -114,5 +117,6 @@ public class CommentDAO {
 				return ps.executeUpdate();  
 			}  
 		});
+		return comment;
     }
 }
