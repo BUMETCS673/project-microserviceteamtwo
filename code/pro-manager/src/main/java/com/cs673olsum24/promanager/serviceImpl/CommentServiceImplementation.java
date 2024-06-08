@@ -3,11 +3,11 @@ package com.cs673olsum24.promanager.serviceImpl;
 import com.cs673olsum24.promanager.dao.CommentDAO;
 import com.cs673olsum24.promanager.entity.Comment;
 import com.cs673olsum24.promanager.service.CommentService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author : Praveen Singh
