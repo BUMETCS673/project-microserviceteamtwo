@@ -69,6 +69,19 @@ public class ProjectDAO {
 			return Collections.emptyList();
 		}
 	}
+	
+	
+	
+	public List<Object[]> findIdWiseProjects(String id) {
+		try {
+			String sql = "SELECT p.project_id, p.projectname ,  u.name , p.active, p.description,  p.created_on, p.updated_on, p.status, p.type FROM project_ci p LEFT join APP_USER u ON p.owner_id = u.user_id where p.project_id = '"+id+"'";
+			Query query = entityManager.createNativeQuery(sql);
+//			List<Object[]> results = query.getResultList();
+			return query.getResultList();
+		} catch (Exception e) {
+			return Collections.emptyList();
+		}
+	}
 
 	public void addProjects(Projects p) {
 

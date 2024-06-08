@@ -2,7 +2,8 @@ package com.cs673olsum24.promanager.service;
 
 import com.cs673olsum24.promanager.entity.Comment;
 
-import java.util.List;
+
+import java.util.Map;
 
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
 
 public interface CommentService {
     Map<String, Object> getAllComments(int projectId);
-    Map<String, Object> addComment(Comment comment);
+//    Map<String, Object> addComment(Comment comment);
     Map<String, Object> deleteComment(int id);
-    Map<String, Object> editComment(Comment comment);
+//    Map<String, Object> editComment(Comment comment);
 }
