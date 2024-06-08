@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 import com.cs673olsum24.promanager.service.*;
@@ -25,21 +26,25 @@ public class CommentController {
 
     @GetMapping(value = "/getallcomments/{projectId}")
     public ResponseEntity<Object> getAllComments(@PathVariable int projectId) {
-        return new ResponseEntity<>(commentService.getAllComments(projectId), HttpStatus.OK);
+        Map<String, Object> response = commentService.getAllComments(projectId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-//    @PostMapping(value = "/addcomment")
-//    public ResponseEntity<Object> addComment(@RequestBody Comment comment) {
-//        return new ResponseEntity<>(commentService.addComment(comment), HttpStatus.OK);
-//    }
+    @PostMapping(value = "/addcomment")
+    public ResponseEntity<Object> addComment(@RequestBody Comment comment) {
+        Map<String, Object> response = commentService.addComment(comment);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
     @DeleteMapping(value = "/deletecomment/{id}")
     public ResponseEntity<Object> deleteComment(@PathVariable int id) {
-        return new ResponseEntity<>(commentService.deleteComment(id), HttpStatus.OK);
+        Map<String, Object> response = commentService.deleteComment(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
-//
-//    @PostMapping(value = "/editcomment")
-//    public ResponseEntity<Object> editComment(@RequestBody Comment comment) {
-//        return new ResponseEntity<>(commentService.editComment(comment), HttpStatus.OK);
-//    }
+
+    @PostMapping(value = "/editcomment")
+    public ResponseEntity<Object> editComment(@RequestBody Comment comment) {
+        Map<String, Object> response = commentService.editComment(comment);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
