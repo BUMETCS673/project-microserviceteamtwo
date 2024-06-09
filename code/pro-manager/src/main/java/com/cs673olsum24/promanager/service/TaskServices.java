@@ -15,5 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public interface TaskServices {
 	
 	public abstract Map<String, Object> getAllTasks(String id) throws JsonProcessingException;
+
+	public abstract Map<String, Object> editTask(JSONObject body);
 	
 }

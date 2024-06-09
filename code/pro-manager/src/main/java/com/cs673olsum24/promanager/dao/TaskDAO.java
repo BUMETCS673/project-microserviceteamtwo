@@ -18,6 +18,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cs673olsum24.promanager.entity.ProjectTasks;
 import com.cs673olsum24.promanager.entity.Projects;
 
 
@@ -77,6 +78,35 @@ public class TaskDAO {
 		}
 
 	}
+
+	public void editTask(ProjectTasks t) {
+
+    final String sql1 = "UPDATE tasks SET task_name=:task_name, project_id=:project_id, description=:description, status=:status, priority=:priority, assigned_user_id=:assigned_user_id, due_date=:due_date, updated_on=:updated_on WHERE task_id=:task_id";
+
+    Map<String,Object> map = new HashMap<>();  
+    map.put("task_id", t.getTask_id());
+    map.put("task_name", t.getTask_name());
+    map.put("project_id", t.getProject_id());
+    map.put("description", t.getDescription());
+    map.put("status", t.getStatus());
+    map.put("priority", t.getPriority());
+    map.put("assigned_user_id", t.getAssigned_user_id());
+    map.put("due_date", t.getDue_date());
+    map.put("updated_on", t.getUpdated_on());
+
+    template.execute(sql1, map, new PreparedStatementCallback<Object>() {  
+        @Override  
+        public Object doInPreparedStatement(PreparedStatement ps)  
+                throws SQLException {  
+            return ps.executeUpdate();  
+        }  
+    });
+}
+
+
+
+
+
 	
 //	SELECT p.project_id, p.projectname ,  u.name , p.active, p.description,  p.created_on, p.updated_on, p.status, p.type FROM project_ci p LEFT join APP_USER u ON p.owner_id = u.user_id where p.project_id = 'proj_001';
 	
