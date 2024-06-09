@@ -29,13 +29,15 @@ public class ProjectControllerTest {
   @Autowired private ObjectMapper objectMapper;
 
     @Test
-    public void testGetAllProjects() throws Exception {
-        Map<String, Object> projectsMap = new HashMap<>();
-        projectsMap.put("projects", new Object[] { /* Mock project data */ });
+    public void testDeleteProject() throws Exception {
+        Map<String, Object> mockResponse = new HashMap<>();
+        mockResponse.put("Response", "Project deleted successfully");
 
-        when(projectServices.getAllProjects()).thenReturn(projectsMap);
+        String projectId = "1";
 
-        mockMvc.perform(get("/apiv1/project/getallprojects")
+        when(projectServices.deleteProject(projectId)).thenReturn(mockResponse);
+
+        mockMvc.perform(delete("/apiv1/project/deleteproject/{id}", projectId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.projects").exists());
