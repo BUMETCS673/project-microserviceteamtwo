@@ -1,25 +1,20 @@
 package com.cs673olsum24.promanager.serviceImpl;
 
+import com.cs673olsum24.promanager.dao.*;
+import com.cs673olsum24.promanager.entity.Projects;
+import com.cs673olsum24.promanager.service.ProjectServices;
+import com.cs673olsum24.promanager.utils.JsonUtils;
+import com.cs673olsum24.promanager.utils.ProjectUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-
-import jakarta.servlet.http.HttpServletRequest;
-
-import com.cs673olsum24.promanager.dao.*;
-import com.cs673olsum24.promanager.entity.Projects;
-import com.cs673olsum24.promanager.service.ProjectServices;
-
-
-import com.cs673olsum24.promanager.utils.JsonUtils;
 
 @Service
 public class ProjectServiceImplementation implements ProjectServices {
@@ -125,10 +120,10 @@ public class ProjectServiceImplementation implements ProjectServices {
 	//    	return map;
 	//	}
 
+
 		@SuppressWarnings("unchecked")
 		public Map<String, Object> editProject(JSONObject each)
 		{
-			System.out.println(each.getOrDefault("updated_on", 0L));
 			Map<String, Object> map = new HashMap<>();		
 			Projects p = new Projects();			
 			Object updatedOnObj = each.getOrDefault("updated_on", 0L);
@@ -141,22 +136,17 @@ public class ProjectServiceImplementation implements ProjectServices {
 
 			int owner_id = (int) each.getOrDefault("owner_id", 1);
 			
-//			Object taskidObj = each.getOrDefault("taskid", 0L);
-//			Long taskId;
-//			if (taskidObj instanceof Integer) {
-//				taskId = ((Integer) taskidObj).longValue();
-//			} else {
-//				taskId = (Long) taskidObj;
-//			}
 
-			p.setProjectid((String) each.getOrDefault("project_id", "NA"));
-			p.setProjectname((String) each.getOrDefault("projectname", "NA"));
+			p.setProjectid(
+			ProjectUtils.safelyGetString(each, "projectid", ProjectUtils.DEFAULT_PROJECT_ID));
+			p.setProjectname(
+			ProjectUtils.safelyGetString(each, "projectname", ProjectUtils.DEFAULT_PROJECT_NAME));
 			
-			p.setUpdated_on(updatedOn);
-//			p.setTaskid(taskId);		
-			p.setDescription(each.getOrDefault("description", "NA").toString());				
-			p.setStatus((String) each.getOrDefault("status", "NA"));
-			p.setType((String) each.getOrDefault("type", "NA"));
+			p.setUpdated_on(updatedOn);		
+			p.setDescription(
+				ProjectUtils.safelyGetString(each, "description", ProjectUtils.DEFAULT_DESCRIPTION));			
+			p.setStatus(ProjectUtils.safelyGetString(each, "status", ProjectUtils.DEFAULT_STATUS));
+			p.setType(ProjectUtils.safelyGetString(each, "type", ProjectUtils.DEFAULT_TYPE));
 			p.setOwner_id(owner_id);
 			
 			try {
@@ -168,8 +158,13 @@ public class ProjectServiceImplementation implements ProjectServices {
 				map.put("Response", "Failed");
 			}
 
-	   	return map;
-		}
+    try {
+      this.projectDAO.editProject(p);
+      map.put("Response", "Success");
+    } catch (Exception e) {
+      map.put("Response", "Failed");
+    }
 
-
+    return map;
+  }
 }
