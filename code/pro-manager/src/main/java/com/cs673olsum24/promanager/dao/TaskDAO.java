@@ -78,6 +78,8 @@ public class TaskDAO {
 
 	}
 	
+//	SELECT p.project_id, p.projectname ,  u.name , p.active, p.description,  p.created_on, p.updated_on, p.status, p.type FROM project_ci p LEFT join APP_USER u ON p.owner_id = u.user_id where p.project_id = 'proj_001';
+	
 	
 
 	

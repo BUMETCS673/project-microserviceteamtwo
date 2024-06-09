@@ -34,9 +34,18 @@ public class ProjectServiceImplementation implements ProjectServices {
 		map.put("projects", data);
 		return map;
 	}
+	
+	public Map<String, Object> getIdWiseProject(String id) throws JsonProcessingException {
+		Map<String, Object> map = new HashMap<>();
+		List<Object []> data = this.projectDAO.findIdWiseProjects(id);
+		map.put("project", data);
+		return map;
+	}
 
 
-
+	
+	
+	
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> addProject(HttpServletRequest request, Map<String, Object> payload) {
 
