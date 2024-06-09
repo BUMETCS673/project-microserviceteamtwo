@@ -11,15 +11,12 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
-//
-//import org.json.simple.JSONObject;
-//import org.json.simple.parser.ParseException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
-//import org.json.simple.parser.ParseException;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,5 +48,13 @@ public class TaskController {
 		public ResponseEntity<Object> getAllTaskProjects( @PathVariable("projectid") String id)  throws JsonProcessingException, ParseException {
 			
 			return new ResponseEntity<>(taskServices.getAllTasks(id),HttpStatus.OK);  	
-	    }						
+	    }		
+		
+		
+		@PostMapping(value = "/task/project/addtasks")
+		public ResponseEntity<Object> addTasks(HttpServletRequest request, @RequestBody Map<String, Object> payload) {
+			return new ResponseEntity<>(taskServices.addTasks(request,payload),HttpStatus.OK);  	
+	    }
+		
+
 }
