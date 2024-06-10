@@ -80,6 +80,62 @@ public Map<String, Object> editTask(JSONObject each) {
     return map;
 }
 
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> addTasks(HttpServletRequest request, Map<String, Object> payload) {
+
+		JSONObject data = JsonUtils.convertPayload(payload);
+		JSONArray tasks = (JSONArray) data.get("tasks");
+
+		Iterator<JSONObject> result = tasks.iterator();
+		while (result.hasNext()) {
+			
+			
+			JSONObject each = (JSONObject) result.next();
+			
+			Long due_date = (Long) each.getOrDefault("created_on", 0);
+			Long created_on = (Long) each.getOrDefault("created_on", 0);
+			Long updated_on = (Long) each.getOrDefault("updated_on", 0);
+			
+			int owner_id = (int) each.getOrDefault("owner_id", 1);
+
+
+			ProjectTasks t = new ProjectTasks();
+			
+			t.setTask_id((String) each.getOrDefault("task_id", "NA"));
+			
+			t.setProject_id((String) each.getOrDefault("project_id", "NA"));
+			
+			t.setTask_name((String) each.getOrDefault("task_name", "NA"));
+			
+			t.setDescription(each.getOrDefault("description", "NA").toString());
+			
+			t.setStatus((String) each.getOrDefault("status", "OPEN"));
+			
+			t.setPriority((String) each.getOrDefault("priority", "NA"));
+			
+			
+			t.setAssigned_user_id(owner_id);
+			
+			t.setDue_date((long) due_date.doubleValue());
+			
+			t.setCreated_on((long) created_on.doubleValue());
+			t.setUpdated_on((long) updated_on.doubleValue());
+			
+			
+	
+			try {
+				this.taskDAO.addTaskProjects(t);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		}
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("Response", "OK");
+
+		return map;
+	}
+
 
 
 }

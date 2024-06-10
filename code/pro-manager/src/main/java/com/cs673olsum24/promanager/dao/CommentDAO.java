@@ -41,11 +41,11 @@ public class CommentDAO {
      *         If no comments are found, an empty list is returned.
      */
     @SuppressWarnings("unchecked")
-	public List<Comment> getAllComments(int projectId) {
+	public List<Comment> getAllComments(int project_id) {
         try {
-            String getCommentsql = "SELECT c FROM Comment c WHERE c.projectId = :projectId";
+            String getCommentsql = "SELECT c FROM Comment c WHERE c.project_id = :project_id";
             Query query = entityManager.createQuery(getCommentsql);
-            query.setParameter("projectId", projectId);
+            query.setParameter("project_id", project_id);
             return query.getResultList();
         } catch (Exception e) {
             return Collections.emptyList();
@@ -60,12 +60,12 @@ public class CommentDAO {
      */
     
     public Comment addComment(Comment comment) {
-        final String addCommentsql = "INSERT INTO comments (project_id, comments, user_id, created_on) VALUES (:projectId, :comments, :userId, :createdOn)";
+        final String addCommentsql = "INSERT INTO comments (project_id, comments, user_id, created_on) VALUES (:project_id, :comments, :user_id, :created_on)";
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("project_id", comment.getProjectId());
         parameters.put("comments", comment.getComments());
-        parameters.put("userId", comment.getUserId());
-        parameters.put("createdOn", comment.getCreatedOn());
+        parameters.put("user_id", comment.getUserId());
+        parameters.put("created_on", comment.getCreatedOn());
 
         template.execute(addCommentsql, parameters, new PreparedStatementCallback<Object>() {  
 			@Override  
