@@ -30,16 +30,6 @@ CREATE TABLE "tasks" (
    "updated_on"       INT
 );
 
-
-CREATE TABLE comments (
-    comment_id SERIAL PRIMARY KEY,
-    project_id INT NOT NULL,
-    comments TEXT NOT NULL,
-    user_id INT NOT NULL,
-    created_on TIMESTAMP NOT NULL
-);
-
-
 CREATE TABLE APP_USER
 (
   USER_ID      INT,
@@ -55,6 +45,16 @@ CREATE TABLE PROJECT_USER (
     ROLE            VARCHAR(20) DEFAULT 'Collaborator',
     created_at      INT,
     updated_at      INT
+);
+
+CREATE TABLE comments (
+    comment_id SERIAL PRIMARY KEY,
+    project_id VARCHAR NOT NULL,
+    comments TEXT NOT NULL,
+    user_id INT NOT NULL,
+    created_on TIMESTAMP NOT NULL,
+    FOREIGN KEY (project_id) REFERENCES project_ci(project_id),
+    FOREIGN KEY (user_id) REFERENCES PROJECT_USER(USER_ID)
 );
 
 ALTER TABLE APP_USER ADD CONSTRAINT PK_APP_USER PRIMARY KEY (USER_ID);
