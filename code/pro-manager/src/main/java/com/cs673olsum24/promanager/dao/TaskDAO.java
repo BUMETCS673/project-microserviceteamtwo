@@ -100,8 +100,26 @@ public class TaskDAO {
 					throws SQLException {  
 				return ps.executeUpdate(); 
 			}  
+			
 		});
+		
+		
 	}
+	
+	public void deleteTask(String id) {
+        final String sql = "DELETE FROM tasks WHERE task_id = :id";
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+
+        template.execute(sql, params, new PreparedStatementCallback<Object>() {
+            @Override
+            public Object doInPreparedStatement(PreparedStatement ps) throws SQLException {
+                return ps.executeUpdate();
+            }
+        });
+    }
+	
+	
 
 
 }

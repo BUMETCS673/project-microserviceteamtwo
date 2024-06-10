@@ -93,6 +93,15 @@ public class TaskServiceImplementation implements TaskServices {
 		return map;
 	}
 
+	public Map<String, Object> deleteTask(String id) {
+        Map<String, Object> map = new HashMap<>();
+
+        this.taskDAO.deleteTask(id);
+
+        map.put("Response", "Success");
+        return map;
+    }
+
 
 
 }
