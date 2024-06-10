@@ -2,7 +2,6 @@ package com.cs673olsum24.promanager.dao;
 
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 
 import java.sql.PreparedStatement;
@@ -34,10 +33,6 @@ public class TaskDAO {
 
 	NamedParameterJdbcTemplate template;
 	
-	
-	
-	
-	
 	public List<Object[]> findAllProjectTasks(String id) {
 		
 		try {
@@ -65,9 +60,6 @@ public class TaskDAO {
 					+ "    p.project_id = '"+id+"'";		
 			
 			
-			
-			
-			
 			Query query = entityManager.createNativeQuery(sql);
 			System.out.println(query.getResultList());
 			List<Object[]> results = query.getResultList();
@@ -77,11 +69,6 @@ public class TaskDAO {
 		}
 
 	}
-	
-//	SELECT p.project_id, p.projectname ,  u.name , p.active, p.description,  p.created_on, p.updated_on, p.status, p.type FROM project_ci p LEFT join APP_USER u ON p.owner_id = u.user_id where p.project_id = 'proj_001';
-	
-	
-
 	
 	public void addTaskProjects(ProjectTasks t) {
 

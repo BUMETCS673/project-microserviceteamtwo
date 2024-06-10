@@ -11,7 +11,7 @@ import java.util.Map;
 
 public interface CommentService {
     Map<String, Object> getAllComments(int projectId);
-//    Map<String, Object> addComment(Comment comment);
+    Map<String, Object> addComment(Comment comment);
     Map<String, Object> deleteComment(int id);
-//    Map<String, Object> editComment(Comment comment);
+    Map<String, Object> editComment(Comment comment);
 }
