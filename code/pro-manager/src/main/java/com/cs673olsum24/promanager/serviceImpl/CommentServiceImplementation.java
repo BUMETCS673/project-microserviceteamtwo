@@ -36,13 +36,13 @@ public class CommentServiceImplementation implements CommentService {
         return response;
     }
 
-//    @Override
-//    public Map<String, Object> addComment(Comment comment) {
-//        Map<String, Object> response = new HashMap<>();
-//        Comment addedComment = commentDAO.addComment(comment);
-//        response.put("comment", addedComment);
-//        return response;
-//    }
+    @Override
+    public Map<String, Object> addComment(Comment comment) {
+        Map<String, Object> response = new HashMap<>();
+        Comment addedComment = commentDAO.addComment(comment);
+        response.put("comment", addedComment);
+        return response;
+    }
 
     @Override
     public Map<String, Object> deleteComment(int id) {
@@ -52,11 +52,11 @@ public class CommentServiceImplementation implements CommentService {
         return response;
     }
 
-//    @Override
-//    public Map<String, Object> editComment(Comment comment) {
-//        Map<String, Object> response = new HashMap<>();
-//        Comment editedComment = commentDAO.editComment(comment);
-//        response.put("comment", editedComment);
-//        return response;
-//    }
+    @Override
+    public Map<String, Object> editComment(Comment comment) {
+        Map<String, Object> response = new HashMap<>();
+        Comment editedComment = commentDAO.editComment(comment);
+        response.put("comment", editedComment);
+        return response;
+    }
 }
