@@ -49,6 +49,14 @@ public class TaskController {
 			
 			return new ResponseEntity<>(taskServices.getAllTasks(id),HttpStatus.OK);  	
 	    }		
+		/*
+		 * Author : Dipayan 
+		 * This is Method edits the Tasks for the given Project.
+		 */	
+		@PostMapping(value = "/task/project/editTask")
+		 public ResponseEntity<Object> editTask(@RequestBody JSONObject body) {
+		 	return new ResponseEntity<>(taskServices.editTask(body),HttpStatus.OK);
+		 }
 		
 		
 		@PostMapping(value = "/task/project/addtasks")
