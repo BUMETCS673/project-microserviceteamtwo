@@ -68,7 +68,7 @@ public class ProjectController {
 			return new ResponseEntity<>(projectServices.getIdWiseProject(id),HttpStatus.OK);  	
 	    }	
 	
-		@PostMapping(value = "/project/addprojects/{id}")
+		@PostMapping(value = "/project/addprojects/")
 		public ResponseEntity<Object> addProject(HttpServletRequest request, @RequestBody Map<String, Object> payload) {
 			return new ResponseEntity<>(projectServices.addProject(request,payload),HttpStatus.OK);  	
 	    }
@@ -77,7 +77,7 @@ public class ProjectController {
 		@DeleteMapping(value = "project/deleteproject/{id}")
 	    public ResponseEntity<Object> deleteProject(@PathVariable("id") String id) {
 			
-//			System.out.println(id);
+
 			return new ResponseEntity<>(projectServices.deleteProject(id),HttpStatus.OK);
 		}
 		

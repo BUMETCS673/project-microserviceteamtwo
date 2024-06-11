@@ -46,14 +46,54 @@ public class ProjectServiceImplementation implements ProjectServices {
 
 		JSONObject data = JsonUtils.convertPayload(payload);
 		JSONArray projects = (JSONArray) data.get("projects");
+		
 
 		Iterator<JSONObject> result = projects.iterator();
 		while (result.hasNext()) {
 			JSONObject each = (JSONObject) result.next();
-			Long created_on = (Long) each.getOrDefault("created_on", 0);
-			Long updated_on = (Long) each.getOrDefault("updated_on", 0);
-			int owner_id = (int) each.getOrDefault("owner_id", 1);
 			
+			
+//			Object createdOnObj = each.getOrDefault("updated_on", 0L);
+//			Long createdOn;
+//			if (createdOnObj instanceof Integer) {
+//				createdOn = ((Integer) createdOnObj).longValue();
+//			} else {
+//				createdOn = (Long) createdOnObj;
+//			}
+			Long createdOn = (Long) each.getOrDefault("created_on", 0);
+			
+			
+			System.out.println("here update");
+			
+			Long updatedOn = (Long) each.getOrDefault("updated_on", 0);
+//			Object updatedOnObj = each.getOrDefault("updated_on", 0L);
+//			Long updatedOn;
+//			if (updatedOnObj instanceof Integer) {
+//				updatedOn = ((Integer) updatedOnObj).longValue();
+//			} else {
+//				updatedOn = (Long) updatedOnObj;
+//			}
+			
+			
+			System.out.println("owner update");
+			
+			System.out.println(each.getOrDefault("project_id", "NA"));
+			
+			
+//			int owner_id = (int) each.getOrDefault("owner_id", 1);
+//			
+			Object ownerIdObj = each.getOrDefault("owner_id", 1);
+			int owner_id;
+
+			if (ownerIdObj instanceof Long) {
+			    owner_id = ((Long) ownerIdObj).intValue();
+			} else if (ownerIdObj instanceof Integer) {
+			    owner_id = (Integer) ownerIdObj;
+			} else {
+			    owner_id = 1; // Default value
+			}
+			
+			System.out.println("owner update complete");
 			
 
 			Projects p = new Projects();
@@ -66,8 +106,8 @@ public class ProjectServiceImplementation implements ProjectServices {
 			p.setType((String) each.getOrDefault("type", "NA"));
 			p.setActive((boolean)each.getOrDefault("active","TRUE"));
 
-			p.setCreated_on((long) created_on.doubleValue());
-			p.setUpdated_on((long) updated_on.doubleValue());
+			p.setCreated_on( createdOn);
+			p.setUpdated_on(updatedOn);
 			p.setOwner_id(owner_id);
 			
 			
@@ -125,7 +165,8 @@ public class ProjectServiceImplementation implements ProjectServices {
 		public Map<String, Object> editProject(JSONObject each)
 		{
 			Map<String, Object> map = new HashMap<>();		
-			Projects p = new Projects();			
+			Projects p = new Projects();
+			System.out.println(each);
 			Object updatedOnObj = each.getOrDefault("updated_on", 0L);
 			Long updatedOn;
 			if (updatedOnObj instanceof Integer) {
@@ -138,13 +179,13 @@ public class ProjectServiceImplementation implements ProjectServices {
 			
 
 			p.setProjectid(
-			ProjectUtils.safelyGetString(each, "projectid", ProjectUtils.DEFAULT_PROJECT_ID));
+			ProjectUtils.safelyGetString(each, "project_id", ProjectUtils.DEFAULT_PROJECT_ID));
 			p.setProjectname(
 			ProjectUtils.safelyGetString(each, "projectname", ProjectUtils.DEFAULT_PROJECT_NAME));
 			
 			p.setUpdated_on(updatedOn);		
 			p.setDescription(
-				ProjectUtils.safelyGetString(each, "description", ProjectUtils.DEFAULT_DESCRIPTION));			
+			ProjectUtils.safelyGetString(each, "description", ProjectUtils.DEFAULT_DESCRIPTION));			
 			p.setStatus(ProjectUtils.safelyGetString(each, "status", ProjectUtils.DEFAULT_STATUS));
 			p.setType(ProjectUtils.safelyGetString(each, "type", ProjectUtils.DEFAULT_TYPE));
 			p.setOwner_id(owner_id);

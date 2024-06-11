@@ -85,8 +85,8 @@ public class ProjectDAO {
 
 	public void addProjects(Projects p) {
 
-		final String sql = "insert into project_ci(project_id,projectname,ownerid,description,created_on,updated_on,status,type,active) "
-				+ "values(:projectid,:projectname,:ownerid,:description,:created_on,:updated_on,:status,:type,:active)";	
+		final String sql = "insert into project_ci(project_id,projectname,owner_id,description,created_on,updated_on,status,type,active) "
+				+ "values(:project_id,:projectname,:owner_id,:description,:created_on,:updated_on,:status,:type,:active)";	
 
 		Map<String,Object> map=new HashMap<>();  
 		map.put("project_id", p.getProjectid());
@@ -111,7 +111,7 @@ public class ProjectDAO {
 
 	public String deleteProject(String id) {		    	
 
-		final String sql1 ="delete from project_ci WHERE projectid= :id";
+		final String sql1 ="delete from project_ci WHERE project_id= :id";
 		Map<String,Object> map1=new HashMap<>(); 
 
 		map1.put("id",id);
