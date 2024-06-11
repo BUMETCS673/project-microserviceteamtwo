@@ -82,7 +82,20 @@ We are proposing to contribute to a learning platform with a Project Management 
 - **Manual Testing:** Exploratory, Usability, Regression
 - **Automation Testing:** Unit Testing, Integration Testing
 
+### Code Coverage
+
+- Integrated JaCoCo for code coverage analysis.
+- Current overall code coverage stands at 6%, with continuous efforts to improve this metric.
+
 ### Updates
-- Started with Project STD documentation
-- Created and added class diagrams
-- Discussed and established roadmap for Testing
+
+- Integrated JaCoCo for code coverage.
+- Written automated and manual test cases to increase code coverage.
+- Discussed and established the roadmap for testing.
+
+### Future Work
+
+- Implement CI/CD pipelines.
+- Enhance project deployment strategies.
+- Increase code coverage to at least 70%.
+- Optimize database queries for better performance.
