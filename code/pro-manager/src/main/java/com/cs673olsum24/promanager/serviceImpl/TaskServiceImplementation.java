@@ -31,14 +31,19 @@ public class TaskServiceImplementation implements TaskServices {
 	
 	public Map<String, Object> getAllTasks(String id) throws JsonProcessingException {
 		Map<String, Object> map = new HashMap<>();
-		List<Object []> data = this.taskDAO.findAllProjectTasks(id);
-		map.put("tasks", data);
+		
+//		map.put("database", this.taskDAO.findAllProjectTasks());
+//		System.out.println(map);
+		List <Map<String, Object>> data = this.taskDAO.findAllProjectTasks(id);
+				
+		map.put("tasks", data); 
 		return map;
 	}
+	
 
 	@SuppressWarnings("unchecked")
 public Map<String, Object> editTask(JSONObject each) {
-    System.out.println(each.getOrDefault("updated_on", 0L));
+   
     Map<String, Object> map = new HashMap<>();
     ProjectTasks t = new ProjectTasks();
     

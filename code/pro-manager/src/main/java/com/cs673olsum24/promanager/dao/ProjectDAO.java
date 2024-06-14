@@ -7,6 +7,7 @@ import jakarta.persistence.Query;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cs673olsum24.promanager.entity.AppUser;
+import com.cs673olsum24.promanager.entity.ProjectTasks;
 import com.cs673olsum24.promanager.entity.Projects;
 
 
@@ -59,25 +62,74 @@ public class ProjectDAO {
 	 * @throws PersistenceException If there is a problem executing the query.
 	 */
 	
-	public List<Object[]> findAllProjects() {
+	public  List<Projects>findAllProjects() {
 		try {
-			String sql = "SELECT p.project_id, p.projectname , p.owner_id, p.active, p.description, p.created_on, p.updated_on, p.status, p.type FROM project_ci p";
-			Query query = entityManager.createNativeQuery(sql);
-//			List<Object[]> results = query.getResultList();
-			return query.getResultList();
+			String sql = "Select p from " + Projects.class.getName() + " p";
+			
+			
+		    Query query = entityManager.createQuery(sql, ProjectTasks.class);
+				
+		    return query.getResultList();
 		} catch (Exception e) {
 			return Collections.emptyList();
 		}
 	}
+
 	
 	
-	
-	public List<Object[]> findIdWiseProjects(String id) {
+	public List<Map<String, Object>> findIdWiseProjects(String id) {
 		try {
-			String sql = "SELECT p.project_id, p.projectname ,  u.name , p.active, p.description,  p.created_on, p.updated_on, p.status, p.type FROM project_ci p LEFT join APP_USER u ON p.owner_id = u.user_id where p.project_id = '"+id+"'";
-			Query query = entityManager.createNativeQuery(sql);
+			String sql = "SELECT p.project_id, p.projectname ,  u.NAME , p.active, p.description,  p.created_on, "
+					+ "p.updated_on, p.status, p.type FROM "+  Projects.class.getName() + " p LEFT join "+AppUser.class.getName() +" u ON p.owner_id = u.USER_ID where p.project_id = '"+id+"'";
+
 //			List<Object[]> results = query.getResultList();
-			return query.getResultList();
+			
+
+			Query query = entityManager.createQuery(sql);
+			
+
+	        
+
+	        List<Object[]> results = query.getResultList();
+			
+
+	        
+	        List<Map<String, Object>> formattedResults = new ArrayList<>();
+
+	        for (Object[] row : results) {
+	        	
+	            Map<String, Object> rowMap = new HashMap<>();
+	            
+	        
+	            rowMap.put("project_id", row[0]);
+	            
+
+	            rowMap.put("projectname", row[1]);
+
+	            rowMap.put("owner_name", row[2]);
+	            rowMap.put("active", row[3]);
+
+	            rowMap.put("description", row[4]);
+	            rowMap.put("created_on", row[5]);
+
+	            rowMap.put("updated_on", row[6]);
+	            rowMap.put("status", row[7]);
+
+	            rowMap.put("type", row[8]);
+
+	            formattedResults.add(rowMap);
+
+	          
+	        }
+			
+			
+			
+			return formattedResults;
+			
+			
+			
+			
+		
 		} catch (Exception e) {
 			return Collections.emptyList();
 		}

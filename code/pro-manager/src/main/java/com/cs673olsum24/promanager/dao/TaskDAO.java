@@ -2,14 +2,17 @@ package com.cs673olsum24.promanager.dao;
 
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.PreparedStatementCallback;
@@ -17,7 +20,11 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cs673olsum24.promanager.entity.AppUser;
 import com.cs673olsum24.promanager.entity.ProjectTasks;
+import com.cs673olsum24.promanager.entity.Projects;
+
+
 
 
 @Repository
@@ -33,41 +40,61 @@ public class TaskDAO {
 
 	NamedParameterJdbcTemplate template;
 	
-	public List<Object[]> findAllProjectTasks(String id) {
+	public List<Map<String, Object>> findAllProjectTasks(String id) {
 		
-		try {
+		try {	
 			
-			Map<String,Object> map=new HashMap<>();
-			map.put("projectid", id);	 
-				
-			String sql = "SELECT \n"
-					+ "    p.project_id,\n"
-					+ "    p.projectname,\n"
-					+ "    t.task_id,\n"
-					+ "    t.task_name,\n"
-					+ "    t.description,\n"
-					+ "    t.status,\n"
-					+ "    t.priority,\n"
-					+ "    t.due_date,\n"
-					+ "    u.NAME AS assigned_user\n"
-					+ "FROM \n"
-					+ "    project_ci p\n"
-					+ "JOIN \n"
-					+ "    tasks t ON p.project_id = t.project_id\n"
-					+ "LEFT JOIN \n"
-					+ "    APP_USER u ON t.assigned_user_id = u.USER_ID\n"
-					+ "WHERE \n"
-					+ "    p.project_id = '"+id+"'";		
+			String sql = "Select  p.project_id, p.projectname,t.task_id,t.task_name,t.description,t.status,t.priority,t.due_date, u.NAME from " 
+			+ Projects.class.getName() + " p join " + ProjectTasks.class.getName() + 
+	             		" t on p.project_id = t.project_id left join " + 
+	             			AppUser.class.getName() + " u on t.assigned_user_id = u.USER_ID where p.project_id ='"+id+"'";
+			Query query = entityManager.createQuery(sql);
 			
 			
-			Query query = entityManager.createNativeQuery(sql);
-			System.out.println(query.getResultList());
+			
 			List<Object[]> results = query.getResultList();
-			return query.getResultList();
+			
+			
+			
+	        List<Map<String, Object>> formattedResults = new ArrayList<>();
+	        
+	        for (Object[] row : results) {
+	        	
+				
+	            Map<String, Object> rowMap = new HashMap<>();
+	            rowMap.put("project_id", row[0]);
+	            rowMap.put("projectname", row[1]);
+	            rowMap.put("task_id", row[2]);
+	            rowMap.put("task_name", row[3]);
+	            rowMap.put("description", row[4]);
+	            rowMap.put("status", row[5]);
+	            rowMap.put("priority", row[6]);
+	            rowMap.put("due_date", row[7]);
+	            rowMap.put("assigned_user_name", row[8]);
+	            
+	            formattedResults.add(rowMap);
+	            
+	        }
+
+			return formattedResults;
+			
 		} catch (Exception e) {
 			return Collections.emptyList();
 		}
 
+	}
+	
+	public List<ProjectTasks> findAllProjectTasks() {
+	    try {
+	        String sql = "Select e from " + ProjectTasks.class.getName() + " e ";
+	       
+	
+	        Query query = entityManager.createQuery(sql, ProjectTasks.class);
+	
+	        return query.getResultList();
+	    } catch (NoResultException e) {
+	    	return Collections.emptyList();
+	    }
 	}
 
 	public void editTask(ProjectTasks t) {

@@ -341,39 +341,3 @@ INSERT INTO comments (project_id, comments, user_id, created_on)
 VALUES (1, 'This is a sample comment', 2, NOW());
 
 
-
-SELECT 
-    p.project_id,
-    p.projectname,
-    t.task_id,
-    t.task_name,
-    t.description,
-    t.status,
-    t.priority,
-    t.due_date,
-    u.NAME AS assigned_user
-FROM 
-    project_ci p
-JOIN 
-    tasks t ON p.project_id = t.project_id
-LEFT JOIN 
-    APP_USER u ON t.assigned_user_id = u.USER_ID
-WHERE 
-    p.project_id = 'proj_001';
-
-
-
-SELECT p.project_id, p.projectname, p.description AS project_description, p.owner_id, p.created_on AS project_created_on,
-    p.updated_on AS project_updated_on, p.status AS project_status, p.type AS project_type, p.active AS project_active 
-    FROM project_ci p LEFT JOIN PROJECT_USER pu ON p.project_id = pu.project_id WHERE p.owner_id = 3 OR pu.user_id = 3;
-
-
-
-SELECT p.project_id, p.projectname, p.description AS project_description, p.owner_id, u.Name AS project_owner, p.created_on AS project_created_on,
-    p.updated_on AS project_updated_on, p.status AS project_status, p.type AS project_type, p.active AS project_active 
-    FROM project_ci p 
-    LEFT JOIN APP_USER u ON p.owner_id = u.USER_ID 
-
-    LEFT JOIN PROJECT_USER pu ON p.project_id = pu.project_id 
-    
-    WHERE p.owner_id = 3 OR pu.user_id = 3;
