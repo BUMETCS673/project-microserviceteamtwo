@@ -18,7 +18,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cs673olsum24.promanager.entity.ProjectTasks;
 import com.cs673olsum24.promanager.entity.ProjectUser;
 
 @Repository

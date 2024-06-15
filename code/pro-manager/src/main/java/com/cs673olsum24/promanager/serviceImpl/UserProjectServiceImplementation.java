@@ -1,7 +1,6 @@
 package com.cs673olsum24.promanager.serviceImpl;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -10,7 +9,6 @@ import java.util.Map;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -19,7 +17,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import com.cs673olsum24.promanager.dao.*;
 import com.cs673olsum24.promanager.entity.ProjectUser;
-import com.cs673olsum24.promanager.entity.Projects;
 import com.cs673olsum24.promanager.service.UserProjectServices;
 import com.cs673olsum24.promanager.utils.JsonUtils;
 

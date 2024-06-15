@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserProjectServiceImplementation.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pro-manager</a> &gt; <a href="index.source.html" class="el_package">com.cs673olsum24.promanager.serviceImpl</a> &gt; <span class="el_source">UserProjectServiceImplementation.java</span></div><h1>UserProjectServiceImplementation.java</h1><pre class="source lang-java linenums">package com.cs673olsum24.promanager.serviceImpl;
+
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+import com.cs673olsum24.promanager.dao.*;
+import com.cs673olsum24.promanager.entity.ProjectUser;
+import com.cs673olsum24.promanager.service.UserProjectServices;
+import com.cs673olsum24.promanager.utils.JsonUtils;
+
+@Service
+<span class="fc" id="L24">public class UserProjectServiceImplementation implements UserProjectServices {</span>
+
+
+	@Autowired
+	private UserProjectDAO userProjectDAO;
+
+	
+	/**
+	 * Retrieves all projects associated with a specific user and organizes them into a map.
+	 *
+	 * @param user_id The ID of the user whose projects are to be retrieved.
+	 * @return A map containing a single entry where the key is &quot;user_projects&quot; and the value is a list of Object arrays,
+	 *         each representing a project with various details.
+	 * @throws JsonProcessingException If an error occurs during JSON processing.
+	 */
+	public Map&lt;String, Object&gt; getAllUserProjects(String user_id) throws JsonProcessingException {
+<span class="nc" id="L40">		Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L41">		 List&lt;Map&lt;String, Object&gt;&gt;  data = this.userProjectDAO.findAllUserProjects(user_id);</span>
+<span class="nc" id="L42">		map.put(&quot;user_projects&quot;, data);</span>
+<span class="nc" id="L43">		return map;</span>
+	}
+	
+	
+	public Map&lt;String, Object&gt; getAllProjectMembers(String project_id) throws JsonProcessingException {
+<span class="nc" id="L48">		Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L49">		 List&lt;Map&lt;String, Object&gt;&gt;  data = this.userProjectDAO.findAllProjectMembers(project_id);</span>
+<span class="nc" id="L50">		map.put(&quot;project_members&quot;, data);</span>
+<span class="nc" id="L51">		return map;</span>
+	}
+
+
+	
+	
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public Map&lt;String, Object&gt; addProjectMember(HttpServletRequest request, Map&lt;String, Object&gt; payload) {
+
+<span class="nc" id="L60">		JSONObject data = JsonUtils.convertPayload(payload);</span>
+<span class="nc" id="L61">		JSONArray user = (JSONArray) data.get(&quot;project_member&quot;);</span>
+		
+
+<span class="nc" id="L64">		Iterator&lt;JSONObject&gt; result = user.iterator();</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		while (result.hasNext()) {</span>
+<span class="nc" id="L66">			JSONObject each = (JSONObject) result.next();</span>
+		
+<span class="nc" id="L68">			Long createdtAt = (Long) each.getOrDefault(&quot;created_at&quot;, 0);</span>
+				
+<span class="nc" id="L70">			Long updatedAt = (Long) each.getOrDefault(&quot;updated_at&quot;, 0);</span>
+			
+				
+<span class="nc" id="L73">			Object projUserIdObj = each.getOrDefault(&quot;PROJECT_USER_ID&quot;, 1);</span>
+			int proj_user_id;
+
+<span class="nc bnc" id="L76" title="All 2 branches missed.">			if (projUserIdObj instanceof Long) {</span>
+<span class="nc" id="L77">				proj_user_id = ((Long) projUserIdObj).intValue();</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			} else if (projUserIdObj instanceof Integer) {</span>
+<span class="nc" id="L79">				proj_user_id = (Integer) projUserIdObj;</span>
+			} else {
+<span class="nc" id="L81">				proj_user_id = 1; // Default value</span>
+			}
+			
+<span class="nc" id="L84">			Object UserIdObj = each.getOrDefault(&quot;USER_ID&quot;, 1);</span>
+			int user_id;
+
+<span class="nc bnc" id="L87" title="All 2 branches missed.">			if (UserIdObj instanceof Long) {</span>
+<span class="nc" id="L88">				user_id = ((Long) UserIdObj).intValue();</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			} else if (UserIdObj instanceof Integer) {</span>
+<span class="nc" id="L90">				user_id = (Integer) UserIdObj;</span>
+			} else {
+<span class="nc" id="L92">				user_id = 1; // Default value</span>
+			}
+			
+
+<span class="nc" id="L96">			ProjectUser p = new ProjectUser();</span>
+			
+
+<span class="nc" id="L99">			p.setPROJECT_USER_ID(proj_user_id);</span>
+<span class="nc" id="L100">			p.setPROJECT_ID((String) each.getOrDefault(&quot;PROJECT_ID&quot;, &quot;NA&quot;));</span>
+<span class="nc" id="L101">			p.setUSER_ID(user_id);</span>
+<span class="nc" id="L102">			p.setROLE((String) each.getOrDefault(&quot;ROLE&quot;, &quot;COLLABORATOR&quot;));</span>
+<span class="nc" id="L103">			p.setCreated_at( createdtAt);</span>
+<span class="nc" id="L104">			p.setUpdated_at(updatedAt);</span>
+			
+			
+
+			try {
+<span class="nc" id="L109">				this.userProjectDAO.addProjectMember(p);</span>
+<span class="nc" id="L110">			} catch (Exception e) {</span>
+<span class="nc" id="L111">				System.out.println(e);</span>
+<span class="nc" id="L112">			}</span>
+<span class="nc" id="L113">		}</span>
+
+<span class="nc" id="L115">		Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L116">		map.put(&quot;Response&quot;, &quot;OK&quot;);</span>
+
+<span class="nc" id="L118">		return map;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

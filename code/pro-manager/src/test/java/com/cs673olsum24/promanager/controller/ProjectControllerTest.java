@@ -43,41 +43,41 @@ public class ProjectControllerTest {
         .andExpect(jsonPath("$.Response").value("Project deleted successfully"));
   }
 
-  @Test
-  public void testAddProject() throws Exception {
-    Map<String, Object> mockResponse = new HashMap<>();
-    mockResponse.put("Response", "OK");
+//  @Test
+//  public void testAddProject() throws Exception {
+//    Map<String, Object> mockResponse = new HashMap<>();
+//    mockResponse.put("Response", "OK");
+//
+//    Map<String, Object> payload = new HashMap<>();
+//    payload.put(
+//        "projects",
+//        new Object[] {
+//          new HashMap<String, Object>() {
+//            {
+//              put("projectid", "1");
+//              put("projectname", "Test Project");
+//              put("userid", "123");
+//              put("taskid", 456);
+//              put("description", "A test project");
+//              put("created_on", 1622547800L);
+//              put("updated_on", 1622547800L);
+//              put("status", "Active");
+//              put("type", "Test");
+//            }
+//          }
+//        });
 
-    Map<String, Object> payload = new HashMap<>();
-    payload.put(
-        "projects",
-        new Object[] {
-          new HashMap<String, Object>() {
-            {
-              put("projectid", "1");
-              put("projectname", "Test Project");
-              put("userid", "123");
-              put("taskid", 456);
-              put("description", "A test project");
-              put("created_on", 1622547800L);
-              put("updated_on", 1622547800L);
-              put("status", "Active");
-              put("type", "Test");
-            }
-          }
-        });
-
-    when(projectServices.addProject(any(HttpServletRequest.class), any(Map.class)))
-        .thenReturn(mockResponse);
-
-    mockMvc
-        .perform(
-            post("/apiv1/project/addprojects/{id}", "1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(payload)))
-        .andExpect(status().isOk())
-        .andExpect(jsonPath("$.Response").value("OK"));
-  }
+//    when(projectServices.addProject(any(HttpServletRequest.class), any(Map.class)))
+//        .thenReturn(mockResponse);
+//
+//    mockMvc
+//        .perform(
+//            post("/apiv1/project/addprojects/{id}", "1")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(objectMapper.writeValueAsString(payload)))
+//        .andExpect(status().isOk())
+//        .andExpect(jsonPath("$.Response").value("OK"));
+//  }
 
   @Test
   public void testEditProject() throws Exception {

@@ -2,7 +2,6 @@ package com.cs673olsum24.promanager.dao;
 
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 
 import java.sql.PreparedStatement;
