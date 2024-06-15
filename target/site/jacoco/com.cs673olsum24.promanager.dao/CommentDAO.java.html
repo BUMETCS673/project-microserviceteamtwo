@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommentDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pro-manager</a> &gt; <a href="index.source.html" class="el_package">com.cs673olsum24.promanager.dao</a> &gt; <span class="el_source">CommentDAO.java</span></div><h1>CommentDAO.java</h1><pre class="source lang-java linenums">package com.cs673olsum24.promanager.dao;
+
+import com.cs673olsum24.promanager.entity.Comment;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
+
+import org.springframework.jdbc.core.PreparedStatementCallback;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Author: Praveen Singh
+ * 
+ * The CommentDAO class handles database operations for the Comment entity.
+ * This includes retrieving, adding, deleting, and updating comments in the database.
+ * It uses both JPA's EntityManager and Spring's NamedParameterJdbcTemplate for database access.
+ */
+
+@Repository  // Indicates that this class is a repository that will be used for data access.
+@Transactional  // Specifies that the methods in this class should be executed within a transactional context.
+public class CommentDAO {
+
+    // Injects the JPA EntityManager to manage and query Comment entities.
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    // Template for executing SQL statements with named parameters.
+    private NamedParameterJdbcTemplate template;
+
+    /**
+     * Constructor for injecting NamedParameterJdbcTemplate.
+     *
+     * @param namedParameterJdbcTemplate the NamedParameterJdbcTemplate to be used for SQL operations.
+     */
+<span class="fc" id="L44">    public CommentDAO(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {</span>
+<span class="fc" id="L45">        this.template = namedParameterJdbcTemplate;</span>
+<span class="fc" id="L46">    }</span>
+
+    /**
+     * Retrieves all comments for a given project ID from the database using JPA.
+     *
+     * @param project_id the ID of the project for which comments are to be retrieved.
+     * @return A list of Comment objects representing the comments for the given project ID.
+     *         If no comments are found, an empty list is returned.
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)  // Suppresses unchecked cast warning for the query result.
+    public List&lt;Comment&gt; getAllComments(int project_id) {
+        try {
+            // JPQL query to select comments by project ID.
+<span class="nc" id="L59">            String getCommentsql = &quot;SELECT c FROM Comment c WHERE c.projectId = :project_id&quot;;</span>
+<span class="nc" id="L60">            Query query = entityManager.createQuery(getCommentsql);</span>
+<span class="nc" id="L61">            query.setParameter(&quot;project_id&quot;, project_id);  // Sets the project_id parameter in the query.</span>
+<span class="nc" id="L62">            return query.getResultList();  // Executes the query and returns the list of comments.</span>
+<span class="nc" id="L63">        } catch (Exception e) {</span>
+            // Returns an empty list if an exception occurs during the query execution.
+<span class="nc" id="L65">            return Collections.emptyList();</span>
+        }
+    }
+
+    /**
+     * Adds a new comment to the database using NamedParameterJdbcTemplate.
+     *
+     * @param comment the Comment object to be added to the database.
+     * @return The added Comment object.
+     */
+    public Comment addComment(Comment comment) {
+        // SQL statement to insert a new comment into the database.
+<span class="nc" id="L77">        final String addCommentsql = &quot;INSERT INTO comments (project_id, comments, user_id, created_on) VALUES (:project_id, :comments, :user_id, :created_on)&quot;;</span>
+        
+        // Maps the named parameters in the SQL statement to the Comment object properties.
+<span class="nc" id="L80">        Map&lt;String, Object&gt; parameters = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L81">        parameters.put(&quot;project_id&quot;, comment.getProjectId());</span>
+<span class="nc" id="L82">        parameters.put(&quot;comments&quot;, comment.getComments());</span>
+<span class="nc" id="L83">        parameters.put(&quot;user_id&quot;, comment.getUserId());</span>
+<span class="nc" id="L84">        parameters.put(&quot;created_on&quot;, comment.getCreatedOn());</span>
+
+        // Executes the insert operation using the named parameters.
+<span class="nc" id="L87">        template.execute(addCommentsql, parameters, new PreparedStatementCallback&lt;Object&gt;() {</span>
+            @Override
+            public Object doInPreparedStatement(PreparedStatement ps) throws SQLException {
+<span class="nc" id="L90">                return ps.executeUpdate();  // Executes the update and returns the result.</span>
+            }
+        });
+<span class="nc" id="L93">        return comment;  // Returns the added comment.</span>
+    }
+
+    /**
+     * Deletes a comment from the database based on its ID using NamedParameterJdbcTemplate.
+     *
+     * @param id the ID of the comment to be deleted.
+     */
+    public void deleteComment(int id) {
+        // SQL statement to delete a comment from the database by ID.
+<span class="nc" id="L103">        final String deleteCommentsql = &quot;DELETE FROM comments WHERE comment_id = :comment_id&quot;;</span>
+        
+        // Maps the named parameter in the SQL statement to the comment ID.
+<span class="nc" id="L106">        Map&lt;String, Object&gt; parameters = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L107">        parameters.put(&quot;comment_id&quot;, id);</span>
+
+        // Executes the delete operation using the named parameter.
+<span class="nc" id="L110">        template.execute(deleteCommentsql, parameters, new PreparedStatementCallback&lt;Object&gt;() {</span>
+            @Override
+            public Object doInPreparedStatement(PreparedStatement ps) throws SQLException {
+<span class="nc" id="L113">                return ps.executeUpdate();  // Executes the update and returns the result.</span>
+            }
+        });
+<span class="nc" id="L116">    }</span>
+
+    /**
+     * Updates an existing comment in the database using NamedParameterJdbcTemplate.
+     *
+     * @param comment the Comment object containing the updated comment data.
+     * @return The updated Comment object.
+     */
+    public Comment editComment(Comment comment) {
+        // SQL statement to update the comment text of an existing comment by ID.
+<span class="nc" id="L126">        final String updateCommentsql = &quot;UPDATE comments SET comments = :comments WHERE comment_id = :comment_id&quot;;</span>
+        
+        // Maps the named parameters in the SQL statement to the updated comment properties.
+<span class="nc" id="L129">        Map&lt;String, Object&gt; parameters = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L130">        parameters.put(&quot;comments&quot;, comment.getComments());</span>
+<span class="nc" id="L131">        parameters.put(&quot;comment_id&quot;, comment.getId());</span>
+
+        // Executes the update operation using the named parameters.
+<span class="nc" id="L134">        template.execute(updateCommentsql, parameters, new PreparedStatementCallback&lt;Object&gt;() {</span>
+            @Override
+            public Object doInPreparedStatement(PreparedStatement ps) throws SQLException {
+<span class="nc" id="L137">                return ps.executeUpdate();  // Executes the update and returns the result.</span>
+            }
+        });
+<span class="nc" id="L140">        return comment;  // Returns the updated comment.</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
