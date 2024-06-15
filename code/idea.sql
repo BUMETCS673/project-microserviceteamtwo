@@ -53,10 +53,7 @@ CREATE TABLE comments (
     comments TEXT NOT NULL,
     user_id INT NOT NULL,
     created_on TIMESTAMP NOT NULL
-);    -- FOREIGN KEY (project_id) REFERENCES project_ci(project_id),
-    -- FOREIGN KEY (user_id) REFERENCES APP_USER(USER_ID)
--- );
-
+);
 
 ALTER TABLE APP_USER ADD CONSTRAINT PK_APP_USER PRIMARY KEY (USER_ID);
 
@@ -71,70 +68,58 @@ ALTER TABLE project_ci ADD CONSTRAINT FK_PROJECT_CI_OWNER FOREIGN KEY (owner_id)
 ALTER TABLE tasks ADD CONSTRAINT FK_ASSIGNED_USER FOREIGN KEY (assigned_user_id) REFERENCES APP_USER(USER_ID);
 
 
-
 ALTER TABLE PROJECT_USER ADD CONSTRAINT FK_APP_USER_PROJECT_USER FOREIGN KEY (USER_ID) REFERENCES APP_USER(USER_ID);
 
 ALTER TABLE PROJECT_USER ADD CONSTRAINT FK_PROJECT_USER FOREIGN KEY (PROJECT_ID) REFERENCES project_ci(project_id);
- 
 
 ALTER TABLE comments ADD CONSTRAINT FK_PROJECT_ID FOREIGN KEY (project_id) REFERENCES project_ci(project_id);
 ALTER TABLE comments ADD CONSTRAINT FK_USER_ID FOREIGN KEY (user_id) REFERENCES APP_USER(USER_ID);
-
-
-
 
 GRANT ALL PRIVILEGES ON TABLE project_ci to cap;
 GRANT ALL PRIVILEGES ON TABLE tasks to cap;
 GRANT ALL PRIVILEGES ON TABLE PROJECT_USER to cap;
 GRANT ALL PRIVILEGES ON TABLE APP_USER to cap;
 
-
-
--- ALTER TABLE APP_USER ALTER COLUMN ENABLED SET DEFAULT 1;
-
-
--- # CONSTRAINTS make active default true
-
-
-INSERT INTO project_ci (project_id, projectname, description, owner_id, created_on, updated_on, status, type, active) VALUES
-('proj_001', 'Project Alpha', 'This is a test project.', 123, 1718478356, 1718478356, 'ongoing', 'development', true);
-
-INSERT INTO project_ci (project_id, projectname, description, owner_id, created_on, updated_on, status, type, active) VALUES
-('proj_002', 'Project Beta', 'This is a test project.', 123, 1718478356, 1718478356, 'ongoing', 'development', true);
-
-
-INSERT INTO project_ci (project_id, projectname, description, owner_id, created_on, updated_on, status, type, active) VALUES
-('proj_003', 'Proeject Gamma', 'This is a test project.', 1, 1718478356, 1718478356, 'closed', 'development', true);
-
-INSERT INTO project_ci (project_id, projectname, description, owner_id, created_on, updated_on, status, type, active) VALUES
-('proj_004', 'Project Theta', 'This is a test project.', 1, 1718478356, 1718478356, 'closed', 'development', true);
-
-
 -- Inserting data into APP_USER
 INSERT INTO APP_USER (USER_ID, NAME, EMAIL, PASSWORD) VALUES
-(123, 'User One', 'user1@example.com', 'password123'),
-(1, 'User Two', 'user2@example.com', 'password124');
+(1, 'User One', 'user1@example.com', 'password123'),
+(2, 'User Two', 'user2@example.com', 'password124');
+
+
+
+INSERT INTO project_ci (project_id, projectname, description, owner_id, created_on, updated_on, status, type, active) VALUES
+('proj_001', 'Project Alpha', 'This is a test project.', 123, 1622548800, 1622645200, 'ongoing', 'development', true);
+
+INSERT INTO project_ci (project_id, projectname, description, owner_id, created_on, updated_on, status, type, active) VALUES
+('proj_002', 'Project Beta', 'This is a test project.', 123, 1622548801, 1622645201, 'ongoing', 'development', true);
+
+
+INSERT INTO project_ci (project_id, projectname, description, owner_id, created_on, updated_on, status, type, active) VALUES
+('proj_003', 'Proeject Gamma', 'This is a test project.', 1, 1622548802, 1622645201, 'closed', 'development', true);
+
+INSERT INTO project_ci (project_id, projectname, description, owner_id, created_on, updated_on, status, type, active) VALUES
+('proj_004', 'Project Theta', 'This is a test project.', 1, 1622548804, 1622645202, 'closed', 'development', true);
 
 
 INSERT INTO tasks (task_id, project_id, task_name, description, status, priority, assigned_user_id, due_date, created_on, updated_on) VALUES
-('task_1', 'proj_001', 'Task 1', 'Task description 1', 'To Do', 'Medium', 2, 1721050554, 1718478356, 1718478356),
-('task_2', 'proj_001', 'Task 1 Create', 'Task description 2', 'To Do', 'Medium', 2, 1721050554, 1718478356, 1718478356),
-('task_3', 'proj_001', 'Task 1 Edit', 'Task description 3', 'To Do', 'Medium', 1, 1721050554, 1718478356, 1718478356),
-('task_4', 'proj_001', 'Task 1 Create', 'Task description 4', 'To Do', 'Medium', 1, 1721050554, 1718478356, 1718478356);
+('task_5', 'proj_001', 'Task 2', 'Task description 2', 'To Do', 'Medium', 1, 1622548800, 1622548800, 1622635200);
 
 
 INSERT INTO tasks (task_id, project_id, task_name, description, status, priority, assigned_user_id, due_date, created_on, updated_on) VALUES
-('task_5', 'proj_002', 'Task 2', 'Task description 2', 'To Do', 'Medium', 1, 1721050554, 1718478356, 1718478356);
+('task_1', 'proj_001', 'Task 1', 'Task description 1', 'To Do', 'Medium', 123, 1622548800, 1622548800, 1622635200),
+('task_2', 'proj_002', 'Task 1 Create', 'Task description 2', 'To Do', 'Medium', 123, 1622548800, 1622548800, 1622635200),
+('task_3', 'proj_003', 'Task 1 Edit', 'Task description 3', 'To Do', 'Medium', 1, 1622548800, 1622548800, 1622548800),
+('task_4', 'proj_003', 'Task 1 Create', 'Task description 4', 'To Do', 'Medium', 1, 1622548800, 1622548800, 1622548800);
+
 
 
 -- Inserting data into PROJECT_USER
-INSERT INTO PROJECT_USER ( PROJECT_ID, USER_ID, ROLE, created_at, updated_at) VALUES
-( 'proj_001', 1, 'Collaborator', 1718478356, 1718478356),
-( 'proj_002', 1, 'Collaborator', 1718478356, 1718478356),
-( 'proj_003', 123, 'Collaborator', 1718478356, 1718478356),
-( 'proj_004', 123, 'Collaborator', 1718478356, 1718478356);
+INSERT INTO PROJECT_USER (PROJECT_USER_ID, PROJECT_ID, USER_ID, ROLE, created_at, updated_at) VALUES
+(1, 'proj_001', 1, 'Collaborator', 1622548800, 1622548800),
+(2, 'proj_002', 1, 'Collaborator', 1622548800, 1622548800),
+(3, 'proj_003', 123, 'Collaborator', 1622548800, 1622548800),
+(4, 'proj_004', 123, 'Collaborator', 1622548800, 1622548800);
 
 
 INSERT INTO comments (project_id, comments, user_id, created_on)
-VALUES ('proj_001', 'This is a second comment', 1, NOW());
-
+VALUES (1, 'This is a sample comment', 2, NOW());
