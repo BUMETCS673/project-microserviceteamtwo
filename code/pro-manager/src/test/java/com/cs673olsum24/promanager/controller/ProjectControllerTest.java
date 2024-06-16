@@ -15,12 +15,16 @@ import java.util.Map;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(classes = ProManagerApplication.class)
 @ActiveProfiles("test")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ProjectControllerTest {
 
   @Autowired private ProjectServices projectServices;
@@ -54,6 +58,7 @@ public class ProjectControllerTest {
   }
 
   @Test
+  @Order(1)
   public void testRetrieveProject() {
     String projectId = testProjectId;
 
@@ -79,6 +84,42 @@ public class ProjectControllerTest {
   }
 
   @Test
+  @Order(2)
+  public void testGetAllProjects() {
+    try {
+      // Use the service to retrieve all projects
+      Map<String, Object> response = projectServices.getAllProjects();
+
+      // Assert that the response is not null and contains the "projects" key
+      assertNotNull(response);
+      assertNotNull(response.get("projects"));
+      assertTrue(response.get("projects") instanceof List);
+
+      // You can further assert specific details about the projects if needed
+      List<?> projects = (List<?>) response.get("projects");
+      assertTrue(!projects.isEmpty(), "Projects list should not be empty");
+
+      // Verify details of the test project
+      Object[] projectDetails =
+          (Object[])
+              projects.stream()
+                  .filter(p -> ((Object[]) p)[ProjectFieldIndexes.PROJECT_ID].equals(testProjectId))
+                  .findFirst()
+                  .orElse(null);
+
+      assertNotNull(projectDetails);
+      assertEquals("Initial Test Project", projectDetails[ProjectFieldIndexes.PROJECT_NAME]);
+      assertEquals("Initial description", projectDetails[ProjectFieldIndexes.DESCRIPTION]);
+      assertEquals("Inactive", projectDetails[ProjectFieldIndexes.STATUS]);
+      assertEquals("Initial", projectDetails[ProjectFieldIndexes.TYPE]);
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+      assertNotNull(null, "JsonProcessingException was thrown");
+    }
+  }
+
+  @Test
+  @Order(3)
   public void testRetrieveNonExistentProject() {
     String projectId = "nonexistent";
 
@@ -97,6 +138,7 @@ public class ProjectControllerTest {
   }
 
   @Test
+  @Order(4)
   public void testDeleteProject() {
     String projectId = testProjectId;
 
@@ -121,6 +163,7 @@ public class ProjectControllerTest {
   }
 
   @Test
+  @Order(5)
   public void testAddProject() {
     // Prepare payload
     String newProjectId = "proj_006";
@@ -171,6 +214,7 @@ public class ProjectControllerTest {
   }
 
   @Test
+  @Order(6)
   public void testEditProject() {
     // Prepare payload
     Map<String, Object> payload = new HashMap<>();
@@ -212,37 +256,5 @@ public class ProjectControllerTest {
     }
   }
 
-  @Test
-  public void testGetAllProjects() {
-    try {
-      // Use the service to retrieve all projects
-      Map<String, Object> response = projectServices.getAllProjects();
-
-      // Assert that the response is not null and contains the "projects" key
-      assertNotNull(response);
-      assertNotNull(response.get("projects"));
-      assertTrue(response.get("projects") instanceof List);
-
-      // You can further assert specific details about the projects if needed
-      List<?> projects = (List<?>) response.get("projects");
-      assertTrue(!projects.isEmpty(), "Projects list should not be empty");
-
-      // Verify details of the test project
-      Object[] projectDetails =
-          (Object[])
-              projects.stream()
-                  .filter(p -> ((Object[]) p)[ProjectFieldIndexes.PROJECT_ID].equals(testProjectId))
-                  .findFirst()
-                  .orElse(null);
-
-      assertNotNull(projectDetails);
-      assertEquals("Initial Test Project", projectDetails[ProjectFieldIndexes.PROJECT_NAME]);
-      assertEquals("Initial description", projectDetails[ProjectFieldIndexes.DESCRIPTION]);
-      assertEquals("Inactive", projectDetails[ProjectFieldIndexes.STATUS]);
-      assertEquals("Initial", projectDetails[ProjectFieldIndexes.TYPE]);
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-      assertNotNull(null, "JsonProcessingException was thrown");
-    }
-  }
+  
 }
