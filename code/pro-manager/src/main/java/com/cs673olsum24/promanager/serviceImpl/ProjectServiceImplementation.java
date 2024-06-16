@@ -1,6 +1,6 @@
 package com.cs673olsum24.promanager.serviceImpl;
 
-import com.cs673olsum24.promanager.dao.*;
+import com.cs673olsum24.promanager.dao.ProjectDAO;
 import com.cs673olsum24.promanager.entity.Projects;
 import com.cs673olsum24.promanager.service.ProjectServices;
 import com.cs673olsum24.promanager.utils.JsonUtils;
@@ -19,9 +19,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProjectServiceImplementation implements ProjectServices {
 
+  @Autowired private ProjectDAO projectDAO;
 
-	@Autowired
-	private ProjectDAO projectDAO;
+  @Override
 
 	public Map<String, Object> getAllProjects() throws JsonProcessingException {
 		Map<String, Object> map = new HashMap<>();
@@ -60,9 +60,6 @@ public class ProjectServiceImplementation implements ProjectServices {
 	     return response;
 	   }
 
-
-	
-	
 	
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> addProject(HttpServletRequest request, Map<String, Object> payload) {
@@ -133,18 +130,6 @@ public class ProjectServiceImplementation implements ProjectServices {
 		return map;
 	}
 
-	public Map<String, Object> deleteProject(String id)
-	{
-		Map<String, Object> map2 = new HashMap<>();
-
-		this.projectDAO.deleteProject(id);
-
-		map2.put("Response","Success");
-		return map2;
-
-	}
-
-
 
 
 	//	@SuppressWarnings("unchecked")
@@ -169,91 +154,73 @@ public class ProjectServiceImplementation implements ProjectServices {
 	//	}
 
 
-		@SuppressWarnings("unchecked")
-		public Map<String, Object> editProject(JSONObject each)
-		{
-			Map<String, Object> map = new HashMap<>();		
-			Projects p = new Projects();
-			System.out.println(each);
-			Object updatedOnObj = each.getOrDefault("updated_on", 0L);
-			Long updatedOn;
-			if (updatedOnObj instanceof Integer) {
-				updatedOn = ((Integer) updatedOnObj).longValue();
-			} else {
-				updatedOn = (Long) updatedOnObj;
-			}
 
-			int owner_id = (int) each.getOrDefault("owner_id", 1);
-			
+  @Override
+  public Map<String, Object> deleteProject(String id) {
+    Map<String, Object> response = new HashMap<>();
+    try {
+      projectDAO.deleteProject(id);
+      response.put("Response", "Success");
+    } catch (Exception e) {
+      e.printStackTrace();
+      response.put("Response", "Failed");
+    }
+    return response;
+  }
 
-			p.setProjectid(
-			ProjectUtils.safelyGetString(each, "project_id", ProjectUtils.DEFAULT_PROJECT_ID));
-			p.setProjectname(
-			ProjectUtils.safelyGetString(each, "projectname", ProjectUtils.DEFAULT_PROJECT_NAME));
-			
-			p.setUpdated_on(updatedOn);		
-			p.setDescription(
-			ProjectUtils.safelyGetString(each, "description", ProjectUtils.DEFAULT_DESCRIPTION));			
-			p.setStatus(ProjectUtils.safelyGetString(each, "status", ProjectUtils.DEFAULT_STATUS));
-			p.setType(ProjectUtils.safelyGetString(each, "type", ProjectUtils.DEFAULT_TYPE));
-			p.setOwner_id(owner_id);
-			
-			try {
-				this.projectDAO.editProject(p);
-				map.put("Response", "Success");
-			}
-			catch(Exception e)		
-			{
-				map.put("Response", "Failed");
-			}
+  @Override
+  @SuppressWarnings("unchecked")
+  public Map<String, Object> editProject(JSONObject each) {
+    Map<String, Object> response = new HashMap<>();
+    Projects project = parseProject(each);
 
     try {
-      this.projectDAO.editProject(p);
-      map.put("Response", "Success");
+      projectDAO.editProject(project);
+      response.put("Response", "Success");
     } catch (Exception e) {
-      map.put("Response", "Failed");
+      e.printStackTrace();
+      response.put("Response", "Failed");
+    }
+    return response;
+  }
+
+  private Projects parseProject(JSONObject each) {
+    Projects project = new Projects();
+
+    project.setProjectid(
+        ProjectUtils.safelyGetString(each, "project_id", ProjectUtils.DEFAULT_PROJECT_ID));
+    project.setProjectname(
+        ProjectUtils.safelyGetString(each, "projectname", ProjectUtils.DEFAULT_PROJECT_NAME));
+    project.setDescription(
+        ProjectUtils.safelyGetString(each, "description", ProjectUtils.DEFAULT_DESCRIPTION));
+    project.setStatus(ProjectUtils.safelyGetString(each, "status", ProjectUtils.DEFAULT_STATUS));
+    project.setType(ProjectUtils.safelyGetString(each, "type", ProjectUtils.DEFAULT_TYPE));
+    project.setActive((Boolean) each.getOrDefault("active", true));
+
+    Long createdOn =
+        ProjectUtils.safelyConvertToLong(
+            each.getOrDefault("created_on", ProjectUtils.DEFAULT_DATE));
+    Long updatedOn =
+        ProjectUtils.safelyConvertToLong(
+            each.getOrDefault("updated_on", ProjectUtils.DEFAULT_DATE));
+
+    project.setCreated_on(createdOn);
+    project.setUpdated_on(updatedOn);
+
+    Object ownerIdObj = each.getOrDefault("owner_id", 1);
+    int owner_id;
+    if (ownerIdObj instanceof Long) {
+      owner_id = ((Long) ownerIdObj).intValue();
+    } else if (ownerIdObj instanceof Integer) {
+      owner_id = (Integer) ownerIdObj;
+    } else {
+      owner_id = 1; // Default value
     }
 
-    return map;
+    project.setOwner_id(owner_id);
+
+    return project;
   }
 		
 		
-		
-		private Projects parseProject(JSONObject each) {
-		     Projects project = new Projects();
-
-		     project.setProjectid(
-		         ProjectUtils.safelyGetString(each, "project_id", ProjectUtils.DEFAULT_PROJECT_ID));
-		     project.setProjectname(
-		         ProjectUtils.safelyGetString(each, "projectname", ProjectUtils.DEFAULT_PROJECT_NAME));
-		     project.setDescription(
-		         ProjectUtils.safelyGetString(each, "description", ProjectUtils.DEFAULT_DESCRIPTION));
-		     project.setStatus(ProjectUtils.safelyGetString(each, "status", ProjectUtils.DEFAULT_STATUS));
-		     project.setType(ProjectUtils.safelyGetString(each, "type", ProjectUtils.DEFAULT_TYPE));
-		     project.setActive((Boolean) each.getOrDefault("active", true));
-
-		     Long createdOn =
-		         ProjectUtils.safelyConvertToLong(
-		             each.getOrDefault("created_on", ProjectUtils.DEFAULT_DATE));
-		     Long updatedOn =
-		         ProjectUtils.safelyConvertToLong(
-		             each.getOrDefault("updated_on", ProjectUtils.DEFAULT_DATE));
-
-		     project.setCreated_on(createdOn);
-		     project.setUpdated_on(updatedOn);
-
-		     Object ownerIdObj = each.getOrDefault("owner_id", 1);
-		     int owner_id;
-		     if (ownerIdObj instanceof Long) {
-		       owner_id = ((Long) ownerIdObj).intValue();
-		     } else if (ownerIdObj instanceof Integer) {
-		       owner_id = (Integer) ownerIdObj;
-		     } else {
-		       owner_id = 1; // Default value
-		     }
-
-		     project.setOwner_id(owner_id);
-
-		     return project;
-		   }
 }
