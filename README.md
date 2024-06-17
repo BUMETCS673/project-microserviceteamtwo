@@ -1,10 +1,9 @@
-# ProManager - Project Management and Notification System
+# ProManager - Project Management MicroService System (CS673 Software Engineering)
 
-## CS673 Software Engineering
+ProManager is a project management system developed as part of the CS673 Software Engineering course.
 
-### Team 2 - ProManager
 
-**Team Members:**
+## Team Members
 
 | **Name**            | **Role**                          |
 |---------------------|-----------------------------------|
@@ -16,12 +15,81 @@
 
 ## Overview
 
-We are proposing to contribute to a learning platform with a Project Management Module designed to facilitate project-based learning for students and professionals. The platform will allow users to create and manage projects, access learning resources, collaborate with team members, and receive assessments and feedback. The key components include:
+We have contributed to a learning platform with a Project Management Module designed to facilitate project-based learning for students and professionals. 
 
-- **User Management**
+The platform will allow users to create and manage projects, access learning resources, collaborate with team members. 
+
+The key components include:
 - **Project Management**
+- **Task Management**
+- **Comment Management**
 - **Collaboration**
-- **Notification**
+
+## Code setup and installation
+### Prerequisites
+
+- Java 8 or higher
+- Maven
+- MySQL
+
+### Setup
+
+1. Clone the repository:
+-- git clone
+```bash
+https://github.com/your-repo/pro-manager.git
+```
+2. Navigate to the project directory:
+```bash
+cd pro-manager
+```
+3. Create a MySQL database and update the database configuration in `src/main/resources/application.properties`.
+
+4. Run the SQL script located in the `code` folder to initialize the database schema and seed data.
+
+
+### Build and Run
+
+1. Build the project using Maven:
+```java
+mvn clean install
+```
+2. Run the Spring Boot application:
+```java
+mvn spring-boot:run
+```
+The application will start on `http://localhost:8080`.
+
+### API Demo
+
+The API endpoints are documented in the `API demo` folder, which contains a Python notebook with examples of REST calls implemented in the application.
+
+### Docker Deployment
+
+To deploy the application using Docker and Heroku, follow these steps:
+
+1. Login to Heroku
+```
+login heroku
+```
+2. Build the Docker image:
+```
+docker build -t registry.heroku.com/promanager-v1/web .
+```
+2. Push the Docker image to Heroku:
+```
+docker push registry.heroku.com/promanager-v1/web
+```
+3. Release the Docker container on Heroku:
+```
+heroku container:release web -a APPLICATION_NAME
+```
+4. View the application logs:
+```
+heroku logs --tail -a promanager-v1
+```
+
+
 
 ## Proposed High-Level Requirements
 
@@ -99,3 +167,17 @@ We are proposing to contribute to a learning platform with a Project Management 
 - Enhance project deployment strategies.
 - Increase code coverage to at least 70%.
 - Optimize database queries for better performance.
+
+## Contributing
+
+If you would like to contribute to the project, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them.
+4. Push your changes to your forked repository.
+5. Create a pull request against the main repository.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
