@@ -82,7 +82,13 @@ We are proposing to contribute to a learning platform with a Project Management 
 - **Manual Testing:** Exploratory, Usability, Regression
 - **Automation Testing:** Unit Testing, Integration Testing
 
-### Updates
-- Started with Project STD documentation
-- Created and added class diagrams
-- Discussed and established roadmap for Testing
+### How to Use This Repository
+
+ - **Clone the Repository**:
+   git clone https://github.com/BUMETCS673/project-microserviceteamtwo/
+   cd microserviceteamtwo
+ - **Install** the required dependencies
+ - **Run** the Project
+ - **Contribute** to the project
+ - **Create Branches** as per requirements
+ - **Push and Commit** to the main Repo
