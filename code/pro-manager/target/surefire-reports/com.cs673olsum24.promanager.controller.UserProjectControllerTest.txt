@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.cs673olsum24.promanager.controller.UserProjectControllerTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.221 s -- in com.cs673olsum24.promanager.controller.UserProjectControllerTest

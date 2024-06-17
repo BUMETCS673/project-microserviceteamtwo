@@ -1,6 +1,11 @@
 package com.cs673olsum24.promanager.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.Map;
+
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,8 +48,27 @@ public class UserProjectController {
 	
 		@GetMapping(value = "/user/getalluserprojects/{user_id}")
 		public ResponseEntity<Object> getAllUserProjects(@PathVariable("user_id") String user_id) throws JsonProcessingException, ParseException {
-			System.out.print("User Project"+user_id);
+			
 			return new ResponseEntity<>(userProjectServices.getAllUserProjects(user_id),HttpStatus.OK);  		    
-		}		
+		}	
+		
+		
+		@GetMapping(value = "/user/getallprojectmembers/{project_id}")
+		public ResponseEntity<Object> getAllProjectMembers(@PathVariable("project_id") String project_id) throws JsonProcessingException, ParseException {
+			
+			return new ResponseEntity<>(userProjectServices.getAllProjectMembers(project_id),HttpStatus.OK);  		    
+		}	
+		
+		
+		@PostMapping(value = "/user/projectmember/")
+		public ResponseEntity<Object> addProjectMember(HttpServletRequest request, @RequestBody Map<String, Object> payload) {
+			return new ResponseEntity<>(userProjectServices.addProjectMember(request,payload),HttpStatus.OK);  	
+	    }
 		
 }
+
+
+
+
+
+

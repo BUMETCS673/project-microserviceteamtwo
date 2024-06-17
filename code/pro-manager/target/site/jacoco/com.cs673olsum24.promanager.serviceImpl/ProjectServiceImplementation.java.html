@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProjectServiceImplementation.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pro-manager</a> &gt; <a href="index.source.html" class="el_package">com.cs673olsum24.promanager.serviceImpl</a> &gt; <span class="el_source">ProjectServiceImplementation.java</span></div><h1>ProjectServiceImplementation.java</h1><pre class="source lang-java linenums">package com.cs673olsum24.promanager.serviceImpl;
+
+import com.cs673olsum24.promanager.dao.*;
+import com.cs673olsum24.promanager.entity.Projects;
+import com.cs673olsum24.promanager.service.ProjectServices;
+import com.cs673olsum24.promanager.utils.JsonUtils;
+import com.cs673olsum24.promanager.utils.ProjectUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import jakarta.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+<span class="fc" id="L20">public class ProjectServiceImplementation implements ProjectServices {</span>
+
+
+	@Autowired
+	private ProjectDAO projectDAO;
+
+	public Map&lt;String, Object&gt; getAllProjects() throws JsonProcessingException {
+<span class="nc" id="L27">		Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L28">		List&lt;Projects&gt; data = this.projectDAO.findAllProjects();</span>
+<span class="nc" id="L29">		map.put(&quot;projects&quot;, data);</span>
+<span class="nc" id="L30">		return map;</span>
+	}
+	
+	public Map&lt;String, Object&gt; getIdWiseProject(String id) throws JsonProcessingException {
+<span class="nc" id="L34">		Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L35">		List&lt;Map&lt;String, Object&gt;&gt; data = this.projectDAO.findIdWiseProjects(id);</span>
+
+		
+<span class="nc" id="L38">		map.put(&quot;project&quot;, data);</span>
+<span class="nc" id="L39">		return map;</span>
+	}
+
+
+	
+	
+	
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public Map&lt;String, Object&gt; addProject(HttpServletRequest request, Map&lt;String, Object&gt; payload) {
+
+<span class="nc" id="L49">		JSONObject data = JsonUtils.convertPayload(payload);</span>
+<span class="nc" id="L50">		JSONArray projects = (JSONArray) data.get(&quot;projects&quot;);</span>
+		
+
+<span class="nc" id="L53">		Iterator&lt;JSONObject&gt; result = projects.iterator();</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">		while (result.hasNext()) {</span>
+<span class="nc" id="L55">			JSONObject each = (JSONObject) result.next();</span>
+			
+			
+//			Object createdOnObj = each.getOrDefault(&quot;updated_on&quot;, 0L);
+//			Long createdOn;
+//			if (createdOnObj instanceof Integer) {
+//				createdOn = ((Integer) createdOnObj).longValue();
+//			} else {
+//				createdOn = (Long) createdOnObj;
+//			}
+<span class="nc" id="L65">			Long createdOn = (Long) each.getOrDefault(&quot;created_on&quot;, 0);</span>
+			
+			
+<span class="nc" id="L68">			System.out.println(&quot;here update&quot;);</span>
+			
+<span class="nc" id="L70">			Long updatedOn = (Long) each.getOrDefault(&quot;updated_on&quot;, 0);</span>
+//			Object updatedOnObj = each.getOrDefault(&quot;updated_on&quot;, 0L);
+//			Long updatedOn;
+//			if (updatedOnObj instanceof Integer) {
+//				updatedOn = ((Integer) updatedOnObj).longValue();
+//			} else {
+//				updatedOn = (Long) updatedOnObj;
+//			}
+			
+			
+<span class="nc" id="L80">			System.out.println(&quot;owner update&quot;);</span>
+			
+<span class="nc" id="L82">			System.out.println(each.getOrDefault(&quot;project_id&quot;, &quot;NA&quot;));</span>
+			
+			
+//			int owner_id = (int) each.getOrDefault(&quot;owner_id&quot;, 1);
+//			
+<span class="nc" id="L87">			Object ownerIdObj = each.getOrDefault(&quot;owner_id&quot;, 1);</span>
+			int owner_id;
+
+<span class="nc bnc" id="L90" title="All 2 branches missed.">			if (ownerIdObj instanceof Long) {</span>
+<span class="nc" id="L91">			    owner_id = ((Long) ownerIdObj).intValue();</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">			} else if (ownerIdObj instanceof Integer) {</span>
+<span class="nc" id="L93">			    owner_id = (Integer) ownerIdObj;</span>
+			} else {
+<span class="nc" id="L95">			    owner_id = 1; // Default value</span>
+			}
+			
+<span class="nc" id="L98">			System.out.println(&quot;owner update complete&quot;);</span>
+			
+
+<span class="nc" id="L101">			Projects p = new Projects();</span>
+
+<span class="nc" id="L103">			p.setProjectid((String) each.getOrDefault(&quot;project_id&quot;, &quot;NA&quot;));</span>
+<span class="nc" id="L104">			p.setProjectname((String) each.getOrDefault(&quot;projectname&quot;, &quot;NA&quot;));</span>
+			
+<span class="nc" id="L106">			p.setDescription(each.getOrDefault(&quot;description&quot;, &quot;NA&quot;).toString());</span>
+<span class="nc" id="L107">			p.setStatus((String) each.getOrDefault(&quot;status&quot;, &quot;OPEN&quot;));</span>
+<span class="nc" id="L108">			p.setType((String) each.getOrDefault(&quot;type&quot;, &quot;NA&quot;));</span>
+<span class="nc" id="L109">			p.setActive((boolean)each.getOrDefault(&quot;active&quot;,&quot;TRUE&quot;));</span>
+
+<span class="nc" id="L111">			p.setCreated_on( createdOn);</span>
+<span class="nc" id="L112">			p.setUpdated_on(updatedOn);</span>
+<span class="nc" id="L113">			p.setOwner_id(owner_id);</span>
+			
+			
+
+			try {
+<span class="nc" id="L118">				this.projectDAO.addProjects(p);</span>
+<span class="nc" id="L119">			} catch (Exception e) {</span>
+<span class="nc" id="L120">				System.out.println(e);</span>
+<span class="nc" id="L121">			}</span>
+<span class="nc" id="L122">		}</span>
+
+<span class="nc" id="L124">		Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L125">		map.put(&quot;Response&quot;, &quot;OK&quot;);</span>
+
+<span class="nc" id="L127">		return map;</span>
+	}
+
+	public Map&lt;String, Object&gt; deleteProject(String id)
+	{
+<span class="nc" id="L132">		Map&lt;String, Object&gt; map2 = new HashMap&lt;&gt;();</span>
+
+<span class="nc" id="L134">		this.projectDAO.deleteProject(id);</span>
+
+<span class="nc" id="L136">		map2.put(&quot;Response&quot;,&quot;Success&quot;);</span>
+<span class="nc" id="L137">		return map2;</span>
+
+	}
+
+
+
+
+	//	@SuppressWarnings(&quot;unchecked&quot;)
+	//	public Map&lt;String, Object&gt; safeDeleteProject(JSONObject each)
+	//	{
+	//		Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();		
+	//		Projects p = new Projects();	
+	//		
+	//		p.setProjectid((String) each.getOrDefault(&quot;projectid&quot;, &quot;NA&quot;));
+	//		
+	//
+	//		try {
+	//			this.projectDAO.safeDeleteProject(p);
+	//			map.put(&quot;Response&quot;, &quot;Success&quot;);
+	//		}
+	//		catch(Exception e)		
+	//		{
+	//			map.put(&quot;Response&quot;, &quot;Failed&quot;);
+	//		}
+	//
+	//    	return map;
+	//	}
+
+
+		@SuppressWarnings(&quot;unchecked&quot;)
+		public Map&lt;String, Object&gt; editProject(JSONObject each)
+		{
+<span class="nc" id="L169">			Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();		</span>
+<span class="nc" id="L170">			Projects p = new Projects();</span>
+<span class="nc" id="L171">			System.out.println(each);</span>
+<span class="nc" id="L172">			Object updatedOnObj = each.getOrDefault(&quot;updated_on&quot;, 0L);</span>
+			Long updatedOn;
+<span class="nc bnc" id="L174" title="All 2 branches missed.">			if (updatedOnObj instanceof Integer) {</span>
+<span class="nc" id="L175">				updatedOn = ((Integer) updatedOnObj).longValue();</span>
+			} else {
+<span class="nc" id="L177">				updatedOn = (Long) updatedOnObj;</span>
+			}
+
+<span class="nc" id="L180">			int owner_id = (int) each.getOrDefault(&quot;owner_id&quot;, 1);</span>
+			
+
+<span class="nc" id="L183">			p.setProjectid(</span>
+<span class="nc" id="L184">			ProjectUtils.safelyGetString(each, &quot;project_id&quot;, ProjectUtils.DEFAULT_PROJECT_ID));</span>
+<span class="nc" id="L185">			p.setProjectname(</span>
+<span class="nc" id="L186">			ProjectUtils.safelyGetString(each, &quot;projectname&quot;, ProjectUtils.DEFAULT_PROJECT_NAME));</span>
+			
+<span class="nc" id="L188">			p.setUpdated_on(updatedOn);		</span>
+<span class="nc" id="L189">			p.setDescription(</span>
+<span class="nc" id="L190">			ProjectUtils.safelyGetString(each, &quot;description&quot;, ProjectUtils.DEFAULT_DESCRIPTION));			</span>
+<span class="nc" id="L191">			p.setStatus(ProjectUtils.safelyGetString(each, &quot;status&quot;, ProjectUtils.DEFAULT_STATUS));</span>
+<span class="nc" id="L192">			p.setType(ProjectUtils.safelyGetString(each, &quot;type&quot;, ProjectUtils.DEFAULT_TYPE));</span>
+<span class="nc" id="L193">			p.setOwner_id(owner_id);</span>
+			
+			try {
+<span class="nc" id="L196">				this.projectDAO.editProject(p);</span>
+<span class="nc" id="L197">				map.put(&quot;Response&quot;, &quot;Success&quot;);</span>
+			}
+<span class="nc" id="L199">			catch(Exception e)		</span>
+			{
+<span class="nc" id="L201">				map.put(&quot;Response&quot;, &quot;Failed&quot;);</span>
+<span class="nc" id="L202">			}</span>
+
+    try {
+<span class="nc" id="L205">      this.projectDAO.editProject(p);</span>
+<span class="nc" id="L206">      map.put(&quot;Response&quot;, &quot;Success&quot;);</span>
+<span class="nc" id="L207">    } catch (Exception e) {</span>
+<span class="nc" id="L208">      map.put(&quot;Response&quot;, &quot;Failed&quot;);</span>
+<span class="nc" id="L209">    }</span>
+
+<span class="nc" id="L211">    return map;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

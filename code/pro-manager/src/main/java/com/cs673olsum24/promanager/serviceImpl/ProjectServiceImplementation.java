@@ -25,14 +25,16 @@ public class ProjectServiceImplementation implements ProjectServices {
 
 	public Map<String, Object> getAllProjects() throws JsonProcessingException {
 		Map<String, Object> map = new HashMap<>();
-		List<Object []> data = this.projectDAO.findAllProjects();
+		List<Projects> data = this.projectDAO.findAllProjects();
 		map.put("projects", data);
 		return map;
 	}
 	
 	public Map<String, Object> getIdWiseProject(String id) throws JsonProcessingException {
 		Map<String, Object> map = new HashMap<>();
-		List<Object []> data = this.projectDAO.findIdWiseProjects(id);
+		List<Map<String, Object>> data = this.projectDAO.findIdWiseProjects(id);
+
+		
 		map.put("project", data);
 		return map;
 	}

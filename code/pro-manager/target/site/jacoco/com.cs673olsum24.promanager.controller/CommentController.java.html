@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommentController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pro-manager</a> &gt; <a href="index.source.html" class="el_package">com.cs673olsum24.promanager.controller</a> &gt; <span class="el_source">CommentController.java</span></div><h1>CommentController.java</h1><pre class="source lang-java linenums">package com.cs673olsum24.promanager.controller;
+
+import com.cs673olsum24.promanager.entity.Comment;
+import com.cs673olsum24.promanager.service.CommentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+
+/**
+ * Author : Praveen Singh
+ *
+ * The CommentController class provides RESTful API endpoints for managing comments in the ProManager application.
+ * It handles incoming HTTP requests and delegates the operations to the CommentService layer.
+ */
+
+@RestController  // Indicates that this class is a RESTful controller
+@RequestMapping(&quot;/api/comments&quot;)  // Maps HTTP requests to /api/comments to this controller
+<span class="fc" id="L21">public class CommentController {</span>
+
+    @Autowired  // Automatically injects the CommentService bean
+    private CommentService commentService;
+
+    /**
+     * Retrieves all comments for a specified project ID.
+     *
+     * @param projectId the ID of the project whose comments are to be retrieved.
+     * @return a ResponseEntity containing a map with the list of comments and an HTTP status code.
+     */
+    @GetMapping(value = &quot;/getallcomments/{projectId}&quot;)
+    public ResponseEntity&lt;Object&gt; getAllComments(@PathVariable int projectId) {
+        // Call the service layer to get all comments for the specified project ID
+<span class="nc" id="L35">        Map&lt;String, Object&gt; response = commentService.getAllComments(projectId);</span>
+        // Return the response with the list of comments and HTTP status 200 (OK)
+<span class="nc" id="L37">        return new ResponseEntity&lt;&gt;(response, HttpStatus.OK);</span>
+    }
+
+    /**
+     * Adds a new comment to the specified project.
+     *
+     * @param comment the Comment object containing details of the comment to be added.
+     * @return a ResponseEntity containing a map with the added comment and an HTTP status code.
+     */
+    @PostMapping(value = &quot;/addcomment&quot;)
+    public ResponseEntity&lt;Object&gt; addComment(@RequestBody Comment comment) {
+        // Call the service layer to add the new comment
+<span class="nc" id="L49">        Map&lt;String, Object&gt; response = commentService.addComment(comment);</span>
+        // Return the response with the added comment and HTTP status 200 (OK)
+<span class="nc" id="L51">        return new ResponseEntity&lt;&gt;(response, HttpStatus.OK);</span>
+    }
+
+    /**
+     * Deletes a comment based on its ID.
+     *
+     * @param id the ID of the comment to be deleted.
+     * @return a ResponseEntity containing a map with a success message and an HTTP status code.
+     */
+    @DeleteMapping(value = &quot;/deletecomment/{id}&quot;)
+    public ResponseEntity&lt;Object&gt; deleteComment(@PathVariable int id) {
+        // Call the service layer to delete the comment by its ID
+<span class="nc" id="L63">        Map&lt;String, Object&gt; response = commentService.deleteComment(id);</span>
+        // Return the response with a success message and HTTP status 200 (OK)
+<span class="nc" id="L65">        return new ResponseEntity&lt;&gt;(response, HttpStatus.OK);</span>
+    }
+
+    /**
+     * Edits an existing comment.
+     *
+     * @param comment the Comment object containing the updated details of the comment.
+     * @return a ResponseEntity containing a map with the updated comment and an HTTP status code.
+     */
+    @PostMapping(value = &quot;/editcomment&quot;)
+    public ResponseEntity&lt;Object&gt; editComment(@RequestBody Comment comment) {
+        // Call the service layer to edit the comment with the updated details
+<span class="nc" id="L77">        Map&lt;String, Object&gt; response = commentService.editComment(comment);</span>
+        // Return the response with the updated comment and HTTP status 200 (OK)
+<span class="nc" id="L79">        return new ResponseEntity&lt;&gt;(response, HttpStatus.OK);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

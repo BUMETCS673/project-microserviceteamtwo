@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProjectDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pro-manager</a> &gt; <a href="index.source.html" class="el_package">com.cs673olsum24.promanager.dao</a> &gt; <span class="el_source">ProjectDAO.java</span></div><h1>ProjectDAO.java</h1><pre class="source lang-java linenums">package com.cs673olsum24.promanager.dao;
+
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.PreparedStatementCallback;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.cs673olsum24.promanager.entity.AppUser;
+import com.cs673olsum24.promanager.entity.ProjectTasks;
+import com.cs673olsum24.promanager.entity.Projects;
+
+
+@Repository
+@Transactional
+@SuppressWarnings(&quot;unchecked&quot;)
+public class ProjectDAO {
+	@Autowired
+	private EntityManager entityManager;	 
+<span class="fc" id="L32">	public ProjectDAO(NamedParameterJdbcTemplate template) {  </span>
+<span class="fc" id="L33">		this.template = template;  </span>
+<span class="fc" id="L34">	}</span>
+
+
+	NamedParameterJdbcTemplate template;
+
+	/**
+	 * Retrieves all project records from the database.
+	 *
+	 * This method executes a native SQL query to fetch all columns of the project records
+	 * from the `project_ci` table. The retrieved columns include project ID, project name,
+	 * user ID, task ID, description, created date, updated date, status, and type.
+	 *
+	 * @return A list of Object arrays, where each array represents a row from the `project_ci`
+	 *         table. Each Object array contains the following columns:
+	 *         - projectid (Integer)
+	 *         - projectname (String)
+	 *         - userid (Integer)
+	 *         - taskid (Integer)
+	 *         - description (String)
+	 *         - created_on (Timestamp)
+	 *         - updated_on (Timestamp)
+	 *         - status (String)
+	 *         - type (String)
+	 *         
+	 *         If an exception occurs during query execution, an empty list is returned.
+	 *
+	 * @throws IllegalArgumentException If the query string is invalid.
+	 * @throws PersistenceException If there is a problem executing the query.
+	 */
+	
+	public  List&lt;Projects&gt;findAllProjects() {
+		try {
+<span class="nc" id="L66">			String sql = &quot;Select p from &quot; + Projects.class.getName() + &quot; p&quot;;</span>
+			
+			
+<span class="nc" id="L69">		    Query query = entityManager.createQuery(sql, ProjectTasks.class);</span>
+				
+<span class="nc" id="L71">		    return query.getResultList();</span>
+<span class="nc" id="L72">		} catch (Exception e) {</span>
+<span class="nc" id="L73">			return Collections.emptyList();</span>
+		}
+	}
+
+	
+	
+	public List&lt;Map&lt;String, Object&gt;&gt; findIdWiseProjects(String id) {
+		try {
+<span class="nc" id="L81">			String sql = &quot;SELECT p.project_id, p.projectname ,  u.NAME , p.active, p.description,  p.created_on, &quot;</span>
+<span class="nc" id="L82">					+ &quot;p.updated_on, p.status, p.type FROM &quot;+  Projects.class.getName() + &quot; p LEFT join &quot;+AppUser.class.getName() +&quot; u ON p.owner_id = u.USER_ID where p.project_id = '&quot;+id+&quot;'&quot;;</span>
+
+//			List&lt;Object[]&gt; results = query.getResultList();
+			
+
+<span class="nc" id="L87">			Query query = entityManager.createQuery(sql);</span>
+			
+
+	        
+
+<span class="nc" id="L92">	        List&lt;Object[]&gt; results = query.getResultList();</span>
+			
+
+	        
+<span class="nc" id="L96">	        List&lt;Map&lt;String, Object&gt;&gt; formattedResults = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L98" title="All 2 branches missed.">	        for (Object[] row : results) {</span>
+	        	
+<span class="nc" id="L100">	            Map&lt;String, Object&gt; rowMap = new HashMap&lt;&gt;();</span>
+	            
+	        
+<span class="nc" id="L103">	            rowMap.put(&quot;project_id&quot;, row[0]);</span>
+	            
+
+<span class="nc" id="L106">	            rowMap.put(&quot;projectname&quot;, row[1]);</span>
+
+<span class="nc" id="L108">	            rowMap.put(&quot;owner_name&quot;, row[2]);</span>
+<span class="nc" id="L109">	            rowMap.put(&quot;active&quot;, row[3]);</span>
+
+<span class="nc" id="L111">	            rowMap.put(&quot;description&quot;, row[4]);</span>
+<span class="nc" id="L112">	            rowMap.put(&quot;created_on&quot;, row[5]);</span>
+
+<span class="nc" id="L114">	            rowMap.put(&quot;updated_on&quot;, row[6]);</span>
+<span class="nc" id="L115">	            rowMap.put(&quot;status&quot;, row[7]);</span>
+
+<span class="nc" id="L117">	            rowMap.put(&quot;type&quot;, row[8]);</span>
+
+<span class="nc" id="L119">	            formattedResults.add(rowMap);</span>
+
+	          
+<span class="nc" id="L122">	        }</span>
+			
+			
+			
+<span class="nc" id="L126">			return formattedResults;</span>
+			
+			
+			
+			
+		
+<span class="nc" id="L132">		} catch (Exception e) {</span>
+<span class="nc" id="L133">			return Collections.emptyList();</span>
+		}
+	}
+
+	public void addProjects(Projects p) {
+
+<span class="nc" id="L139">		final String sql = &quot;insert into project_ci(project_id,projectname,owner_id,description,created_on,updated_on,status,type,active) &quot;</span>
+				+ &quot;values(:project_id,:projectname,:owner_id,:description,:created_on,:updated_on,:status,:type,:active)&quot;;	
+
+<span class="nc" id="L142">		Map&lt;String,Object&gt; map=new HashMap&lt;&gt;();  </span>
+<span class="nc" id="L143">		map.put(&quot;project_id&quot;, p.getProjectid());</span>
+<span class="nc" id="L144">		map.put(&quot;projectname&quot;, p.getProjectname());</span>
+<span class="nc" id="L145">		map.put(&quot;owner_id&quot;, p.getOwner_id());</span>
+<span class="nc" id="L146">		map.put(&quot;description&quot;, p.getDescription());</span>
+<span class="nc" id="L147">		map.put(&quot;created_on&quot;, p.getCreated_on());</span>
+<span class="nc" id="L148">		map.put(&quot;updated_on&quot;, p.getUpdated_on());</span>
+<span class="nc" id="L149">		map.put(&quot;status&quot;, p.getStatus());</span>
+<span class="nc" id="L150">		map.put(&quot;type&quot;, p.getType());	</span>
+<span class="nc" id="L151">		map.put(&quot;active&quot;, p.getActive());</span>
+
+<span class="nc" id="L153">		template.execute(sql,map,new PreparedStatementCallback&lt;Object&gt;() {  </span>
+			@Override  
+			public Object doInPreparedStatement(PreparedStatement ps)  
+					throws SQLException {  
+<span class="nc" id="L157">				return ps.executeUpdate(); </span>
+			}  
+		});
+<span class="nc" id="L160">	}</span>
+
+
+	public String deleteProject(String id) {		    	
+
+<span class="nc" id="L165">		final String sql1 =&quot;delete from project_ci WHERE project_id= :id&quot;;</span>
+<span class="nc" id="L166">		Map&lt;String,Object&gt; map1=new HashMap&lt;&gt;(); </span>
+
+<span class="nc" id="L168">		map1.put(&quot;id&quot;,id);</span>
+
+<span class="nc" id="L170">		template.execute(sql1,map1,new PreparedStatementCallback&lt;Object&gt;() {  </span>
+			@Override  
+			public Object doInPreparedStatement(PreparedStatement ps)  
+					throws SQLException {  
+<span class="nc" id="L174">				return ps.executeUpdate();  </span>
+			}  
+		});
+<span class="nc" id="L177">		return &quot;success&quot;;</span>
+	}
+
+
+
+	public void safeDeleteProject(Projects p) {
+
+<span class="nc" id="L184">		final String sql1 =&quot;UPDATE project_ci SET status= inactive WHERE projectid= :projectid&quot;;</span>
+
+<span class="nc" id="L186">		Map&lt;String,Object&gt; map=new HashMap&lt;&gt;();</span>
+
+<span class="nc" id="L188">		map.put(&quot;projectid&quot;, p.getProjectid());	 	</span>
+<span class="nc" id="L189">		map.put(&quot;status&quot;, p.getStatus());</span>
+
+<span class="nc" id="L191">		template.execute(sql1,map,new PreparedStatementCallback&lt;Object&gt;() {  </span>
+			@Override  
+			public Object doInPreparedStatement(PreparedStatement ps)  
+					throws SQLException {  
+<span class="nc" id="L195">				return ps.executeUpdate();  </span>
+			}  
+		});
+<span class="nc" id="L198">	}</span>
+
+
+
+	public void editProject(Projects p) {
+
+<span class="nc" id="L204">		final String sql1 =&quot;UPDATE project_ci SET projectname=:projectname,owner_id=:owner_id,description=:description ,updated_on= :updated_on, status=:status,type=:type WHERE project_id= :project_id&quot;;</span>
+
+<span class="nc" id="L206">		Map&lt;String,Object&gt; map=new HashMap&lt;&gt;();  </span>
+<span class="nc" id="L207">		map.put(&quot;project_id&quot;, p.getProjectid());</span>
+<span class="nc" id="L208">		map.put(&quot;projectname&quot;, p.getProjectname());</span>
+<span class="nc" id="L209">		map.put(&quot;owner_id&quot;, p.getOwner_id());		</span>
+<span class="nc" id="L210">		map.put(&quot;description&quot;, p.getDescription());</span>
+<span class="nc" id="L211">		map.put(&quot;updated_on&quot;, p.getUpdated_on());</span>
+<span class="nc" id="L212">		map.put(&quot;status&quot;, p.getStatus());</span>
+<span class="nc" id="L213">		map.put(&quot;type&quot;, p.getType());</span>
+
+<span class="nc" id="L215">		template.execute(sql1,map,new PreparedStatementCallback&lt;Object&gt;() {  </span>
+			@Override  
+			public Object doInPreparedStatement(PreparedStatement ps)  
+					throws SQLException {  
+<span class="nc" id="L219">				return ps.executeUpdate();  </span>
+			}  
+		});
+<span class="nc" id="L222">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
