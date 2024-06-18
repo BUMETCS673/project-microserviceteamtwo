@@ -88,7 +88,7 @@ public class TaskServiceImplementation implements TaskServices {
 	
 
 	@SuppressWarnings("unchecked")
-	public Map<String, Object> addTask(HttpServletRequest request, Map<String, Object> payload) {
+	public Map<String, Object> addTasks(HttpServletRequest request, Map<String, Object> payload) {
 		JSONObject data = JsonUtils.convertPayload(payload);
 		JSONArray tasks = (JSONArray) data.get("tasks");
 			     
@@ -107,61 +107,61 @@ public class TaskServiceImplementation implements TaskServices {
    }
 	
 
-	@SuppressWarnings("unchecked")
-	public Map<String, Object> addTasks(HttpServletRequest request, Map<String, Object> payload) {
+	// @SuppressWarnings("unchecked")
+	// public Map<String, Object> addTasks(HttpServletRequest request, Map<String, Object> payload) {
 
-		JSONObject data = JsonUtils.convertPayload(payload);
-		JSONArray tasks = (JSONArray) data.get("tasks");
+	// 	JSONObject data = JsonUtils.convertPayload(payload);
+	// 	JSONArray tasks = (JSONArray) data.get("tasks");
 
-		Iterator<JSONObject> result = tasks.iterator();
-		while (result.hasNext()) {
+	// 	Iterator<JSONObject> result = tasks.iterator();
+	// 	while (result.hasNext()) {
 			
 			
-			JSONObject each = (JSONObject) result.next();
+	// 		JSONObject each = (JSONObject) result.next();
 			
-			Long due_date = (Long) each.getOrDefault("created_on", 0);
-			Long created_on = (Long) each.getOrDefault("created_on", 0);
-			Long updated_on = (Long) each.getOrDefault("updated_on", 0);
+	// 		Long due_date = (Long) each.getOrDefault("created_on", 0);
+	// 		Long created_on = (Long) each.getOrDefault("created_on", 0);
+	// 		Long updated_on = (Long) each.getOrDefault("updated_on", 0);
 			
-			int owner_id = (int) each.getOrDefault("owner_id", 1);
+	// 		int owner_id = (int) each.getOrDefault("owner_id", 1);
 
 
-			ProjectTasks t = new ProjectTasks();
+	// 		ProjectTasks t = new ProjectTasks();
 			
-			t.setTask_id((String) each.getOrDefault("task_id", "NA"));
+	// 		t.setTask_id((String) each.getOrDefault("task_id", "NA"));
 			
-			t.setProject_id((String) each.getOrDefault("project_id", "NA"));
+	// 		t.setProject_id((String) each.getOrDefault("project_id", "NA"));
 			
-			t.setTask_name((String) each.getOrDefault("task_name", "NA"));
+	// 		t.setTask_name((String) each.getOrDefault("task_name", "NA"));
 			
-			t.setDescription(each.getOrDefault("description", "NA").toString());
+	// 		t.setDescription(each.getOrDefault("description", "NA").toString());
 			
-			t.setStatus((String) each.getOrDefault("status", "OPEN"));
+	// 		t.setStatus((String) each.getOrDefault("status", "OPEN"));
 			
-			t.setPriority((String) each.getOrDefault("priority", "NA"));
+	// 		t.setPriority((String) each.getOrDefault("priority", "NA"));
 			
 			
-			t.setAssigned_user_id(owner_id);
+	// 		t.setAssigned_user_id(owner_id);
 			
-			t.setDue_date((long) due_date.doubleValue());
+	// 		t.setDue_date((long) due_date.doubleValue());
 			
-			t.setCreated_on((long) created_on.doubleValue());
-			t.setUpdated_on((long) updated_on.doubleValue());
+	// 		t.setCreated_on((long) created_on.doubleValue());
+	// 		t.setUpdated_on((long) updated_on.doubleValue());
 			
 			
 	
-			try {
-				this.taskDAO.addTaskProjects(t);
-			} catch (Exception e) {
-				System.out.println(e);
-			}
-		}
+	// 		try {
+	// 			this.taskDAO.addTaskProjects(t);
+	// 		} catch (Exception e) {
+	// 			System.out.println(e);
+	// 		}
+	// 	}
 
-		Map<String, Object> map = new HashMap<>();
-		map.put("Response", "OK");
+	// 	Map<String, Object> map = new HashMap<>();
+	// 	map.put("Response", "OK");
 
-		return map;
-	}
+	// 	return map;
+	// }
 	
 	public Map<String, Object> deleteTask(String id)
 	{
