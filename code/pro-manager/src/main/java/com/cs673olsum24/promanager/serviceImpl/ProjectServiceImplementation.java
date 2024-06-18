@@ -55,35 +55,20 @@ public class ProjectServiceImplementation implements ProjectServices {
 			JSONObject each = (JSONObject) result.next();
 			
 			
-//			Object createdOnObj = each.getOrDefault("updated_on", 0L);
-//			Long createdOn;
-//			if (createdOnObj instanceof Integer) {
-//				createdOn = ((Integer) createdOnObj).longValue();
-//			} else {
-//				createdOn = (Long) createdOnObj;
-//			}
+
 			Long createdOn = (Long) each.getOrDefault("created_on", 0);
 			
 			
 			System.out.println("here update");
 			
 			Long updatedOn = (Long) each.getOrDefault("updated_on", 0);
-//			Object updatedOnObj = each.getOrDefault("updated_on", 0L);
-//			Long updatedOn;
-//			if (updatedOnObj instanceof Integer) {
-//				updatedOn = ((Integer) updatedOnObj).longValue();
-//			} else {
-//				updatedOn = (Long) updatedOnObj;
-//			}
-			
+
 			
 			System.out.println("owner update");
 			
 			System.out.println(each.getOrDefault("project_id", "NA"));
 			
 			
-//			int owner_id = (int) each.getOrDefault("owner_id", 1);
-//			
 			Object ownerIdObj = each.getOrDefault("owner_id", 1);
 			int owner_id;
 

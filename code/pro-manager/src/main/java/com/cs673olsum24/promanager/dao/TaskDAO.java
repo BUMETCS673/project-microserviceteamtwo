@@ -158,6 +158,26 @@ public class TaskDAO {
 			}  
 		});
 	}
+	
+	
+	public String deleteTask(String id) {		    	
+
+		final String sql1 ="delete from tasks WHERE task_id= :id";
+		Map<String,Object> map1=new HashMap<>(); 
+
+		map1.put("id",id);
+
+		template.execute(sql1,map1,new PreparedStatementCallback<Object>() {  
+			@Override  
+			public Object doInPreparedStatement(PreparedStatement ps)  
+					throws SQLException {  
+				return ps.executeUpdate();  
+			}  
+		});
+		return "success";
+	}
+
+
 
 
 }

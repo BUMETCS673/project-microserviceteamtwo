@@ -140,6 +140,17 @@ public Map<String, Object> editTask(JSONObject each) {
 
 		return map;
 	}
+	
+	public Map<String, Object> deleteTask(String id)
+	{
+		Map<String, Object> map2 = new HashMap<>();
+
+		this.taskDAO.deleteTask(id);
+
+		map2.put("Response","Success");
+		return map2;
+
+	}
 
 
 
