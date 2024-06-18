@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.json.simple.JSONObject;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -59,6 +60,24 @@ public class ProjectControllerTest {
 
     // Insert the project
     projectServices.addProject(null, payload);
+  }
+  
+  @AfterEach
+  public void cleanup() {
+      try {
+          // Fetch all projects
+          Map<String, Object> response = projectServices.getAllProjects();
+          if (response != null && response.containsKey("projects")) {
+              List<Projects> projects = (List<Projects>) response.get("projects");
+              // Delete each project created during the test
+              for (Projects project : projects) {
+                  String projectId = project.getProjectid();
+                  projectServices.deleteProject(projectId);
+              }
+          }
+      } catch (Exception e) {
+          // Ignore if there was an error fetching or deleting projects
+      }
   }
 
   @Test

@@ -40,9 +40,7 @@ public class TaskControllerTests {
 	   private String testTaskId = "task_002";
 	   
 	   private String testProjectId = "proj_002";
-	   
-	   
-   
+	 
 	   @BeforeEach
 	   public void setup() throws JsonProcessingException {
 		   
