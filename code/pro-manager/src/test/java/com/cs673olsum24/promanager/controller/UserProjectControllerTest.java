@@ -18,6 +18,33 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import com.cs673olsum24.promanager.ProManagerApplication;
+import com.cs673olsum24.promanager.service.ProjectServices;
+
+import com.cs673olsum24.promanager.service.TaskServices;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
+
+import org.junit.jupiter.api.AfterEach;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+
+
 /*
  * Author: Pranjal Ekhande
  * 
@@ -31,11 +58,75 @@ import static org.mockito.Mockito.when;
  */
 
 
+@SpringBootTest(classes = ProManagerApplication.class)
+@ActiveProfiles("test")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UserProjectControllerTest {
 
-	 @Mock
+	@Autowired
 	 private UserProjectServices userProjectServices;
+	 
+	 
+	   
+	   @Autowired private ProjectServices projectServices;
+	   
+	   
+	   private int testPROJECT_USER_ID = 2;
+	   
+	   private String testProjectId = "proj_002";
+	   
 
+	   @BeforeEach
+	   public void setup() throws JsonProcessingException {
+		   
+		   
+		   Map<String, Object> payload_projects = new HashMap<>();
+		   payload_projects.put(
+			         "projects",
+			         new Object[] {
+			           new HashMap<String, Object>() {
+			             {
+			               put("project_id", testProjectId);
+			               put("projectname", "Initial Test Project");
+			               put("owner_id", 123);
+			               put("description", "Initial description");
+			               put("created_on", 1622547800L);
+			               put("updated_on", 1622547800L);
+			               put("status", "Inactive");
+			               put("type", "Initial");
+			               put("active", true);
+			             }
+			           }
+			         });
+	
+		     // Insert the project
+		     projectServices.addProject(null, payload_projects);
+		     
+		     
+		     // Prepare and insert a test project
+		     
+
+			 Map<String, Object> payload_users = new HashMap<>();
+			 payload_users.put(
+			         "projects",
+			         new Object[] {
+			           new HashMap<String, Object>() {
+			             {
+			               put("PROJECT_USER_ID", testPROJECT_USER_ID);
+			               put("PROJECT_ID", testProjectId);
+			               put("USER_ID", 1);
+			               put("ROLE", "Initial Viewer");
+			               put("created_at", 1718390619L);
+			               put("updated_at", 1718390619L);
+			              
+			             
+			             }
+			           }
+			         });
+		     userProjectServices.addProjectMember(null, payload_users);        
+	   }
+	   
+	   
 	    @InjectMocks
 	    private UserProjectController userProjectController;
 

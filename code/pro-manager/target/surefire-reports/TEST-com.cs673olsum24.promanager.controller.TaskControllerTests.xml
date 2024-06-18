@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.cs673olsum24.promanager.controller.ProjectControllerTest" time="1.687" tests="2" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.cs673olsum24.promanager.controller.TaskControllerTests" time="11.254" tests="5" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="22"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -66,10 +66,8 @@
     <property name="java.class.version" value="66.0"/>
     <property name="LOGGED_APPLICATION_NAME" value="[pro-manager] "/>
   </properties>
-  <testcase name="testEditProject" classname="com.cs673olsum24.promanager.controller.ProjectControllerTest" time="0.685">
-    <system-out><![CDATA[&amp#27;[2m2024-06-18T23:55:30.067+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36mt.c.s.AnnotationConfigContextLoaderUtils&amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m Could not detect default configuration classes for test class [com.cs673olsum24.promanager.controller.ProjectControllerTest]: ProjectControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-&amp#27;[2m2024-06-18T23:55:30.135+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36m.b.t.c.SpringBootTestContextBootstrapper&amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m Found @SpringBootConfiguration com.cs673olsum24.promanager.ProManagerApplication for test class com.cs673olsum24.promanager.controller.ProjectControllerTest
-
+  <testcase name="testRetrieveProject" classname="com.cs673olsum24.promanager.controller.TaskControllerTests" time="2.107">
+    <system-out><![CDATA[
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
@@ -78,13 +76,88 @@
  =========|_|==============|___/=/_/_/_/
 &amp#27;[32m :: Spring Boot :: &amp#27;[39m              &amp#27;[2m (v3.2.5)&amp#27;[0;39m
 
-&amp#27;[2m2024-06-18T23:55:30.175+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36mc.c.p.controller.ProjectControllerTest  &amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m Starting ProjectControllerTest using Java 22.0.1 with PID 20948 (started by pranjal in /Users/pranjal/Documents/Summer 2024/project-microserviceteamtwo/code/pro-manager)
-&amp#27;[2m2024-06-18T23:55:30.175+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36mc.c.p.controller.ProjectControllerTest  &amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m No active profile set, falling back to 1 default profile: "default"
-&amp#27;[2m2024-06-18T23:55:30.988+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36mo.s.b.t.m.w.SpringBootMockServletContext&amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m Initializing Spring TestDispatcherServlet ''
-&amp#27;[2m2024-06-18T23:55:30.989+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36mo.s.t.web.servlet.TestDispatcherServlet &amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m Initializing Servlet ''
-&amp#27;[2m2024-06-18T23:55:30.993+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36mo.s.t.web.servlet.TestDispatcherServlet &amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m Completed initialization in 2 ms
-&amp#27;[2m2024-06-18T23:55:31.015+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36mc.c.p.controller.ProjectControllerTest  &amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m Started ProjectControllerTest in 0.875 seconds (process running for 13.506)
+&amp#27;[2m2024-06-18T23:55:20.365+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36mc.c.p.controller.TaskControllerTests    &amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m Starting TaskControllerTests using Java 22.0.1 with PID 20948 (started by pranjal in /Users/pranjal/Documents/Summer 2024/project-microserviceteamtwo/code/pro-manager)
+&amp#27;[2m2024-06-18T23:55:20.370+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36mc.c.p.controller.TaskControllerTests    &amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m The following 1 profile is active: "test"
+&amp#27;[2m2024-06-18T23:55:21.690+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36m.s.d.r.c.RepositoryConfigurationDelegate&amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+&amp#27;[2m2024-06-18T23:55:21.750+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36m.s.d.r.c.RepositoryConfigurationDelegate&amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m Finished Spring Data repository scanning in 37 ms. Found 0 JPA repository interfaces.
+&amp#27;[2m2024-06-18T23:55:22.476+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36mcom.zaxxer.hikari.HikariDataSource      &amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m HikariPool-1 - Starting...
+&amp#27;[2m2024-06-18T23:55:23.152+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36mcom.zaxxer.hikari.pool.HikariPool       &amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+&amp#27;[2m2024-06-18T23:55:23.156+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36mcom.zaxxer.hikari.HikariDataSource      &amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m HikariPool-1 - Start completed.
+&amp#27;[2m2024-06-18T23:55:23.470+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36mo.hibernate.jpa.internal.util.LogHelper &amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m HHH000204: Processing PersistenceUnitInfo [name: default]
+&amp#27;[2m2024-06-18T23:55:23.628+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36morg.hibernate.Version                   &amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m HHH000412: Hibernate ORM core version 6.4.4.Final
+&amp#27;[2m2024-06-18T23:55:23.743+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36mo.h.c.internal.RegionFactoryInitiator   &amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m HHH000026: Second-level cache disabled
+&amp#27;[2m2024-06-18T23:55:24.347+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36mo.s.o.j.p.SpringPersistenceUnitInfo     &amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m No LoadTimeWeaver setup: ignoring JPA class transformer
+&amp#27;[2m2024-06-18T23:55:24.427+05:30&amp#27;[0;39m &amp#27;[33m WARN&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36morg.hibernate.orm.deprecation           &amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+&amp#27;[2m2024-06-18T23:55:26.486+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36mo.h.e.t.j.p.i.JtaPlatformInitiator      &amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: drop table if exists app_user cascade
+Hibernate: drop table if exists comments cascade
+Hibernate: drop table if exists project_ci cascade
+Hibernate: drop table if exists project_user cascade
+Hibernate: drop table if exists tasks cascade
+Hibernate: drop sequence if exists app_user_seq
+Hibernate: drop sequence if exists project_ci_seq
+Hibernate: drop sequence if exists project_user_seq
+Hibernate: drop sequence if exists tasks_seq
+Hibernate: create sequence app_user_seq start with 1 increment by 50
+Hibernate: create sequence project_ci_seq start with 1 increment by 50
+Hibernate: create sequence project_user_seq start with 1 increment by 50
+Hibernate: create sequence tasks_seq start with 1 increment by 50
+Hibernate: create table app_user (user_id integer not null, email varchar(255), name varchar(255), password varchar(255), primary key (user_id))
+Hibernate: create table comments (id serial not null, project_id integer, user_id integer, created_on timestamp(6), comments TEXT, primary key (id))
+Hibernate: create table project_ci (active boolean, owner_id integer, created_on bigint, updated_on bigint, description varchar(255), project_id varchar(255) not null, projectname varchar(255), status varchar(255), type varchar(255), primary key (project_id))
+Hibernate: create table project_user (project_user_id integer not null, user_id integer, created_at bigint, updated_at bigint, project_id varchar(255), role varchar(255), primary key (project_user_id))
+Hibernate: create table tasks (assigned_user_id integer, created_on bigint, due_date bigint, updated_on bigint, description varchar(255), priority varchar(255), project_id varchar(255), status varchar(255), task_id varchar(255) not null, task_name varchar(255), primary key (task_id))
+&amp#27;[2m2024-06-18T23:55:26.566+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36mj.LocalContainerEntityManagerFactoryBean&amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m Initialized JPA EntityManagerFactory for persistence unit 'default'
+&amp#27;[2m2024-06-18T23:55:27.081+05:30&amp#27;[0;39m &amp#27;[33m WARN&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36mJpaBaseConfiguration$JpaWebConfiguration&amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+&amp#27;[2m2024-06-18T23:55:27.755+05:30&amp#27;[0;39m &amp#27;[32m INFO&amp#27;[0;39m &amp#27;[35m20948&amp#27;[0;39m &amp#27;[2m---&amp#27;[0;39m &amp#27;[2m[pro-manager] [           main]&amp#27;[0;39m &amp#27;[2m&amp#27;[0;39m&amp#27;[36mc.c.p.controller.TaskControllerTests    &amp#27;[0;39m &amp#27;[2m:&amp#27;[0;39m Started TaskControllerTests in 8.064 seconds (process running for 10.246)
+here update
+owner update
+proj_002
+owner update complete
+Hibernate: select p1_0.project_id,p1_0.projectname,pt1_0.task_id,pt1_0.task_name,pt1_0.description,pt1_0.status,pt1_0.priority,pt1_0.due_date,au1_0.name from project_ci p1_0 join tasks pt1_0 on p1_0.project_id=pt1_0.project_id left join app_user au1_0 on pt1_0.assigned_user_id=au1_0.user_id where p1_0.project_id='proj_002'
+Hibernate: select p1_0.project_id,p1_0.projectname,pt1_0.task_id,pt1_0.task_name,pt1_0.description,pt1_0.status,pt1_0.priority,pt1_0.due_date,au1_0.name from project_ci p1_0 join tasks pt1_0 on p1_0.project_id=pt1_0.project_id left join app_user au1_0 on pt1_0.assigned_user_id=au1_0.user_id where p1_0.project_id='proj_002'
+]]></system-out>
+    <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (/Users/pranjal/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.13/byte-buddy-agent-1.14.13.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+  </testcase>
+  <testcase name="testGetAllProjectTasks" classname="com.cs673olsum24.promanager.controller.TaskControllerTests" time="0.026">
+    <system-out><![CDATA[here update
+owner update
+proj_002
+owner update complete
+Hibernate: select p1_0.project_id,p1_0.projectname,pt1_0.task_id,pt1_0.task_name,pt1_0.description,pt1_0.status,pt1_0.priority,pt1_0.due_date,au1_0.name from project_ci p1_0 join tasks pt1_0 on p1_0.project_id=pt1_0.project_id left join app_user au1_0 on pt1_0.assigned_user_id=au1_0.user_id where p1_0.project_id='proj_002'
+Hibernate: select p1_0.project_id,p1_0.projectname,pt1_0.task_id,pt1_0.task_name,pt1_0.description,pt1_0.status,pt1_0.priority,pt1_0.due_date,au1_0.name from project_ci p1_0 join tasks pt1_0 on p1_0.project_id=pt1_0.project_id left join app_user au1_0 on pt1_0.assigned_user_id=au1_0.user_id where p1_0.project_id='proj_002'
 ]]></system-out>
   </testcase>
-  <testcase name="testDeleteProject" classname="com.cs673olsum24.promanager.controller.ProjectControllerTest" time="0.029"/>
+  <testcase name="testRetrieveNonExistentProject" classname="com.cs673olsum24.promanager.controller.TaskControllerTests" time="0.03">
+    <system-out><![CDATA[here update
+owner update
+proj_002
+owner update complete
+Hibernate: select p1_0.project_id,p1_0.projectname,pt1_0.task_id,pt1_0.task_name,pt1_0.description,pt1_0.status,pt1_0.priority,pt1_0.due_date,au1_0.name from project_ci p1_0 join tasks pt1_0 on p1_0.project_id=pt1_0.project_id left join app_user au1_0 on pt1_0.assigned_user_id=au1_0.user_id where p1_0.project_id='nonexistent'
+Hibernate: select p1_0.project_id,p1_0.projectname,pt1_0.task_id,pt1_0.task_name,pt1_0.description,pt1_0.status,pt1_0.priority,pt1_0.due_date,au1_0.name from project_ci p1_0 join tasks pt1_0 on p1_0.project_id=pt1_0.project_id left join app_user au1_0 on pt1_0.assigned_user_id=au1_0.user_id where p1_0.project_id='proj_002'
+]]></system-out>
+  </testcase>
+  <testcase name="testDeleteProject" classname="com.cs673olsum24.promanager.controller.TaskControllerTests" time="0.037">
+    <system-out><![CDATA[here update
+owner update
+proj_002
+owner update complete
+Hibernate: select p1_0.project_id,p1_0.projectname,pt1_0.task_id,pt1_0.task_name,pt1_0.description,pt1_0.status,pt1_0.priority,pt1_0.due_date,au1_0.name from project_ci p1_0 join tasks pt1_0 on p1_0.project_id=pt1_0.project_id left join app_user au1_0 on pt1_0.assigned_user_id=au1_0.user_id where p1_0.project_id='proj_002'
+Hibernate: select p1_0.project_id,p1_0.projectname,pt1_0.task_id,pt1_0.task_name,pt1_0.description,pt1_0.status,pt1_0.priority,pt1_0.due_date,au1_0.name from project_ci p1_0 join tasks pt1_0 on p1_0.project_id=pt1_0.project_id left join app_user au1_0 on pt1_0.assigned_user_id=au1_0.user_id where p1_0.project_id='proj_002'
+]]></system-out>
+  </testcase>
+  <testcase name="testAddTasks" classname="com.cs673olsum24.promanager.controller.TaskControllerTests" time="0.046">
+    <system-out><![CDATA[here update
+owner update
+proj_002
+owner update complete
+Hibernate: select p1_0.project_id,p1_0.projectname,au1_0.name,p1_0.active,p1_0.description,p1_0.created_on,p1_0.updated_on,p1_0.status,p1_0.type from project_ci p1_0 left join app_user au1_0 on p1_0.owner_id=au1_0.user_id where p1_0.project_id='proj_002'
+Hibernate: select p1_0.project_id,p1_0.projectname,pt1_0.task_id,pt1_0.task_name,pt1_0.description,pt1_0.status,pt1_0.priority,pt1_0.due_date,au1_0.name from project_ci p1_0 join tasks pt1_0 on p1_0.project_id=pt1_0.project_id left join app_user au1_0 on pt1_0.assigned_user_id=au1_0.user_id where p1_0.project_id='proj_002'
+Hibernate: select p1_0.project_id,p1_0.projectname,pt1_0.task_id,pt1_0.task_name,pt1_0.description,pt1_0.status,pt1_0.priority,pt1_0.due_date,au1_0.name from project_ci p1_0 join tasks pt1_0 on p1_0.project_id=pt1_0.project_id left join app_user au1_0 on pt1_0.assigned_user_id=au1_0.user_id where p1_0.project_id='proj_002'
+]]></system-out>
+  </testcase>
 </testsuite>

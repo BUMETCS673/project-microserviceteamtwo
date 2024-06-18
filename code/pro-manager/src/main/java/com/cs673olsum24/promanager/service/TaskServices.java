@@ -20,4 +20,9 @@ public interface TaskServices {
 
 	public abstract Map<String, Object> addTasks(HttpServletRequest request,Map<String, Object> payload) ;
 	
+	public abstract Map<String, Object> deleteTask(String id); //permanant delete
+	
+	public abstract Map<String, Object> addTask(HttpServletRequest request,Map<String, Object> payload) ;
+	
+	
 }
