@@ -3,6 +3,8 @@ package com.cs673olsum24.promanager.serviceImpl;
 import com.cs673olsum24.promanager.dao.CommentDAO;
 import com.cs673olsum24.promanager.entity.Comment;
 import com.cs673olsum24.promanager.service.CommentService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.HashMap;
@@ -30,20 +32,21 @@ public class CommentServiceImplementation implements CommentService {
      * @return A Map containing a list of Comment objects associated with the given project ID.
      */
     @Override
-    public Map<String, Object> getAllComments(int projectId) {
-        // Initialize a response map to hold the result
-        Map<String, Object> response = new HashMap<>();
+    public Map<String, Object> getAllComments(String projectId) {
+       
+    	Map<String, Object> map = new HashMap<>();
         
-        // Use the DAO to get the list of comments for the specified project ID
-        List<Comment> comments = commentDAO.getAllComments(projectId);
+       
+        List<Map<String, Object>> data = this.commentDAO.getAllComments(projectId);
         
-        // Add the list of comments to the response map
-        response.put("comments", comments);
-        
-        // Return the response map
-        return response;
+        System.out.println(data);
+       
+        map.put("comments", data);
+		return map;
     }
-
+  
+    
+	
     /**
      * Adds a new comment to the system.
      *

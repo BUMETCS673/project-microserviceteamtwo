@@ -1,10 +1,14 @@
 package com.cs673olsum24.promanager.dao;
 
+import com.cs673olsum24.promanager.entity.AppUser;
 import com.cs673olsum24.promanager.entity.Comment;
+import com.cs673olsum24.promanager.entity.Projects;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -12,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -29,12 +34,10 @@ import java.util.Map;
 @Transactional  // Specifies that the methods in this class should be executed within a transactional context.
 public class CommentDAO {
 
-    // Injects the JPA EntityManager to manage and query Comment entities.
-    @PersistenceContext
+    
+	@Autowired
     private EntityManager entityManager;
 
-    // Template for executing SQL statements with named parameters.
-    private NamedParameterJdbcTemplate template;
 
     /**
      * Constructor for injecting NamedParameterJdbcTemplate.
@@ -44,6 +47,10 @@ public class CommentDAO {
     public CommentDAO(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.template = namedParameterJdbcTemplate;
     }
+    
+    // Template for executing SQL statements with named parameters.
+    private NamedParameterJdbcTemplate template;
+    
 
     /**
      * Retrieves all comments for a given project ID from the database using JPA.
@@ -52,20 +59,53 @@ public class CommentDAO {
      * @return A list of Comment objects representing the comments for the given project ID.
      *         If no comments are found, an empty list is returned.
      */
-    @SuppressWarnings("unchecked")  // Suppresses unchecked cast warning for the query result.
-    public List<Comment> getAllComments(int project_id) {
+    
+    
+    
+    
+  
+    public List<Map<String, Object>> getAllComments(String project_id) {
         try {
-            // JPQL query to select comments by project ID.
-            String getCommentsql = "SELECT c FROM Comment c WHERE c.projectId = :project_id";
-            Query query = entityManager.createQuery(getCommentsql);
-            query.setParameter("project_id", project_id);  // Sets the project_id parameter in the query.
-            return query.getResultList();  // Executes the query and returns the list of comments.
+        	
+        	String sql = "SELECT *  FROM comments"+" c where c.project_id = '"+project_id+"'";
+
+           
+            Query query = entityManager.createNativeQuery(sql);
+           
+	        List<Object[]> results = query.getResultList();		
+
+	        List<Map<String, Object>> formattedResults = new ArrayList<>();
+            
+            for (Object[] row : results) {
+	        	
+		            Map<String, Object> rowMap = new HashMap<>();
+		           
+		            
+		        
+		            rowMap.put("comment_id", row[0]);
+
+		            rowMap.put("project_id", row[1]);
+		            rowMap.put("comments", row[2]);
+	
+		            rowMap.put("user_id", row[3]);
+		            rowMap.put("created_on", row[4]);
+	
+		            formattedResults.add(rowMap);
+		            
+		           
+	          
+	        } 
+            return formattedResults;  
         } catch (Exception e) {
             // Returns an empty list if an exception occurs during the query execution.
             return Collections.emptyList();
         }
     }
+    
 
+    
+    
+    
     /**
      * Adds a new comment to the database using NamedParameterJdbcTemplate.
      *
@@ -74,7 +114,7 @@ public class CommentDAO {
      */
     public Comment addComment(Comment comment) {
         // SQL statement to insert a new comment into the database.
-        final String addCommentsql = "INSERT INTO comments (project_id, comments, user_id, created_on) VALUES (:project_id, :comments, :user_id, :created_on)";
+        final String addCommentsql = "INSERT INTO comments (project_id, comments, user_id, created_on) VALUES (:project_id, :comments, :user_id, NOW())";
         
         // Maps the named parameters in the SQL statement to the Comment object properties.
         Map<String, Object> parameters = new HashMap<>();

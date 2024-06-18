@@ -1,6 +1,8 @@
 package com.cs673olsum24.promanager.service;
 
 import com.cs673olsum24.promanager.entity.Comment;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import java.util.Map;
 
 /**
@@ -20,7 +22,9 @@ public interface CommentService {
      * @return A Map containing the result of the operation. The map typically includes
      *         a success flag, a message, and the list of comments if the retrieval is successful.
      */
-    Map<String, Object> getAllComments(int projectId);
+	public abstract Map<String, Object> getAllComments(String projectId);
+    
+   
 
     /**
      * Adds a new comment to the system.

@@ -2,6 +2,9 @@ package com.cs673olsum24.promanager.controller;
 
 import com.cs673olsum24.promanager.entity.Comment;
 import com.cs673olsum24.promanager.service.CommentService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,15 +31,19 @@ public class CommentController {
      *
      * @param projectId the ID of the project whose comments are to be retrieved.
      * @return a ResponseEntity containing a map with the list of comments and an HTTP status code.
+     * 		   response with the list of comments and HTTP status 200 (OK)
      */
     @GetMapping(value = "/getallcomments/{projectId}")
-    public ResponseEntity<Object> getAllComments(@PathVariable int projectId) {
+    public ResponseEntity<Object> getAllComments(@PathVariable("projectId") String id) {
         // Call the service layer to get all comments for the specified project ID
-        Map<String, Object> response = commentService.getAllComments(projectId);
-        // Return the response with the list of comments and HTTP status 200 (OK)
+        Map<String, Object> response = commentService.getAllComments(id);
+        
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
+    
+    
+    
+    
     /**
      * Adds a new comment to the specified project.
      *
