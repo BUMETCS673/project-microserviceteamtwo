@@ -103,7 +103,7 @@ public class CommentDAO {
      * @param comment the Comment object to be added to the database.
      * @return The added Comment object.
      */
-    public Comment addComment(Comment comment) {
+    public void addComment(Comment comment) {
         // SQL statement to insert a new comment into the database.
         final String addCommentsql = "INSERT INTO comments (project_id, comments, user_id, created_on) VALUES (:project_id, :comments, :user_id, NOW())";
         
@@ -121,7 +121,7 @@ public class CommentDAO {
                 return ps.executeUpdate();  // Executes the update and returns the result.
             }
         });
-        return comment;  // Returns the added comment.
+  
     }
 
     /**
@@ -129,7 +129,7 @@ public class CommentDAO {
      *
      * @param id the ID of the comment to be deleted.
      */
-    public void deleteComment(int id) {
+    public String deleteComment(int id) {
         // SQL statement to delete a comment from the database by ID.
         final String deleteCommentsql = "DELETE FROM comments WHERE comment_id = :comment_id";
         
@@ -144,6 +144,8 @@ public class CommentDAO {
                 return ps.executeUpdate();  // Executes the update and returns the result.
             }
         });
+        
+        return "success";
     }
 
     /**
@@ -152,7 +154,7 @@ public class CommentDAO {
      * @param comment the Comment object containing the updated comment data.
      * @return The updated Comment object.
      */
-    public Comment editComment(Comment comment) {
+    public void editComment(Comment comment) {
         // SQL statement to update the comment text of an existing comment by ID.
         final String updateCommentsql = "UPDATE comments SET comments = :comments WHERE comment_id = :comment_id";
         
@@ -168,6 +170,5 @@ public class CommentDAO {
                 return ps.executeUpdate();  // Executes the update and returns the result.
             }
         });
-        return comment;  // Returns the updated comment.
     }
 }
