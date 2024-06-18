@@ -23,7 +23,7 @@ public class Comment {
     private int id;  // Unique identifier for the comment.
 
     @Column(name = "project_id")  // Maps this field to the "project_id" column in the "comments" table.
-    private int projectId;  // ID of the project to which the comment belongs.
+    private String projectId;  // ID of the project to which the comment belongs.
 
     @Column(name = "comments", columnDefinition = "TEXT")  // Maps this field to the "comments" column, specifying the data type as TEXT.
     private String comments;  // The content of the comment.
@@ -51,7 +51,7 @@ public class Comment {
      * @param userId    the ID of the user who made the comment.
      * @param createdOn the timestamp when the comment was created.
      */
-    public Comment(int projectId, String comments, int userId, Date createdOn) {
+    public Comment(String projectId, String comments, int userId, Date createdOn) {
         this.projectId = projectId;
         this.comments = comments;
         this.userId = userId;
@@ -83,17 +83,17 @@ public class Comment {
      *
      * @return the project ID.
      */
-    public int getProjectId() {
+    public String getProjectId() {
         return projectId;
     }
 
     /**
      * Sets the ID of the project to which the comment belongs.
      *
-     * @param projectId the new project ID.
+     * @param string the new project ID.
      */
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
+    public void setProjectId(String string) {
+        this.projectId = string;
     }
 
     /**
@@ -149,4 +149,6 @@ public class Comment {
     public void setCreatedOn(Date createdOn) {
         this.createdOn = createdOn;
     }
+
+	
 }
