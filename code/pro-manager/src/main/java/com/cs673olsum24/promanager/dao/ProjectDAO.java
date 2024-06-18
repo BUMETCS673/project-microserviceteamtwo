@@ -149,6 +149,8 @@ public class ProjectDAO {
 		map.put("status", p.getStatus());
 		map.put("type", p.getType());	
 		map.put("active", p.getActive());
+		
+		System.out.println(sql);
 
 		template.execute(sql,map,new PreparedStatementCallback<Object>() {  
 			@Override  

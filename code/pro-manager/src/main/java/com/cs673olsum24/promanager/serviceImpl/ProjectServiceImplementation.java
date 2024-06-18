@@ -38,9 +38,6 @@ public class ProjectServiceImplementation implements ProjectServices {
 		map.put("project", data);
 		return map;
 	}
-
-
-	
 	
 	
 	@SuppressWarnings("unchecked")
@@ -65,7 +62,6 @@ public class ProjectServiceImplementation implements ProjectServices {
 			Long createdOn = (Long) each.getOrDefault("created_on", 0);
 			
 			
-			System.out.println("here update");
 			
 			Long updatedOn = (Long) each.getOrDefault("updated_on", 0);
 //			Object updatedOnObj = each.getOrDefault("updated_on", 0L);
@@ -77,7 +73,6 @@ public class ProjectServiceImplementation implements ProjectServices {
 //			}
 			
 			
-			System.out.println("owner update");
 			
 			System.out.println(each.getOrDefault("project_id", "NA"));
 			
@@ -95,7 +90,6 @@ public class ProjectServiceImplementation implements ProjectServices {
 			    owner_id = 1; // Default value
 			}
 			
-			System.out.println("owner update complete");
 			
 
 			Projects p = new Projects();

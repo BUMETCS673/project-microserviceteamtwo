@@ -59,11 +59,6 @@ public class CommentDAO {
      * @return A list of Comment objects representing the comments for the given project ID.
      *         If no comments are found, an empty list is returned.
      */
-    
-    
-    
-    
-  
     public List<Map<String, Object>> getAllComments(String project_id) {
         try {
         	
@@ -79,8 +74,6 @@ public class CommentDAO {
             for (Object[] row : results) {
 	        	
 		            Map<String, Object> rowMap = new HashMap<>();
-		           
-		            
 		        
 		            rowMap.put("comment_id", row[0]);
 
@@ -90,9 +83,7 @@ public class CommentDAO {
 		            rowMap.put("user_id", row[3]);
 		            rowMap.put("created_on", row[4]);
 	
-		            formattedResults.add(rowMap);
-		            
-		           
+		            formattedResults.add(rowMap);	           
 	          
 	        } 
             return formattedResults;  
