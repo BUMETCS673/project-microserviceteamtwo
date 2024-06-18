@@ -17,6 +17,8 @@ import java.util.Map;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 
+import org.junit.jupiter.api.AfterEach;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -42,12 +44,7 @@ public class TaskControllerTests {
 	   private String testProjectId = "proj_002";
 	   
 	   
-//	   @BeforeEach
-//	   public void setupProject() throws JsonProcessingException {
-//	     // Prepare and insert a test project
-//	     
-//	   }
-//	   
+   
 	   @BeforeEach
 	   public void setup() throws JsonProcessingException {
 		   
@@ -87,11 +84,8 @@ public class TaskControllerTests {
 	               put("project_id", "proj_002");
 	               put("task_name", "Initial Test Task");	             
 	               put("description", "Initial description");
-	               put("status", "To Do");
-	              
-	               put("priority", "Low");	               
-	              
-	              
+	               put("status", "To Do");	              
+	               put("priority", "Low");	               	             	              
 	               put("assigned_user_id", 1);
 	               put("due_date", 1717941368L);
 	               put("created_on", 1717941368L);
@@ -99,12 +93,35 @@ public class TaskControllerTests {
 	             }
 	           }
 	         });
-	     taskServices.addTask(null, payload);
-	     
-	     
-	     
+	     taskServices.addTask(null, payload);        
 	   }
 	   
+
+	   @AfterEach
+	   public void cleanup() {
+	       try {
+	           // Fetch all tasks for the test project
+	           Map<String, Object> response = taskServices.getAllTasks(testProjectId);
+	           if (response != null && response.containsKey("tasks")) {
+	               List<?> tasks = (List<?>) response.get("tasks");
+	               // Delete each task associated with the test project
+	               for (Object taskObj : tasks) {
+	                   Map<?, ?> task = (Map<?, ?>) taskObj;
+	                   String taskId = (String) task.get("task_id");
+	                   taskServices.deleteTask(taskId);
+	               }
+	           }
+	       } catch (Exception e) {
+	           // Ignore if already deleted or if there was an error fetching/deleting tasks
+	       }
+
+	       try {
+	           // Delete the test project
+	           projectServices.deleteProject(testProjectId);
+	       } catch (Exception e) {
+	           // Ignore if already deleted
+	       }
+	   }
 
 	   @Test
 	   @Order(1)
