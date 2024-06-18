@@ -39,7 +39,10 @@ public class TaskController {
 		 */		
 		@GetMapping(value = "/task/project/getalltasks/{projectid}")
 		public ResponseEntity<Object> getAllTaskProjects( @PathVariable("projectid") String id)  throws JsonProcessingException, ParseException {
-			
+			 Map<String, Object> response = taskServices.getAllTasks(id);
+		       
+		     System.out.print("proj_001");
+		     System.out.print(response.get("tasks"));
 			return new ResponseEntity<>(taskServices.getAllTasks(id),HttpStatus.OK);  	
 	    }		
 		/*

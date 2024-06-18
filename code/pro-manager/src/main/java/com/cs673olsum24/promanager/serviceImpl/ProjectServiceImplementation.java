@@ -38,6 +38,27 @@ public class ProjectServiceImplementation implements ProjectServices {
 		map.put("project", data);
 		return map;
 	}
+	
+	@Override
+	   @SuppressWarnings("unchecked")
+	   public Map<String, Object> addProjects(HttpServletRequest request, Map<String, Object> payload) {
+	     JSONObject data = JsonUtils.convertPayload(payload);
+	     JSONArray projects = (JSONArray) data.get("projects");
+
+	     for (Object obj : projects) {
+	       JSONObject each = (JSONObject) obj;
+	       Projects project = parseProject(each);
+	       try {
+	         projectDAO.addProjects(project);
+	       } catch (Exception e) {
+	         e.printStackTrace();
+	       }
+	     }
+
+	     Map<String, Object> response = new HashMap<>();
+	     response.put("Response", "OK");
+	     return response;
+	   }
 
 
 	
@@ -195,4 +216,44 @@ public class ProjectServiceImplementation implements ProjectServices {
 
     return map;
   }
+		
+		
+		
+		private Projects parseProject(JSONObject each) {
+		     Projects project = new Projects();
+
+		     project.setProjectid(
+		         ProjectUtils.safelyGetString(each, "project_id", ProjectUtils.DEFAULT_PROJECT_ID));
+		     project.setProjectname(
+		         ProjectUtils.safelyGetString(each, "projectname", ProjectUtils.DEFAULT_PROJECT_NAME));
+		     project.setDescription(
+		         ProjectUtils.safelyGetString(each, "description", ProjectUtils.DEFAULT_DESCRIPTION));
+		     project.setStatus(ProjectUtils.safelyGetString(each, "status", ProjectUtils.DEFAULT_STATUS));
+		     project.setType(ProjectUtils.safelyGetString(each, "type", ProjectUtils.DEFAULT_TYPE));
+		     project.setActive((Boolean) each.getOrDefault("active", true));
+
+		     Long createdOn =
+		         ProjectUtils.safelyConvertToLong(
+		             each.getOrDefault("created_on", ProjectUtils.DEFAULT_DATE));
+		     Long updatedOn =
+		         ProjectUtils.safelyConvertToLong(
+		             each.getOrDefault("updated_on", ProjectUtils.DEFAULT_DATE));
+
+		     project.setCreated_on(createdOn);
+		     project.setUpdated_on(updatedOn);
+
+		     Object ownerIdObj = each.getOrDefault("owner_id", 1);
+		     int owner_id;
+		     if (ownerIdObj instanceof Long) {
+		       owner_id = ((Long) ownerIdObj).intValue();
+		     } else if (ownerIdObj instanceof Integer) {
+		       owner_id = (Integer) ownerIdObj;
+		     } else {
+		       owner_id = 1; // Default value
+		     }
+
+		     project.setOwner_id(owner_id);
+
+		     return project;
+		   }
 }
