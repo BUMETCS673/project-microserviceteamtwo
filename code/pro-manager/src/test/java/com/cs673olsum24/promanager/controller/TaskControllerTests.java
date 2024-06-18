@@ -9,12 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import com.cs673olsum24.promanager.ProManagerApplication;
 import com.cs673olsum24.promanager.service.ProjectServices;
 import com.cs673olsum24.promanager.service.TaskServices;
-import com.cs673olsum24.promanager.utils.TaskFieldIndexes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.AfterEach;
