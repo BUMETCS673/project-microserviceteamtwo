@@ -4,6 +4,9 @@ import com.cs673olsum24.promanager.entity.Comment;
 import com.cs673olsum24.promanager.service.CommentService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import jakarta.servlet.http.HttpServletRequest;
+
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +23,7 @@ import java.util.Map;
  */
 
 @RestController  // Indicates that this class is a RESTful controller
-@RequestMapping("/api/comments")  // Maps HTTP requests to /api/comments to this controller
+@RequestMapping("/apiv1")  // Maps HTTP requests to /api/comments to this controller
 public class CommentController {
 
     @Autowired  // Automatically injects the CommentService bean
@@ -33,7 +36,7 @@ public class CommentController {
      * @return a ResponseEntity containing a map with the list of comments and an HTTP status code.
      * 		   response with the list of comments and HTTP status 200 (OK)
      */
-    @GetMapping(value = "/getallcomments/{projectId}")
+    @GetMapping(value = "/comment/getallcomments/{projectId}")
     public ResponseEntity<Object> getAllComments(@PathVariable("projectId") String id) {
         // Call the service layer to get all comments for the specified project ID
         Map<String, Object> response = commentService.getAllComments(id);
@@ -50,26 +53,24 @@ public class CommentController {
      * @param comment the Comment object containing details of the comment to be added.
      * @return a ResponseEntity containing a map with the added comment and an HTTP status code.
      */
-    @PostMapping(value = "/addcomment")
-    public ResponseEntity<Object> addComment(@RequestBody Comment comment) {
+    @PostMapping(value = "/comment/addcomment")
+    public ResponseEntity<Object> addComment(HttpServletRequest request, @RequestBody Map<String, Object> payload) {
         // Call the service layer to add the new comment
-        Map<String, Object> response = commentService.addComment(comment);
+    	return new ResponseEntity<>(commentService.addComment(request,payload),HttpStatus.OK); 
         // Return the response with the added comment and HTTP status 200 (OK)
-        return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
+    
+  
     /**
      * Deletes a comment based on its ID.
      *
      * @param id the ID of the comment to be deleted.
      * @return a ResponseEntity containing a map with a success message and an HTTP status code.
      */
-    @DeleteMapping(value = "/deletecomment/{id}")
-    public ResponseEntity<Object> deleteComment(@PathVariable int id) {
-        // Call the service layer to delete the comment by its ID
-        Map<String, Object> response = commentService.deleteComment(id);
-        // Return the response with a success message and HTTP status 200 (OK)
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    @DeleteMapping(value = "/comment/deletecomment/{id}")
+    public ResponseEntity<Object> deleteComment(@PathVariable("id") int id) {
+
+		return new ResponseEntity<>(commentService.deleteComment(id),HttpStatus.OK);
     }
 
     /**
@@ -78,11 +79,8 @@ public class CommentController {
      * @param comment the Comment object containing the updated details of the comment.
      * @return a ResponseEntity containing a map with the updated comment and an HTTP status code.
      */
-    @PostMapping(value = "/editcomment")
-    public ResponseEntity<Object> editComment(@RequestBody Comment comment) {
-        // Call the service layer to edit the comment with the updated details
-        Map<String, Object> response = commentService.editComment(comment);
-        // Return the response with the updated comment and HTTP status 200 (OK)
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    @PostMapping(value = "/comment/editcomment")
+    public ResponseEntity<Object> editComment(@RequestBody JSONObject body) {
+	 	return new ResponseEntity<>(commentService.editComment(body),HttpStatus.OK);
     }
 }
