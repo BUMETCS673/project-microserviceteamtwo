@@ -60,6 +60,8 @@ mvn spring-boot:run
 ```
 The application will start on `http://localhost:8080`.
 
+Demo Application is hosted on "https://promanager-v1-b1f0addf3fcb.herokuapp.com/apiv1/project/getIdWiseProject/proj_001" this is one of the endpoints of it.
+
 ### API Demo
 
 The API endpoints are documented in the `API demo` folder, which contains a Python notebook with examples of REST calls implemented in the application.
