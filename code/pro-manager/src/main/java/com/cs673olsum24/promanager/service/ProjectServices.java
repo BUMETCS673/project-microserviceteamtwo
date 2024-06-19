@@ -16,7 +16,11 @@ public interface ProjectServices {
 	
 	public abstract Map<String, Object> getAllProjects() throws JsonProcessingException;
 	
+	public abstract Map<String, Object> getIdWiseProject(String id) throws JsonProcessingException;
+	
 	public abstract Map<String, Object> addProject(HttpServletRequest request,Map<String, Object> payload) ;
+	
+	public abstract Map<String, Object> addProjects(HttpServletRequest request,Map<String, Object> payload) ;
 	
 	public abstract Map<String, Object> deleteProject(String id); //permanant delete
 	
