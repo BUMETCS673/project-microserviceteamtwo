@@ -1,81 +1,92 @@
-//package com.cs673olsum24.promanager.dao;
-//
-//import com.cs673olsum24.promanager.entity.Comment;
-//import jakarta.persistence.EntityManager;
-//import jakarta.persistence.Query;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import org.mockito.InjectMocks;
-//import org.mockito.Mock;
-//import org.mockito.MockitoAnnotations;
-//import org.springframework.jdbc.core.PreparedStatementCallback;
-//import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-//
-//import java.util.Date;
-//
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.mockito.ArgumentMatchers.any;
-//import static org.mockito.ArgumentMatchers.anyMap;
-//import static org.mockito.ArgumentMatchers.anyString;
-//import static org.mockito.ArgumentMatchers.eq;
-//import static org.mockito.Mockito.*;
-//
-///**
-// * Author: Praveen Singh
-// */
-//
-//class CommentDAOTest {
-//
-//    @Mock
-//    private EntityManager entityManager;
-//
-//    @Mock
-//    private NamedParameterJdbcTemplate template;
-//
-//    @Mock
-//    private Query query;
-//
-//    @InjectMocks
-//    private CommentDAO commentDAO;
-//
-//    @BeforeEach
-//    void setUp() {
-//        MockitoAnnotations.openMocks(this);
-//    }
-//
-//    @SuppressWarnings("unchecked")
-//	@Test
-//    void testAddComment() {
-//        Comment comment = new Comment(1, "New comment", 1, new Date());
-//        when(template.execute(anyString(), anyMap(), any(PreparedStatementCallback.class))).thenReturn(1);
-//
-//        Comment result = commentDAO.addComment(comment);
-//
-//        assertEquals(comment, result);
-//        verify(template).execute(eq("INSERT INTO comments (project_id, comments, user_id, created_on) VALUES (:project_id, :comments, :user_id, :created_on)"), anyMap(), any(PreparedStatementCallback.class));
-//    }
-//
-//    @SuppressWarnings("unchecked")
-//	@Test
-//    void testDeleteComment() {
-//        when(template.execute(anyString(), anyMap(), any(PreparedStatementCallback.class))).thenReturn(1);
-//
-//        commentDAO.deleteComment(1);
-//
-//        verify(template).execute(eq("DELETE FROM comments WHERE id = :comment_id"), anyMap(), any(PreparedStatementCallback.class));
-//    }
-//
-//    @SuppressWarnings("unchecked")
-//	@Test
-//    void testEditComment() {
-//        Comment comment = new Comment();
-//        comment.setId(1);
-//        comment.setComments("Updated comment");
-//        when(template.execute(anyString(), anyMap(), any(PreparedStatementCallback.class))).thenReturn(1);
-//
-//        Comment result = commentDAO.editComment(comment);
-//
-//        assertEquals(comment, result);
-//        verify(template).execute(eq("UPDATE comments SET comments = :comments WHERE id = :comment_id"), anyMap(), any(PreparedStatementCallback.class));
-//    }
-//}
+package com.cs673olsum24.promanager.dao;
+
+import com.cs673olsum24.promanager.entity.Comment;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import javax.sql.DataSource;
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+@DataJpaTest
+public class CommentDAOTest {
+
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Autowired
+    private CommentDAO commentDAO;
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    private Comment comment;
+
+    @BeforeEach
+    void setUp() {
+        commentDAO = new CommentDAO(namedParameterJdbcTemplate);
+        commentDAO.setEntityManager(entityManager);
+
+        comment = new Comment();
+        comment.setProjectId("proj_001");
+        comment.setComments("This is a sample comment");
+        comment.setUserId(2);
+        comment.setCreatedOn(new Timestamp(System.currentTimeMillis()));
+    }
+
+    @Test
+    void testGetAllComments() {
+        List<Map<String, Object>> comments = commentDAO.getAllComments("proj_001");
+        assertThat(comments).isNotEmpty();
+        assertThat(comments.get(0)).containsKeys("comment_id", "project_id", "comments", "user_id", "created_on");
+    }
+
+    @Test
+    void testAddComment() {
+        commentDAO.addComment(comment);
+
+        List<Map<String, Object>> comments = commentDAO.getAllComments("proj_001");
+        assertThat(comments).isNotEmpty();
+        assertThat(comments.get(comments.size() - 1)).containsEntry("comments", "This is a sample comment");
+    }
+
+   
+    @Test
+    void testEditComment() {
+        List<Map<String, Object>> commentsBeforeEdit = commentDAO.getAllComments("proj_001");
+        int commentId = (int) commentsBeforeEdit.get(0).get("comment_id");
+
+        comment.setId(commentId);
+        comment.setComments("Updated comment");
+
+        commentDAO.editComment(comment);
+
+        List<Map<String, Object>> commentsAfterEdit = commentDAO.getAllComments("proj_001");
+        assertThat(commentsAfterEdit).isNotEmpty();
+        assertThat(commentsAfterEdit.get(0)).containsEntry("comments", "Updated comment");
+    }
+
+    @TestConfiguration
+    static class TestConfig {
+
+        @Bean
+        NamedParameterJdbcTemplate namedParameterJdbcTemplate(DataSource dataSource) {
+            return new NamedParameterJdbcTemplate(dataSource);
+        }
+
+        @Bean
+        CommentDAO commentDAO(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+            return new CommentDAO(namedParameterJdbcTemplate);
+        }
+    }
+}
