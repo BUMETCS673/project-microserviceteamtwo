@@ -91,7 +91,9 @@ public class CommentDAO {
     }
     
 
-    
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
     
     
     /**
@@ -128,7 +130,7 @@ public class CommentDAO {
      */
     public String deleteComment(int id) {
         // SQL statement to delete a comment from the database by ID.
-        final String deleteCommentsql = "DELETE FROM comments WHERE comment_id = :comment_id";
+        final String deleteCommentsql = "DELETE FROM comments WHERE comment_id = :id";
         
         // Maps the named parameter in the SQL statement to the comment ID.
         Map<String, Object> parameters = new HashMap<>();
