@@ -90,7 +90,6 @@ heroku logs --tail -a promanager-v1
 ```
 
 
-
 ## Proposed High-Level Requirements
 
 ### Functional Requirements
@@ -103,7 +102,7 @@ heroku logs --tail -a promanager-v1
   - Estimated person-hours: 160-180
 - **Project Access Control:** Allow project owners to manage access and privacy settings.
   - Estimated person-hours: 150-200
-- **Project Search and Filtering:** Enable users to find relevant projects easily.
+- **Comment Management:** Adding Reviews and comments to the project.
   - Estimated person-hours: 150-200
 
 **Desirable Features:**
@@ -149,6 +148,7 @@ heroku logs --tail -a promanager-v1
 - **Postman:** API Testing
 - **Manual Testing:** Exploratory, Usability, Regression
 - **Automation Testing:** Unit Testing, Integration Testing
+
 
 ### Code Coverage
 
